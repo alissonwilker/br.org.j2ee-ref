@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<script src="https://use.fontawesome.com/8f53efc3bd.js"></script>
+	<h:outputStylesheet name="/resources/css/style.css" />
+	<title>#{msg['app.title']}</title>
+</h:head>
+<h:body>
+	<p:growl autoUpdate="true" />
+	<div class="ui-g">
+		<div class="ui-g-12">
+			<div class="ui-g-12 ">
+				<div style="vertical-align: middle" class="ui-g-12 ui-lg-11">
+					<p:graphicImage styleClass="logo" name="/resources/images/logo.png" />
+					<p:outputLabel styleClass="pageTitle" value="#{msg['app.title']}" />
+				</div>
+				<div class="ui-g-12 ui-lg-1">
+					<h:form>
+						<p:menuButton rendered="#{usuarioController.autenticado}" styleClass="nomeUsuario" value="#{usuarioController.nomeUsuarioAutenticado}">
+							<p:menuitem action="#{usuarioController.logout}">
+								<span class="fa fa-sign-out" aria-hidden="true"/>
+								<p:outputLabel value="#{msg['app.logout']}"/>
+							</p:menuitem>
+						</p:menuButton>
+					</h:form>
+				</div>
+			</div>
+			<div class="ui-g-12 ui-lg-3">
+				<ui:include src="/WEB-INF/facelets/menu.xhtml" />
+			</div>
+			<div class="ui-g-12 ui-lg-9">
+				<p:panel header="#{pageTitle}">
+					<ui:insert name="content" />
+				</p:panel>
+			</div>
+		</div>
+	</div>
+</h:body>
+</html>

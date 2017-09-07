@@ -1,0 +1,60 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>br.org.j2ee-ref</groupId>
+	<artifactId>libros-web</artifactId>
+	<packaging>war</packaging>
+	<version>0.0.2-SNAPSHOT</version>
+
+	<parent>
+		<groupId>br.org</groupId>
+		<artifactId>j2ee-ref</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<dependencies>
+		<dependency>
+			<groupId>br.org.j2ee-ref</groupId>
+			<artifactId>libros-negocio</artifactId>
+			<version>0.0.2-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.github.kongchen</groupId>
+				<artifactId>swagger-maven-plugin</artifactId>
+				<version>${swagger.version}</version>
+				<configuration>
+					<apiSources>
+						<apiSource>
+							<locations>br.org.libros.biblioteca.api,br.org.libros.cliente.api</locations>
+							<info>
+								<title>API's do Libros</title>
+								<version>${project.version}</version>
+							</info>
+							<host>${ambiente.testes}</host>
+							<basePath>/api</basePath>
+							<schemes>http</schemes>
+							<swaggerDirectory>${project.apidocsdir}</swaggerDirectory>
+						</apiSource>
+					</apiSources>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+		<finalName>libros</finalName>
+	</build>
+
+	<properties>
+		<ambiente.testes>localhost:8080/libros</ambiente.testes>
+	</properties>
+</project>

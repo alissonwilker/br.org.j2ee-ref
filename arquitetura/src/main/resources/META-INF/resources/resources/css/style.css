@@ -1,0 +1,19 @@
+.logo {
+	width: 40px;
+}
+
+.pageTitle {
+	font-size: 180%;
+}
+
+.textAtCenter {
+	text-align: center;
+} 
+
+.nomeUsuario {
+	font-size: 70%;
+} 
+
+fieldset {
+	margin-bottom: 20px;
+}
