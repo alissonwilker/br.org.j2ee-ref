@@ -6,10 +6,10 @@
 	<persistence-unit name="LibrosPersistenceUnit"
 		transaction-type="JTA">
 		<jta-data-source>java:jboss/datasources/LibrosDS</jta-data-source>
-		<class>br.org.libros.usuario.model.persistence.entity.Usuario</class>
-		<class>br.org.libros.biblioteca.model.persistence.entity.Biblioteca</class>
-		<class>br.org.libros.cliente.model.persistence.entity.Cliente</class>
-		<class>br.org.libros.livrobiblioteca.model.persistence.entity.LivroBiblioteca</class>
+		<class>br.org.libros.negocio.usuario.model.persistence.entity.Usuario</class>
+		<class>br.org.libros.negocio.biblioteca.model.persistence.entity.Biblioteca</class>
+		<class>br.org.libros.negocio.cliente.model.persistence.entity.Cliente</class>
+		<class>br.org.libros.negocio.livrobiblioteca.model.persistence.entity.LivroBiblioteca</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
