@@ -7,9 +7,9 @@ import javax.persistence.PersistenceException;
  * lançada quando uma Entidade que já existe está tentando ser cadastrada
  * novamente.
  *
- * @see br.org.arquitetura.excecao.Excecao
+ * @see br.org.arquitetura.excecao.RuntimeExcecao
  */
-public class EntidadeJaExisteExcecao extends Excecao {
+public class EntidadeJaExisteExcecao extends RuntimeExcecao {
 
 	private static final long serialVersionUID = 1L;
 

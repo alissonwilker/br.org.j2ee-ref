@@ -5,9 +5,9 @@ package br.org.arquitetura.excecao;
  * lançada quando tenta-se realizar uma operação sobre uma Entidade que não
  * existe.
  *
- * @see br.org.arquitetura.excecao.Excecao
+ * @see br.org.arquitetura.excecao.RuntimeExcecao
  */
-public class EntidadeNaoEncontradaExcecao extends Excecao {
+public class EntidadeNaoEncontradaExcecao extends RuntimeExcecao {
 
 	private static final long serialVersionUID = 1L;
 
