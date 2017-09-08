@@ -8,7 +8,7 @@ Obs.: para ter acesso ao recurso de filas JMS do Wildfly, vamos utilizar o perfi
 
 Para integrar o Wildfly com uma base de dados H2, é preciso criar um DataSource no arquivo '<WILDFLY_HOME_DIR>/standalone/configuration/standalone-full.xml' ou disponibilizar a configuração dos DataSources em um arquivo 'ds.xml' dentro do diretório WEB-INF da aplicação. O Libros utiliza essa segunda opção, configurando os DataSources no arquivo 'src/main/webapp/WEB-INF/libros-ds.xml'. Portanto, não há configuração a ser realizada em relação aos DataSources. Porém, se quiser acessar alguma das bases de dados através um cliente externo (como o Eclipse Data Tools Platform (DTP), por exemplo), será necessário iniciar o H2 Database Engine em modo servidor e alterar a URL de conexão do respectivo DataSource no arquivo 'libros-ds.xml' para a alternativa que está comentada e que faz referência ao protocolo TCP ('jdbc:h2:tcp://localhost:9092/~/LibrosH2DB/LibrosDB;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE', por exemplo).
  
-A configuração a seguir deve ser feita no arquivo 'standalone-full.xml' do servidor de aplicação e diz respeito à criação de um Security Domain. O Security Domain é utilizado para definir como um usuário se autentica e recebe autorização para acessar os recursos da aplicação. Procure a tag '<security-domains>' e adicione o conteúdo necessário:
+A configuração a seguir deve ser feita no arquivo 'standalone-full.xml' do servidor de aplicação e diz respeito à criação de um Security Domain. O Security Domain é utilizado para definir como um usuário se autentica e recebe autorização para acessar os recursos da aplicação. Procure a tag 'security-domains' e adicione o conteúdo necessário:
 
             <security-domains>
                 ...
@@ -50,8 +50,6 @@ http://localhost:8080/libros/api-docs (documentação das APIs REST da aplicaç�
 http://localhost:8080/libros/api/bibliotecas (API REST do módulo Biblioteca)
 
 http://localhost:8080/libros/api/clientes (API REST do módulo Cliente)
-
-http://localhost:8080/libros/api/livros (API REST do módulo Livro)
 
 Obs.: o usuário 'admin' (com senha 'admin') e o usuário 'user' (com senha 'user') estão disponíveis e podem ser utilizados para logar na aplicação.
 
