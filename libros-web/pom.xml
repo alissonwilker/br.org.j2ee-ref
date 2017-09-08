@@ -29,7 +29,7 @@
 				<configuration>
 					<apiSources>
 						<apiSource>
-							<locations>br.org.libros.biblioteca.api,br.org.libros.cliente.api</locations>
+							<locations>br.org.libros.negocio.biblioteca.api,br.org.libros.negocio.cliente.api</locations>
 							<info>
 								<title>API's do Libros</title>
 								<version>${project.version}</version>
