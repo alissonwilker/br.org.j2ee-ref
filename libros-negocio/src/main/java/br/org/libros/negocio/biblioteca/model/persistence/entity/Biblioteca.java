@@ -17,6 +17,8 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.BatchSize;
+
 import br.org.arquitetura.model.persistence.entity.IEntidade;
 import br.org.libros.negocio.livrobiblioteca.model.persistence.entity.LivroBiblioteca;
 
@@ -43,6 +45,7 @@ public class Biblioteca implements IEntidade {
 	private String nome;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@BatchSize(size = 10)
 	private List<LivroBiblioteca> livros;
 
 	@Valid
