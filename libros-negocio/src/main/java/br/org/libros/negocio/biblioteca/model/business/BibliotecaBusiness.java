@@ -75,7 +75,6 @@ public class BibliotecaBusiness extends AbstractBusiness<Biblioteca, Integer> {
         InstanceInfo nextServerInfo = null;
         try {
             nextServerInfo = eurekaClient.getNextServerFromEureka(vipAddress, false);
-            System.out.println("teste: " + nextServerInfo.getMetadata().get("teste"));
         } catch (Exception e) {
             System.err.println("Cannot get an instance of example service to talk to from eureka");
             System.exit(-1);
@@ -84,50 +83,18 @@ public class BibliotecaBusiness extends AbstractBusiness<Biblioteca, Integer> {
         System.out.println("Found an instance of example service to talk to from eureka: "
                 + nextServerInfo.getVIPAddress() + ":" + nextServerInfo.getPort());
 
-        System.out.println("healthCheckUrl: " + nextServerInfo.getHealthCheckUrl());
-        System.out.println("override: " + nextServerInfo.getOverriddenStatus());
         System.out.println("nextServerInfo.getHostName(): " + nextServerInfo.getHostName());
-        System.out.println("nextServerInfo.getIPAddr(): " + nextServerInfo.getIPAddr());
+        System.out.println("service.port: " + nextServerInfo.getMetadata().get("service.port"));
 
-//        Socket s = new Socket();
-        int serverPort = nextServerInfo.getPort();
-        System.out.println("nextServerInfo.getPort(): " + nextServerInfo.getPort());
+        int serverPort = Integer.valueOf(nextServerInfo.getMetadata().get("service.port"));
         
-        testarRecuperarLivros(nextServerInfo.getHostName());
-//        try {
-//            s.connect(new InetSocketAddress(nextServerInfo.getHostName(), serverPort));
-//        } catch (IOException e) {
-//            System.err.println("Could not connect to the server :"
-//                    + nextServerInfo.getHostName() + " at port " + serverPort);
-//        } catch (Exception e) {
-//            System.err.println("Could not connect to the server :"
-//                    + nextServerInfo.getHostName() + " at port " + serverPort + "due to Exception " + e);
-//        }
-//        try {
-//            String request = "FOO " + new Date();
-//            System.out.println("Connected to server. Sending a sample request: " + request);
-//
-//            PrintStream out = new PrintStream(s.getOutputStream());
-//            out.println(request);
-//
-//            System.out.println("Waiting for server response..");
-//            BufferedReader rd = new BufferedReader(new InputStreamReader(s.getInputStream()));
-//            String str = rd.readLine();
-//            if (str != null) {
-//                System.out.println("Received response from server: " + str);
-//                System.out.println("Exiting the client. Demo over..");
-//            }
-//            rd.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        testarRecuperarLivros(nextServerInfo.getHostName() + ":" + serverPort);
     }
     
-    private void testarRecuperarLivros(String hostName) {
-		// TODO substituir endereço hardcoded por um service discovery
+    private void testarRecuperarLivros(String hostNameAndPort) {
 		Client client = ClientBuilder.newClient();
         System.out.println("Testando resolucao do servidor..");
-		JsonArray jsonArrayResponse = client.target("http://" + hostName + ":8180/livraria/api/livros/")
+		JsonArray jsonArrayResponse = client.target("http://" + hostNameAndPort + "/livraria/api/livros/")
 				.request(MediaType.APPLICATION_JSON).get(JsonArray.class);
 		ObjectMapper jsonToObjectMapper = new ObjectMapper();
 		List<LivroBiblioteca> livrosBibliotecas = null;
@@ -143,6 +110,8 @@ public class BibliotecaBusiness extends AbstractBusiness<Biblioteca, Integer> {
 			for (LivroBiblioteca livroBiblioteca : livrosBibliotecas) {
 				System.out.println(livroBiblioteca.getId());
 			}
+		} else {
+			System.out.println("Nenhum livro");
 		}
 	}
 

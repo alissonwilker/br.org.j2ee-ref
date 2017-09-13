@@ -19,7 +19,9 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import com.netflix.appinfo.ApplicationInfoManager;
 import com.netflix.appinfo.EurekaInstanceConfig;
@@ -51,15 +53,19 @@ public class LivroApi extends AbstractApi<LivroDto, Integer> {
 	private static ApplicationInfoManager applicationInfoManager;
 	private static EurekaClient eurekaClient;
 	private DynamicPropertyFactory configInstance;
+	
+	@Context
+    private UriInfo uri;
 
-	private static synchronized ApplicationInfoManager initializeApplicationInfoManager(
+	private synchronized ApplicationInfoManager initializeApplicationInfoManager(
 			EurekaInstanceConfig instanceConfig) {
 		if (applicationInfoManager == null) {
 			InstanceInfo instanceInfo = new EurekaConfigBasedInstanceInfoProvider(instanceConfig).get();
 			applicationInfoManager = new ApplicationInfoManager(instanceConfig, instanceInfo);
-			Map<String, String> mapa = new HashMap<String, String>();
-			mapa.put("teste", "valorTeste");
-			applicationInfoManager.registerAppMetadata(mapa);
+
+			Map<String, String> metadataMap = new HashMap<String, String>();
+			metadataMap.put("service.port", String.valueOf(uri.getBaseUri().getPort()));
+			applicationInfoManager.registerAppMetadata(metadataMap);
 		}
 
 		return applicationInfoManager;
@@ -79,47 +85,11 @@ public class LivroApi extends AbstractApi<LivroDto, Integer> {
 		configInstance = com.netflix.config.DynamicPropertyFactory.getInstance();
 		applicationInfoManager = initializeApplicationInfoManager(new MyDataCenterInstanceConfig());
 		eurekaClient = initializeEurekaClient(applicationInfoManager, new DefaultEurekaClientConfig());
-
-		// A good practice is to register as STARTING and only change status to
-		// UP
-		// after the service is ready to receive traffic
-		System.out.println("Registering service to eureka with STARTING status");
+		
 		applicationInfoManager.setInstanceStatus(InstanceInfo.InstanceStatus.STARTING);
-
-		System.out.println("Simulating service initialization by sleeping for 2 seconds...");
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// Nothing
-		}
-
-		// Now we change our status to UP
-		System.out.println("Done sleeping, now changing status to UP");
-		applicationInfoManager.setInstanceStatus(InstanceInfo.InstanceStatus.UP);
 		waitForRegistrationWithEureka(eurekaClient);
+		applicationInfoManager.setInstanceStatus(InstanceInfo.InstanceStatus.UP);
 		System.out.println("Service started and ready to process requests..");
-
-//		try {
-//			int myServingPort = applicationInfoManager.getInfo().getPort(); // read
-//																			// from
-//																			// my
-//																			// registered
-//																			// info
-//			ServerSocket serverSocket = new ServerSocket(myServingPort);
-//			final Socket s = serverSocket.accept();
-//			System.out.println("Client got connected... processing request from the client");
-//			processRequest(s);
-//
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//
-//		System.out.println("Simulating service doing work by sleeping for " + 5 + " seconds...");
-//		try {
-//			Thread.sleep(5 * 1000);
-//		} catch (InterruptedException e) {
-//			// Nothing
-//		}
 	}
 
 	@PreDestroy
@@ -144,32 +114,6 @@ public class LivroApi extends AbstractApi<LivroDto, Integer> {
 					Thread.sleep(10000);
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
-				}
-			}
-		}
-	}
-
-	private void processRequest(final Socket s) {
-		try {
-			BufferedReader rd = new BufferedReader(new InputStreamReader(s.getInputStream()));
-			String line = rd.readLine();
-			if (line != null) {
-				System.out.println("Received a request from the example client: " + line);
-			}
-			String response = "BAR " + new Date();
-			System.out.println("Sending the response to the client: " + response);
-
-			PrintStream out = new PrintStream(s.getOutputStream());
-			out.println(response);
-
-		} catch (Throwable e) {
-			System.err.println("Error processing requests");
-		} finally {
-			if (s != null) {
-				try {
-					s.close();
-				} catch (IOException e) {
-					e.printStackTrace();
 				}
 			}
 		}
