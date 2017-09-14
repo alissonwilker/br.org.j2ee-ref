@@ -1,0 +1,24 @@
+<ui:composition template="/facelets/formCadastro.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:param name="pageTitle" value="#{msg['app.cadastrarCliente']}" />
+	<ui:define name="formCadastroContent">
+		<p:outputLabel for="cpfCliente" value="#{msg['clientes.cpfCliente']}:" />
+		<p:inputMask id="cpfCliente" required="true"
+			requiredMessage="#{msg['clientes.digiteCpfCliente']}"
+			value="#{cpfCliente}" a:placeholder="#{msg['clientes.cpfCliente']}"
+			mask="#{msg['clientes.cpfMask']}" validator="cpfValidator"
+			converter="cpfConverter">
+		</p:inputMask>
+		<p:outputLabel for="nomeCliente"
+			value="#{msg['clientes.nomeCliente']}:" />
+		<p:inputText id="nomeCliente" required="true"
+			requiredMessage="#{msg['clientes.digiteNomeCliente']}"
+			value="#{nomeCliente}" a:placeholder="#{msg['clientes.nomeCliente']}"
+			maxlength="20" />
+		<p:commandButton value="#{msg['app.ok']}"
+			action="#{clienteController.adicionarCliente(cpfCliente, nomeCliente)}" />
+	</ui:define>
+</ui:composition>

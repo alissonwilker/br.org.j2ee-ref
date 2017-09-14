@@ -1,0 +1,23 @@
+<ui:composition template="/facelets/formCadastro.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	<f:metadata>
+		<f:viewAction action="#{usuarioController.redirecionarSeAutenticado}" />
+	</f:metadata>
+	<ui:param name="pageTitle" value="#{msg['login.logar']}" />
+	<ui:define name="formCadastroContent">
+		<p:outputLabel for="usernameInput" value="#{msg['login.usuario']}" />
+		<p:inputText id="usernameInput" value="#{usuario}"
+			required="true" requiredMessage="#{msg['login.digiteUsuario']}"
+			a:placeholder="#{msg['login.usuario']}" maxlength="20" />
+		<p:outputLabel for="passwordInput" value="#{msg['login.senha']}" />
+		<p:password id="passwordInput" value="#{senha}"
+			required="true" requiredMessage="#{msg['login.digiteSenha']}"
+			a:placeholder="#{msg['login.senha']}" maxlength="32" />
+		<p:commandButton value="#{msg['app.ok']}"
+			action="#{usuarioController.login(usuario, senha)}" />
+	</ui:define>
+</ui:composition>
