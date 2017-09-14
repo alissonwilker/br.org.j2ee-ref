@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.json.JsonArray;
 import javax.ws.rs.client.Client;
@@ -16,6 +17,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import br.org.arquitetura.excecao.RuntimeExcecao;
 import br.org.arquitetura.model.business.AbstractBusiness;
 import br.org.libros.negocio.livrobiblioteca.model.persistence.entity.LivroBiblioteca;
+import br.org.libros.negocio.usuario.utils.AppStartupConfigurator;
 
 /**
  * 
@@ -27,11 +29,13 @@ public class LivroBibliotecaBusiness extends AbstractBusiness<LivroBiblioteca, I
 
 	private static final long serialVersionUID = 1L;
 
+	@Inject 
+	private AppStartupConfigurator appStartupConfigurator;
+	
 	@Override
 	public List<LivroBiblioteca> listar() {
-		// TODO substituir endereço hardcoded por um service discovery
 		Client client = ClientBuilder.newClient();
-		JsonArray jsonArrayResponse = client.target("http://localhost:8080/livraria/api/livros/")
+		JsonArray jsonArrayResponse = client.target(appStartupConfigurator.getLivrariaBaseUri() + "/livros/")
 				.request(MediaType.APPLICATION_JSON).get(JsonArray.class);
 		ObjectMapper jsonToObjectMapper = new ObjectMapper();
 		List<LivroBiblioteca> livrosBibliotecas = null;
