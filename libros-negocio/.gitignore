@@ -1,5 +1,6 @@
 /target/
-*webapp*
+swagger.json
+*javadocs*
 .*
 !.gitignore
 MANIFEST.MF

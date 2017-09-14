@@ -1,0 +1,23 @@
+<ui:composition template="/facelets/formCadastro.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:param name="pageTitle" value="#{msg['app.cadastrarLivro']}" />
+	<ui:define name="formCadastroContent">
+		<p:outputLabel for="isbnLivro" value="#{msg['livros.isbnLivro']}:" />
+		<p:inputMask id="isbnLivro" required="true"
+			requiredMessage="#{msg['livros.digiteIsbnLivro']}"
+			value="#{isbnLivro}" a:placeholder="#{msg['livros.isbnLivro']}"
+			mask="#{msg['livros.isbnMask']}" validator="isbnValidator"
+			converter="isbnConverter">
+		</p:inputMask>
+		<p:outputLabel for="nomeLivro" value="#{msg['livros.nomeLivro']}:" />
+		<p:inputText id="nomeLivro" required="true"
+			requiredMessage="#{msg['livros.digiteNomeLivro']}"
+			value="#{nomeLivro}" a:placeholder="#{msg['livros.nomeLivro']}"
+			maxlength="20" />
+		<p:commandButton value="#{msg['app.ok']}"
+			action="#{livroController.adicionarLivro(isbnLivro, nomeLivro)}" />
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,32 @@
+<ui:composition template="/pages/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+	<ui:param name="pageTitle" value="#{msg['app.inicio']}" />
+	<ui:define name="content">
+		<p:fieldset legend="#{msg['app.livros']}">
+			<p:dataTable id="livros" var="livro" reflow="true" 
+				value="#{livroController.entidades}" rows="3" paginator="true"
+				emptyMessage="#{msg['app.nenhumItem']}">
+   				<f:event type="preRenderView" listener="#{livroController.carregarEntidades}" />
+				<p:column styleClass="textAtCenter" headerText="#{msg['app.isbn']}">
+					<p:outputLabel value="#{livro.isbn}" converter="isbnConverter" />
+				</p:column>
+				<p:column headerText="#{msg['livros.nomeLivro']}">
+					<p:link outcome="/pages/livro/gerenciarLivro" value="#{livro.nome}" />
+				</p:column>
+				<p:column headerText="#{msg['app.remover']}" styleClass="textAtCenter">
+					<h:form>
+						<p:commandLink action="#{livroController.remover(livro)}"
+							ajax="true" update="livros" >
+							<span class="fa fa-trash"/>
+						</p:commandLink>
+					</h:form>
+				</p:column>
+			</p:dataTable>
+		</p:fieldset>
+	</ui:define>
+</ui:composition>
