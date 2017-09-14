@@ -66,10 +66,7 @@ public class AppStartupConfigurator {
 	}
 
 	private String sendRequestToServiceUsingEureka(EurekaClient eurekaClient) {
-		// initialize the client
-		// this is the vip address for the example service to talk to as defined
-		// in conf/sample-eureka-service.properties
-		String vipAddress = "sampleservice.mydomain.net";
+		String vipAddress = "livraria.j2ee-ref.org.br";
 
 		InstanceInfo nextServerInfo = null;
 		try {
