@@ -40,7 +40,11 @@ public class AppStartupConfigurator implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
-		logger.info("estou aqui");
+		descobrirPortasServidor();
+		start();
+	}
+
+	private void descobrirPortasServidor() {
 		try {
 			MBeanServer server = java.lang.management.ManagementFactory.getPlatformMBeanServer();
 
@@ -66,13 +70,11 @@ public class AppStartupConfigurator implements ServletContextListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		start();
 	}
 
 	@Override
 	public void contextDestroyed(ServletContextEvent sce) {
-		// TODO Auto-generated method stub
+		stop();
 	}
 
 	private static ApplicationInfoManager applicationInfoManager;
@@ -86,7 +88,7 @@ public class AppStartupConfigurator implements ServletContextListener {
 		if (applicationInfoManager == null) {
 			InstanceInfo instanceInfo = new EurekaConfigBasedInstanceInfoProvider(instanceConfig).get();
 			applicationInfoManager = new ApplicationInfoManager(instanceConfig, instanceInfo);
-			
+
 			metadataMap.put("service.httpPort", portaHttp);
 			metadataMap.put("service.httpsPort", portaHttps);
 			applicationInfoManager.registerAppMetadata(metadataMap);

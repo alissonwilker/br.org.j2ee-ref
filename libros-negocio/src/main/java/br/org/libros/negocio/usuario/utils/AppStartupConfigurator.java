@@ -48,19 +48,19 @@ public class AppStartupConfigurator {
 
 	private static synchronized ApplicationInfoManager initializeApplicationInfoManager(
 			EurekaInstanceConfig instanceConfig) {
-		if (applicationInfoManager == null) {
+//		if (applicationInfoManager == null) {
 			InstanceInfo instanceInfo = new EurekaConfigBasedInstanceInfoProvider(instanceConfig).get();
 			applicationInfoManager = new ApplicationInfoManager(instanceConfig, instanceInfo);
-		}
+//		}
 
 		return applicationInfoManager;
 	}
 
 	private static synchronized EurekaClient initializeEurekaClient(ApplicationInfoManager applicationInfoManager,
 			EurekaClientConfig clientConfig) {
-		if (eurekaClient == null) {
+//		if (eurekaClient == null) {
 			eurekaClient = new DiscoveryClient(applicationInfoManager, clientConfig);
-		}
+//		}
 
 		return eurekaClient;
 	}
@@ -89,7 +89,7 @@ public class AppStartupConfigurator {
 			serviceBaseUri = "http://" + nextServerInfo.getHostName() + ":" + serviceHttpPort + "/livraria/api";
 		} else if (serviceHttpsPort != null)  {
 			serviceBaseUri = "https://" + nextServerInfo.getHostName() + ":" + serviceHttpsPort + "/livraria/api";
-		}
+		} 
 
 		System.out.println(serviceBaseUri);
 		
