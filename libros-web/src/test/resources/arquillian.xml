@@ -7,7 +7,7 @@
 	</engine>
 	<container qualifier="wildfly-managed" default="true">
 		<configuration>
-			<property name="jbossHome">target/wildfly-11.0.0.Beta1</property>
+			<property name="jbossHome">target/wildfly-11.0.0.CR1</property>
 			<property name="serverConfig">../../../test-classes/test-standalone-full.xml</property>
 		</configuration>
 	</container>

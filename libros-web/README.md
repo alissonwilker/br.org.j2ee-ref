@@ -1,8 +1,8 @@
 O Libros é um sistema de gerenciamento de bibliotecas construído com as seguintes tecnologias: J2EE, JSF, JAX-RS, JPA (Hibernate) e PrimeFaces.
 
-Para executar esse projeto, é preciso ter um servidor de aplicação e um banco de dados. Os passos a seguir o ajudarão a configurar o servidor de aplicação Wildfly 11.0.0.Beta1 e o banco de dados H2 Database Engine.
+Para executar esse projeto, é preciso ter um servidor de aplicação e um banco de dados. Os passos a seguir o ajudarão a configurar o servidor de aplicação Wildfly 11.0.0.CR1 e o banco de dados H2 Database Engine.
 
-Obs.: o servidor de aplicação Wildfly 11.0.0.Beta1 foi utilizado porque a versão 10.1.0.Final possui um bug relacionado com injeção CDI em EntityListeners (https://issues.jboss.org/browse/WFLY-2387).
+Obs.: o servidor de aplicação Wildfly 11.0.0.CR1 foi utilizado porque a versão 10.1.0.Final possui um bug relacionado com injeção CDI em EntityListeners (https://issues.jboss.org/browse/WFLY-2387).
 
 Obs.: para ter acesso ao recurso de filas JMS do Wildfly, vamos utilizar o perfil 'standalone-full.xml' ao invés do padrão 'standalone.xml'. Esse perfil já disponibiliza uma fila, que será utilizada pelo Libros.
 
