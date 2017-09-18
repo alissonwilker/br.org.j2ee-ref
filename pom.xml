@@ -136,6 +136,46 @@
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jxr-plugin</artifactId>
+				<version>${maven-jxr.version}</version>
+				<executions>
+					<execution>
+						<id>jxr</id>
+						<phase>validate</phase>
+						<configuration>
+							<linkJavadoc>true</linkJavadoc>
+							<javadocDir>${project.javadocsdir}</javadocDir>
+						</configuration>
+						<goals>
+							<goal>jxr</goal>
+							<goal>test-jxr</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>${maven-checkstyle.version}</version>
+				<executions>
+					<execution>
+						<id>checkstyle</id>
+						<phase>validate</phase>
+						<configuration>
+							<configLocation>google_checks.xml</configLocation>
+							<encoding>UTF-8</encoding>
+							<consoleOutput>false</consoleOutput>
+							<failsOnError>true</failsOnError>
+							<linkXRef>true</linkXRef>
+						</configuration>
+						<goals>
+							<goal>checkstyle</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
 				<version>${maven-build-helper.version}</version>
@@ -191,10 +231,19 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>${maven-javadoc.version}</version>
-				<configuration>
-					<destDir>${javadocsdir}</destDir>
-					<reportOutputDirectory>${project.webappdir}</reportOutputDirectory>
-				</configuration>
+				<executions>
+					<execution>
+						<id>javadoc</id>
+						<phase>validate</phase>
+						<configuration>
+							<destDir>${javadocsdir}</destDir>
+							<reportOutputDirectory>${project.webappdir}</reportOutputDirectory>
+						</configuration>
+						<goals>
+							<goal>javadoc</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -220,6 +269,8 @@
 		<project.apidocsdir>${project.webappdir}/api-docs</project.apidocsdir>
 		<project.javadocsdir>${project.webappdir}/${javadocsdir}</project.javadocsdir>
 		<swagger.version>3.1.5</swagger.version>
+		<maven-checkstyle.version>2.17</maven-checkstyle.version>
+		<maven-jxr.version>2.5</maven-jxr.version>
 		<maven-clean.version>3.0.0</maven-clean.version>
 		<maven-javadoc.version>3.0.0-M1</maven-javadoc.version>
 		<maven-compiler.version>3.5.1</maven-compiler.version>
