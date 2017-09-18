@@ -22,44 +22,44 @@ import br.org.arquitetura.model.persistence.entity.listener.EventoEntidade.Tipo;
  * 
  */
 public abstract class AbstractNotificadorJms {
-	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
-	protected Queue fila;
+    protected Queue fila;
 
-	protected JMSContext contextoJms;
+    protected JMSContext contextoJms;
 
-	protected void setContextoJms(JMSContext contextoJms) {
-		this.contextoJms = contextoJms;
-	}
+    protected void setContextoJms(JMSContext contextoJms) {
+        this.contextoJms = contextoJms;
+    }
 
-	protected void setFila(Queue fila) {
-		this.fila = fila;
-	}
+    protected void setFila(Queue fila) {
+        this.fila = fila;
+    }
 
-	/**
-	 * Método executado quando a entidade é atualizada, persistida ou removida.
-	 * 
-	 * @param evento
-	 *            o evento específico que resultou na execução desse método.
-	 */
-	@IEntidadeAtualizada
-	@IEntidadePersistida
-	@IEntidadeRemovida
-	public void onEntidadeAtualizada(@Observes EventoEntidade evento) {
-		enviarMensagemJms(evento.getTipo(), evento.getPayload());
-	}
+    /**
+     * Método executado quando a entidade é atualizada, persistida ou removida.
+     * 
+     * @param evento
+     *            o evento específico que resultou na execução desse método.
+     */
+    @IEntidadeAtualizada
+    @IEntidadePersistida
+    @IEntidadeRemovida
+    public void onEntidadeAtualizada(@Observes EventoEntidade evento) {
+        enviarMensagemJms(evento.getTipo(), evento.getPayload());
+    }
 
-	/**
-	 * Envia mensagem JMS de notifição sobre a mudança na entidade.
-	 * 
-	 * @param tipo
-	 *            o tipo do evento de entidade que ocorreu.
-	 * 
-	 * @param payloadDoEvento
-	 *            conteúdo do evento que será enviado na mensagem JMS.
-	 */
-	protected void enviarMensagemJms(Tipo tipo, Serializable payloadDoEvento) {
-		contextoJms.createProducer().setProperty("tipoEvento", tipo.name()).send(fila, payloadDoEvento);
-		logger.info("mensagem JMS enviada: " + payloadDoEvento);
-	}
+    /**
+     * Envia mensagem JMS de notifição sobre a mudança na entidade.
+     * 
+     * @param tipo
+     *            o tipo do evento de entidade que ocorreu.
+     * 
+     * @param payloadDoEvento
+     *            conteúdo do evento que será enviado na mensagem JMS.
+     */
+    protected void enviarMensagemJms(Tipo tipo, Serializable payloadDoEvento) {
+        contextoJms.createProducer().setProperty("tipoEvento", tipo.name()).send(fila, payloadDoEvento);
+        logger.info("mensagem JMS enviada: " + payloadDoEvento);
+    }
 }

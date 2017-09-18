@@ -20,20 +20,20 @@ import io.restassured.specification.RequestSpecification;
  */
 @RunWith(Arquillian.class)
 public class BibliotecaApiITCase extends AbstractIntegrationTest {
-	private static final String BASE_HREF = "/" + TEST_APP_CONTEXT_ROOT + "/api" + BibliotecaApi.PATH;
-	private static final RequestSpecification request = given().contentType(ContentType.JSON);
+    private static final String BASE_HREF = "/" + TEST_APP_CONTEXT_ROOT + "/api" + BibliotecaApi.PATH;
+    private static final RequestSpecification request = given().contentType(ContentType.JSON);
 
-	/**
-	 * Test method for
-	 * {@link br.org.libros.negocio.biblioteca.api.BibliotecaApi#adicionar(java.lang.String)}
-	 * and {@link br.org.libros.negocio.biblioteca.api.BibliotecaApi#listar()}.
-	 */
-	@Test
-	public void testAdicionarEListar() {
-		BibliotecaDto dto = new BibliotecaDto();
-		dto.setNome("nova biblioteca");
-		request.body(dto).post(BASE_HREF).then().statusCode(HttpStatus.SC_CREATED);
-		request.get(BASE_HREF).then().body("id", hasItems(1));
-	}
+    /**
+     * Test method for
+     * {@link br.org.libros.negocio.biblioteca.api.BibliotecaApi#adicionar(java.lang.String)}
+     * and {@link br.org.libros.negocio.biblioteca.api.BibliotecaApi#listar()}.
+     */
+    @Test
+    public void testAdicionarEListar() {
+        BibliotecaDto dto = new BibliotecaDto();
+        dto.setNome("nova biblioteca");
+        request.body(dto).post(BASE_HREF).then().statusCode(HttpStatus.SC_CREATED);
+        request.get(BASE_HREF).then().body("id", hasItems(1));
+    }
 
 }

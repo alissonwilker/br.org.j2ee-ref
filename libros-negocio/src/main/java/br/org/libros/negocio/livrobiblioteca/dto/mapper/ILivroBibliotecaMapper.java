@@ -13,6 +13,6 @@ import br.org.libros.negocio.livrobiblioteca.model.persistence.entity.LivroBibli
  */
 @Mapper
 public interface ILivroBibliotecaMapper extends IGenericMapper<LivroBiblioteca, LivroBibliotecaDto> {
-	ILivroBibliotecaMapper INSTANCE = Mappers.getMapper(ILivroBibliotecaMapper.class);
+    ILivroBibliotecaMapper INSTANCE = Mappers.getMapper(ILivroBibliotecaMapper.class);
 
 }

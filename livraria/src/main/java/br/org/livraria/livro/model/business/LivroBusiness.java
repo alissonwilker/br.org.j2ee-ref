@@ -14,5 +14,5 @@ import br.org.livraria.livro.model.persistence.entity.Livro;
 @RequestScoped
 public class LivroBusiness extends AbstractBusiness<Livro, Integer> {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 }

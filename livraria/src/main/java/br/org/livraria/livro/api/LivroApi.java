@@ -26,47 +26,49 @@ import io.swagger.annotations.ApiParam;
 @Api(LivroApi.PATH)
 public class LivroApi extends AbstractApi<LivroDto, Integer> {
 
-	protected static final String PATH = "/livros";
+    protected static final String PATH = "/livros";
 
-	public LivroApi() {
-		apiPath = PATH;
-	}
+    public LivroApi() {
+        apiPath = PATH;
+    }
 
-	@Override
-	@POST
-	@ApiOperation(value = "Adicionar um livro")
-	public Response adicionar(@ApiParam(value = "livroDto") LivroDto livroDto) throws EntidadeJaExisteExcecao, EntidadeNaoEncontradaExcecao, URISyntaxException {
-		return super.adicionar(livroDto);
-	}
+    @Override
+    @POST
+    @ApiOperation(value = "Adicionar um livro")
+    public Response adicionar(@ApiParam(value = "livroDto") LivroDto livroDto)
+            throws EntidadeJaExisteExcecao, EntidadeNaoEncontradaExcecao, URISyntaxException {
+        return super.adicionar(livroDto);
+    }
 
-	@Override
-	@GET
-	@ApiOperation(value = "Recuperar os livros", response = LivroDto.class, responseContainer = "List")
-	public Response listar() {
-		return super.listar();
-	}
+    @Override
+    @GET
+    @ApiOperation(value = "Recuperar os livros", response = LivroDto.class, responseContainer = "List")
+    public Response listar() {
+        return super.listar();
+    }
 
-	@Override
-	@DELETE
-	@Path("/{idLivro}")
-	@ApiOperation(value = "Remover um livro")
-	public Response remover(@PathParam("idLivro") Integer idLivro) throws EntidadeNaoEncontradaExcecao {
-		return super.remover(idLivro);
-	}
+    @Override
+    @DELETE
+    @Path("/{idLivro}")
+    @ApiOperation(value = "Remover um livro")
+    public Response remover(@PathParam("idLivro") Integer idLivro) throws EntidadeNaoEncontradaExcecao {
+        return super.remover(idLivro);
+    }
 
-	@Override
-	@PUT
-	@ApiOperation(value = "Atualizar um livro", response = LivroDto.class)
-	public Response atualizar(@ApiParam(value = "livroDto") LivroDto livroDto) throws EntidadeNaoEncontradaExcecao, EntidadeJaExisteExcecao {
-		return super.atualizar(livroDto);
-	}
+    @Override
+    @PUT
+    @ApiOperation(value = "Atualizar um livro", response = LivroDto.class)
+    public Response atualizar(@ApiParam(value = "livroDto") LivroDto livroDto)
+            throws EntidadeNaoEncontradaExcecao, EntidadeJaExisteExcecao {
+        return super.atualizar(livroDto);
+    }
 
-	@Override
-	@GET
-	@Path("/{idLivro}")
-	@ApiOperation(value = "Recuperar um livro", response = LivroDto.class)
-	public Response recuperar(@PathParam("idLivro") Integer idLivro) throws EntidadeNaoEncontradaExcecao {
-		return super.recuperar(idLivro);
-	}
+    @Override
+    @GET
+    @Path("/{idLivro}")
+    @ApiOperation(value = "Recuperar um livro", response = LivroDto.class)
+    public Response recuperar(@PathParam("idLivro") Integer idLivro) throws EntidadeNaoEncontradaExcecao {
+        return super.recuperar(idLivro);
+    }
 
 }

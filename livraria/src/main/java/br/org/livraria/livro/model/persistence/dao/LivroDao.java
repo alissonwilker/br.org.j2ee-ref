@@ -13,6 +13,6 @@ import br.org.livraria.livro.model.persistence.entity.Livro;
 @Named
 @RequestScoped
 public class LivroDao extends LivrariaAbstractDao<Livro, Integer> {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
 }

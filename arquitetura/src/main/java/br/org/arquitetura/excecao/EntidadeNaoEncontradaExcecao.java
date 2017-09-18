@@ -9,14 +9,14 @@ package br.org.arquitetura.excecao;
  */
 public class EntidadeNaoEncontradaExcecao extends RuntimeExcecao {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public EntidadeNaoEncontradaExcecao(IllegalArgumentException iaex) {
-		super(iaex);
-	}
+    public EntidadeNaoEncontradaExcecao(IllegalArgumentException iaex) {
+        super(iaex);
+    }
 
-	public EntidadeNaoEncontradaExcecao() {
-		super();
-	}
+    public EntidadeNaoEncontradaExcecao() {
+        super();
+    }
 
 }

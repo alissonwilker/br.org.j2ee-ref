@@ -17,14 +17,14 @@ import br.org.arquitetura.view.utils.FacesMessageUtils;
 @FacesValidator(value = "cpfValidator")
 public class CpfFacesValidator implements Validator {
 
-	@Override
-	public void validate(FacesContext context, UIComponent component, Object cpf) throws ValidatorException {
-		if (cpf == null) {
-			return;
-		}
+    @Override
+    public void validate(FacesContext context, UIComponent component, Object cpf) throws ValidatorException {
+        if (cpf == null) {
+            return;
+        }
 
-		if (!VerificadorCpf.isValido((String) cpf)) {
-			throw new ValidatorException(FacesMessageUtils.getInfoFacesMessage("clientes.cpfValidator"));
-		}
-	}
+        if (!VerificadorCpf.isValido((String) cpf)) {
+            throw new ValidatorException(FacesMessageUtils.getInfoFacesMessage("clientes.cpfValidator"));
+        }
+    }
 }

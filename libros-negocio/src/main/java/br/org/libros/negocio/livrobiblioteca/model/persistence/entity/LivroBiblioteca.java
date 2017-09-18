@@ -20,48 +20,48 @@ import br.org.arquitetura.model.persistence.entity.IEntidade;
 @Table(name = "LivroBiblioteca", uniqueConstraints = { @UniqueConstraint(columnNames = { "ID" }) })
 public class LivroBiblioteca implements IEntidade {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@Column(name = "ID", nullable = false, unique = true, length = 10)
-	@NotNull
-	@Max(Integer.MAX_VALUE)
-	private int id;
-	
-	@Transient
-	private String nome;
-	
-	@Transient 
-	private String isbn;
+    @Id
+    @Column(name = "ID", nullable = false, unique = true, length = 10)
+    @NotNull
+    @Max(Integer.MAX_VALUE)
+    private int id;
 
-	@Valid
-	public LivroBiblioteca() {
-	}
+    @Transient
+    private String nome;
 
-	@Override
-	public int getId() {
-		return id;
-	}
+    @Transient
+    private String isbn;
 
-	@Override
-	public void setId(int id) {
-		this.id = id;
-	}
+    @Valid
+    public LivroBiblioteca() {
+    }
 
-	public String getNome() {
-		return nome;
-	}
+    @Override
+    public int getId() {
+        return id;
+    }
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+    @Override
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public String getIsbn() {
-		return isbn;
-	}
+    public String getNome() {
+        return nome;
+    }
 
-	public void setIsbn(String isbn) {
-		this.isbn = isbn;
-	}
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
 
 }

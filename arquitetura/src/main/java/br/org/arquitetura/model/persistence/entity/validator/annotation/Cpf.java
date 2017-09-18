@@ -26,10 +26,10 @@ import br.org.arquitetura.model.persistence.entity.validator.CpfBeanValidator;
 @Documented
 public @interface Cpf {
 
-	String message() default "{cpf.invalido}"; 
+    String message() default "{cpf.invalido}";
 
-	Class<?>[] groups() default {};
+    Class<?>[] groups() default {};
 
-	Class<? extends Payload>[] payload() default {};
+    Class<? extends Payload>[] payload() default {};
 
 }

@@ -16,30 +16,30 @@ import br.org.libros.negocio.biblioteca.dto.BibliotecaDto;
  * @see br.org.arquitetura.view.controller.AbstractController
  */
 @ManagedBean
-@ViewScoped 
+@ViewScoped
 public class BibliotecaController extends AbstractController<BibliotecaDto, Integer> {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@PostConstruct
-	@Inject
-	public void init(IBusinessFacade<BibliotecaDto, Integer> businessFacade) {
-		this.businessFacade = businessFacade;
-	}
+    @PostConstruct
+    @Inject
+    public void init(IBusinessFacade<BibliotecaDto, Integer> businessFacade) {
+        this.businessFacade = businessFacade;
+    }
 
-	/**
-	 * Cadastra uma nova biblioteca.
-	 * 
-	 * @param nomeBiblioteca
-	 *            nome da biblioteca a ser adicionada.
-	 * @return página inicial da aplicação.
-	 */
-	public String adicionarBiblioteca(String nomeBiblioteca) {
-		BibliotecaDto bibliotecaDto = new BibliotecaDto(nomeBiblioteca);
-		if (super.adicionar(bibliotecaDto)) {
-			return JsfUtils.getRedirecionamentoComMensagens(Pagina.app);
-		}
-		return null;
-	}
+    /**
+     * Cadastra uma nova biblioteca.
+     * 
+     * @param nomeBiblioteca
+     *            nome da biblioteca a ser adicionada.
+     * @return página inicial da aplicação.
+     */
+    public String adicionarBiblioteca(String nomeBiblioteca) {
+        BibliotecaDto bibliotecaDto = new BibliotecaDto(nomeBiblioteca);
+        if (super.adicionar(bibliotecaDto)) {
+            return JsfUtils.getRedirecionamentoComMensagens(Pagina.app);
+        }
+        return null;
+    }
 
 }

@@ -19,11 +19,11 @@ import br.org.libros.negocio.cliente.model.persistence.entity.Cliente;
 @Transactional
 public class ClienteBusinessFacade extends AbstractBusinessFacade<Cliente, ClienteDto, Integer> {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@PostConstruct
-	public void init() {
-		mapper = IClienteMapper.INSTANCE;
-	}
+    @PostConstruct
+    public void init() {
+        mapper = IClienteMapper.INSTANCE;
+    }
 
 }

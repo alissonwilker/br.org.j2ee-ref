@@ -13,12 +13,12 @@ import br.org.arquitetura.utils.VerificadorCpf;
  */
 public class CpfBeanValidator implements ConstraintValidator<Cpf, String> {
 
-	@Override
-	public boolean isValid(String cpf, ConstraintValidatorContext constraintContext) {
-		return VerificadorCpf.isValido(cpf);
-	}
+    @Override
+    public boolean isValid(String cpf, ConstraintValidatorContext constraintContext) {
+        return VerificadorCpf.isValido(cpf);
+    }
 
-	@Override
-	public void initialize(Cpf constraintAnnotation) {
-	}
+    @Override
+    public void initialize(Cpf constraintAnnotation) {
+    }
 }

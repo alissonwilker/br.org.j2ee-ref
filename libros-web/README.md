@@ -37,7 +37,7 @@ A configuração a seguir deve ser feita no arquivo 'standalone-full.xml' do ser
  
 Obs.: note que o conteúdo acima faz referência ao DataSource 'LibrosDS', disponível no arquivo 'libros-ds.xml', conforme mencionado anteriormente. Além disso, o conteúdo também faz referência à tabela 'users', que será criada automaticamente pela aplicação quando esta for iniciada no servidor de aplicação.
  
-Pronto! Digite 'mvn clean package javadoc:javadoc' a partir do diretório raiz do projeto para compilar, executar testes e empacotar a aplicação, gerando também javadocs. O pacote WAR será criado no diretório 'target'.
+Pronto! Digite 'mvn clean package' a partir do diretório raiz do projeto para compilar, executar testes e empacotar a aplicação, gerando também javadocs. O pacote WAR será criado no diretório 'target'.
 
 Uma vez realizado o deploy no servidor de aplicação, você poderá acessar a aplicação pelos seguintes endereços:
 

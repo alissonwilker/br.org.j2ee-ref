@@ -13,6 +13,6 @@ import br.org.libros.negocio.cliente.model.persistence.entity.Cliente;
  */
 @Mapper
 public interface IClienteMapper extends IGenericMapper<Cliente, ClienteDto> {
-	IClienteMapper INSTANCE = Mappers.getMapper(IClienteMapper.class);
+    IClienteMapper INSTANCE = Mappers.getMapper(IClienteMapper.class);
 
 }

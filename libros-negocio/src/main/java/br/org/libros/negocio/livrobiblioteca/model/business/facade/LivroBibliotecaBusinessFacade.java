@@ -17,13 +17,14 @@ import br.org.libros.negocio.livrobiblioteca.model.persistence.entity.LivroBibli
 @Named("LivroBibliotecaBusinessFacade")
 @RequestScoped
 @Transactional
-public class LivroBibliotecaBusinessFacade extends AbstractBusinessFacade<LivroBiblioteca, LivroBibliotecaDto, Integer> {
+public class LivroBibliotecaBusinessFacade
+        extends AbstractBusinessFacade<LivroBiblioteca, LivroBibliotecaDto, Integer> {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@PostConstruct
-	public void init() {
-		mapper = ILivroBibliotecaMapper.INSTANCE;
-	}
+    @PostConstruct
+    public void init() {
+        mapper = ILivroBibliotecaMapper.INSTANCE;
+    }
 
 }

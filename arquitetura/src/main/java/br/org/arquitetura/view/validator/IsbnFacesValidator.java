@@ -17,15 +17,15 @@ import br.org.arquitetura.view.utils.FacesMessageUtils;
 @FacesValidator(value = "isbnValidator")
 public class IsbnFacesValidator implements Validator {
 
-	@Override
-	public void validate(FacesContext context, UIComponent component, Object isbn) throws ValidatorException {
-		if (isbn == null) {
-			return;
-		}
-		
-		if (!VerificadorIsbn.isValido((String)isbn)) {
-			throw new ValidatorException(FacesMessageUtils.getInfoFacesMessage("livros.isbnValidator"));
-		}
-	}
+    @Override
+    public void validate(FacesContext context, UIComponent component, Object isbn) throws ValidatorException {
+        if (isbn == null) {
+            return;
+        }
+
+        if (!VerificadorIsbn.isValido((String) isbn)) {
+            throw new ValidatorException(FacesMessageUtils.getInfoFacesMessage("livros.isbnValidator"));
+        }
+    }
 
 }

@@ -11,10 +11,10 @@ import javax.persistence.PersistenceException;
  */
 public class EntidadeJaExisteExcecao extends RuntimeExcecao {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public EntidadeJaExisteExcecao(PersistenceException eeex) {
-		super(eeex);
-	}
+    public EntidadeJaExisteExcecao(PersistenceException eeex) {
+        super(eeex);
+    }
 
 }

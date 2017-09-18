@@ -3,49 +3,50 @@ package br.org.livraria.livro.dto;
 import br.org.arquitetura.dto.IDto;
 
 /**
- * DTO que representa a Entidade {@link br.org.livraria.livro.model.persistence.entity.Livro Livro}.
+ * DTO que representa a Entidade
+ * {@link br.org.livraria.livro.model.persistence.entity.Livro Livro}.
  * 
  */
 public class LivroDto implements IDto {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private int id;
+    private int id;
 
-	private String isbn;
+    private String isbn;
 
-	private String nome;
+    private String nome;
 
-	public LivroDto(){
-	}
-	
-	public LivroDto(String isbnLivro, String nomeLivro) {
-		setIsbn(isbnLivro);
-		setNome(nomeLivro);
-	}
+    public LivroDto() {
+    }
 
-	public int getId() {
-		return id;
-	}
+    public LivroDto(String isbnLivro, String nomeLivro) {
+        setIsbn(isbnLivro);
+        setNome(nomeLivro);
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public String getIsbn() {
-		return isbn;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setIsbn(String isbn) {
-		this.isbn = isbn;
-	}
+    public String getIsbn() {
+        return isbn;
+    }
 
-	public String getNome() {
-		return nome;
-	}
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
 }

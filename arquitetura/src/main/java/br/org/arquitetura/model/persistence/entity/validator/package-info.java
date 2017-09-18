@@ -1,5 +1,6 @@
 /**
- * Este pacote contém os Validadores de Entidades da camada Persistence da Arquitetura.
+ * Este pacote contém os Validadores de Entidades da camada Persistence da
+ * Arquitetura.
  * 
  * @since 0.0.1
  */

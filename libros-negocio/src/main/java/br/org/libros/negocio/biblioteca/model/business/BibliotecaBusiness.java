@@ -22,31 +22,32 @@ import br.org.libros.negocio.livrobiblioteca.model.persistence.entity.LivroBibli
 @RequestScoped
 public class BibliotecaBusiness extends AbstractBusiness<Biblioteca, Integer> {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Override
-	public Biblioteca atualizar(Biblioteca entidade) throws EntidadeJaExisteExcecao, EntidadeNaoEncontradaExcecao {
-			verificarExistenciaLivros(entidade);
-			return super.atualizar(entidade);
-	}
+    @Override
+    public Biblioteca atualizar(Biblioteca entidade) throws EntidadeJaExisteExcecao, EntidadeNaoEncontradaExcecao {
+        verificarExistenciaLivros(entidade);
+        return super.atualizar(entidade);
+    }
 
-	@Override
-	public Biblioteca adicionar(Biblioteca entidade) throws EntidadeJaExisteExcecao, EntidadeNaoEncontradaExcecao {
-			verificarExistenciaLivros(entidade);
-			return super.atualizar(entidade);
-	}
-	
-	private void verificarExistenciaLivros(Biblioteca entidade) throws EntidadeNaoEncontradaExcecao {
-		if (entidade.getLivros() != null) {
-			for (LivroBiblioteca livro : entidade.getLivros()) {
-				//TODO substituir endereço hardcoded por um service discovery
-				Client client = ClientBuilder.newClient();
-				Response response = client.target("http://localhost:8080/livraria/api/livros/" + livro.getId()).request(MediaType.APPLICATION_JSON).get();
-				if (Status.fromStatusCode(response.getStatus()) != Status.OK) {
-					throw new EntidadeNaoEncontradaExcecao();
-				}
-			}
-		}
-	}
-	
+    @Override
+    public Biblioteca adicionar(Biblioteca entidade) throws EntidadeJaExisteExcecao, EntidadeNaoEncontradaExcecao {
+        verificarExistenciaLivros(entidade);
+        return super.atualizar(entidade);
+    }
+
+    private void verificarExistenciaLivros(Biblioteca entidade) throws EntidadeNaoEncontradaExcecao {
+        if (entidade.getLivros() != null) {
+            for (LivroBiblioteca livro : entidade.getLivros()) {
+                // TODO substituir endereço hardcoded por um service discovery
+                Client client = ClientBuilder.newClient();
+                Response response = client.target("http://localhost:8080/livraria/api/livros/" + livro.getId())
+                        .request(MediaType.APPLICATION_JSON).get();
+                if (Status.fromStatusCode(response.getStatus()) != Status.OK) {
+                    throw new EntidadeNaoEncontradaExcecao();
+                }
+            }
+        }
+    }
+
 }

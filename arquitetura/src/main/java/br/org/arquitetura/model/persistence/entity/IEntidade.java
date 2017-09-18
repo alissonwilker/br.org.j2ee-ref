@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 
 public interface IEntidade extends Serializable {
 
-	public int getId();
+    public int getId();
 
-	public void setId(@NotNull @Max(Integer.MAX_VALUE) int id);
+    public void setId(@NotNull @Max(Integer.MAX_VALUE) int id);
 }

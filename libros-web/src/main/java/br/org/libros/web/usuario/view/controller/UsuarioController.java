@@ -21,58 +21,58 @@ import br.org.libros.negocio.usuario.dto.UsuarioDto;
 @RequestScoped
 public class UsuarioController extends AbstractController<UsuarioDto, Integer> {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@SuppressWarnings("unused")
-	private boolean autenticado;
+    @SuppressWarnings("unused")
+    private boolean autenticado;
 
-	public boolean isAutenticado() {
-		return JsfUtils.getRequest().getUserPrincipal() != null;
-	}
+    public boolean isAutenticado() {
+        return JsfUtils.getRequest().getUserPrincipal() != null;
+    }
 
-	public String getNomeUsuarioAutenticado() {
-		Principal principal = JsfUtils.getRequest().getUserPrincipal();
-		if (principal != null) {
-			return principal.getName();
-		}
-		return null;
-	}
+    public String getNomeUsuarioAutenticado() {
+        Principal principal = JsfUtils.getRequest().getUserPrincipal();
+        if (principal != null) {
+            return principal.getName();
+        }
+        return null;
+    }
 
-	public boolean isUserInRole(String... roles) {
-		boolean userIsInRole = false;
-		int i = 0;
-		while (i < roles.length && !userIsInRole) {
-			userIsInRole = JsfUtils.getRequest().isUserInRole(roles[i++]);
-		}
-		return userIsInRole;
-	}
+    public boolean isUserInRole(String... roles) {
+        boolean userIsInRole = false;
+        int i = 0;
+        while (i < roles.length && !userIsInRole) {
+            userIsInRole = JsfUtils.getRequest().isUserInRole(roles[i++]);
+        }
+        return userIsInRole;
+    }
 
-	public void redirecionarSeAutenticado() throws IOException {
-		if (isAutenticado()) {
-			JsfUtils.redirecionar(Pagina.app);
-		}
-	}
+    public void redirecionarSeAutenticado() throws IOException {
+        if (isAutenticado()) {
+            JsfUtils.redirecionar(Pagina.app);
+        }
+    }
 
-	public String login(String usuario, String senha) {
-		try {
-			JsfUtils.getRequest().login(usuario, senha);
-		} catch (ServletException e) {
-			FacesMessageUtils.addInfoFacesMessage("login.falhou");
-			return null;
-		}
+    public String login(String usuario, String senha) {
+        try {
+            JsfUtils.getRequest().login(usuario, senha);
+        } catch (ServletException e) {
+            FacesMessageUtils.addInfoFacesMessage("login.falhou");
+            return null;
+        }
 
-		return JsfUtils.getRedirecionamentoComMensagens(Pagina.app);
-	}
+        return JsfUtils.getRedirecionamentoComMensagens(Pagina.app);
+    }
 
-	public String logout() {
-		try {
-			JsfUtils.getRequest().logout();
-			return JsfUtils.getRedirecionamentoComMensagens(Pagina.login);
-		} catch (ServletException e) {
-			FacesMessageUtils.addInfoFacesMessage("logout.falhou");
-		}
+    public String logout() {
+        try {
+            JsfUtils.getRequest().logout();
+            return JsfUtils.getRedirecionamentoComMensagens(Pagina.login);
+        } catch (ServletException e) {
+            FacesMessageUtils.addInfoFacesMessage("logout.falhou");
+        }
 
-		return null;
-	}
+        return null;
+    }
 
 }

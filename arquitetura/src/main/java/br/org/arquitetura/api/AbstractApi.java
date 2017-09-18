@@ -28,33 +28,33 @@ import br.org.arquitetura.model.business.facade.IBusinessFacade;
 @Produces({ MediaType.APPLICATION_JSON })
 public abstract class AbstractApi<D extends IDto, PK extends Serializable> {
 
-	protected String apiPath;
+    protected String apiPath;
 
-	@Inject
-	protected IBusinessFacade<D, PK> businessFacade;
+    @Inject
+    protected IBusinessFacade<D, PK> businessFacade;
 
-	public Response adicionar(D dto) throws EntidadeJaExisteExcecao, EntidadeNaoEncontradaExcecao, URISyntaxException {
-		dto = businessFacade.adicionar(dto);
-		return Response.created(new URI(apiPath + "/" + dto.getId())).build();
-	}
+    public Response adicionar(D dto) throws EntidadeJaExisteExcecao, EntidadeNaoEncontradaExcecao, URISyntaxException {
+        dto = businessFacade.adicionar(dto);
+        return Response.created(new URI(apiPath + "/" + dto.getId())).build();
+    }
 
-	public Response listar() {
-		List<D> dtos = businessFacade.listar();
-		return Response.ok(dtos).build();
-	}
+    public Response listar() {
+        List<D> dtos = businessFacade.listar();
+        return Response.ok(dtos).build();
+    }
 
-	public Response remover(PK chavePrimaria) throws EntidadeNaoEncontradaExcecao {
-		businessFacade.remover(chavePrimaria);
-		return Response.ok().build();
-	}
+    public Response remover(PK chavePrimaria) throws EntidadeNaoEncontradaExcecao {
+        businessFacade.remover(chavePrimaria);
+        return Response.ok().build();
+    }
 
-	public Response atualizar(D dto) throws EntidadeNaoEncontradaExcecao, EntidadeJaExisteExcecao {
-		dto = businessFacade.atualizar(dto);
-		return Response.ok(dto).build();
-	}
+    public Response atualizar(D dto) throws EntidadeNaoEncontradaExcecao, EntidadeJaExisteExcecao {
+        dto = businessFacade.atualizar(dto);
+        return Response.ok(dto).build();
+    }
 
-	public Response recuperar(PK chavePrimaria) throws EntidadeNaoEncontradaExcecao {
-		D dto = businessFacade.recuperar(chavePrimaria);
-		return Response.ok(dto).build();
-	}
+    public Response recuperar(PK chavePrimaria) throws EntidadeNaoEncontradaExcecao {
+        D dto = businessFacade.recuperar(chavePrimaria);
+        return Response.ok(dto).build();
+    }
 }

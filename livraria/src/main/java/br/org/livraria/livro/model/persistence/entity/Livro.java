@@ -26,59 +26,59 @@ import br.org.arquitetura.model.persistence.entity.validator.annotation.Isbn;
 @EntityListeners(DefaultEntityListener.class)
 public class Livro implements IEntidade {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID", nullable = false, unique = true, length = 10)
-	@NotNull
-	@Max(Integer.MAX_VALUE)
-	private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", nullable = false, unique = true, length = 10)
+    @NotNull
+    @Max(Integer.MAX_VALUE)
+    private int id;
 
-	@Column(name = "ISBN", nullable = false, unique = true, length = 13)
-	@NotNull
-	@Isbn
-	private String isbn;
+    @Column(name = "ISBN", nullable = false, unique = true, length = 13)
+    @NotNull
+    @Isbn
+    private String isbn;
 
-	@Column(name = "NOME", length = 20, unique = false, nullable = false)
-	@NotNull
-	@Size(max = 20)
-	private String nome;
+    @Column(name = "NOME", length = 20, unique = false, nullable = false)
+    @NotNull
+    @Size(max = 20)
+    private String nome;
 
-	@Valid
-	public Livro() {
-	}
+    @Valid
+    public Livro() {
+    }
 
-	@Valid
-	public Livro(String isbn, String nome) {
-		setIsbn(isbn);
-		setNome(nome);
-	}
+    @Valid
+    public Livro(String isbn, String nome) {
+        setIsbn(isbn);
+        setNome(nome);
+    }
 
-	@Override
-	public int getId() {
-		return id;
-	}
+    @Override
+    public int getId() {
+        return id;
+    }
 
-	@Override
-	public void setId(int id) {
-		this.id = id;
-	}
+    @Override
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public String getIsbn() {
-		return isbn;
-	}
+    public String getIsbn() {
+        return isbn;
+    }
 
-	public void setIsbn(@NotNull @Isbn String isbn) {
-		this.isbn = isbn;
-	}
+    public void setIsbn(@NotNull @Isbn String isbn) {
+        this.isbn = isbn;
+    }
 
-	public String getNome() {
-		return nome;
-	}
+    public String getNome() {
+        return nome;
+    }
 
-	public void setNome(@NotNull @Size(max = 20) String nome) {
-		this.nome = nome;
-	}
+    public void setNome(@NotNull @Size(max = 20) String nome) {
+        this.nome = nome;
+    }
 
 }

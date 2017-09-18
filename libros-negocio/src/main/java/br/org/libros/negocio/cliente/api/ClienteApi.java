@@ -26,47 +26,49 @@ import io.swagger.annotations.ApiParam;
 @Api(ClienteApi.PATH)
 public class ClienteApi extends AbstractApi<ClienteDto, Integer> {
 
-	protected static final String PATH = "/clientes";
+    protected static final String PATH = "/clientes";
 
-	public ClienteApi() {
-		apiPath = PATH;
-	}
+    public ClienteApi() {
+        apiPath = PATH;
+    }
 
-	@Override
-	@POST
-	@ApiOperation(value = "Adicionar um cliente")
-	public Response adicionar(@ApiParam(value = "clienteDto") ClienteDto clienteDto) throws EntidadeJaExisteExcecao, EntidadeNaoEncontradaExcecao, URISyntaxException {
-		return super.adicionar(clienteDto);
-	}
+    @Override
+    @POST
+    @ApiOperation(value = "Adicionar um cliente")
+    public Response adicionar(@ApiParam(value = "clienteDto") ClienteDto clienteDto)
+            throws EntidadeJaExisteExcecao, EntidadeNaoEncontradaExcecao, URISyntaxException {
+        return super.adicionar(clienteDto);
+    }
 
-	@Override
-	@GET
-	@ApiOperation(value = "Recuperar os clientes", response = ClienteDto.class, responseContainer = "List")
-	public Response listar() {
-		return super.listar();
-	}
+    @Override
+    @GET
+    @ApiOperation(value = "Recuperar os clientes", response = ClienteDto.class, responseContainer = "List")
+    public Response listar() {
+        return super.listar();
+    }
 
-	@Override
-	@DELETE
-	@Path("/{idCliente}")
-	@ApiOperation(value = "Remover um cliente")
-	public Response remover(@PathParam("idCliente") Integer idCliente) throws EntidadeNaoEncontradaExcecao {
-		return super.remover(idCliente);
-	}
+    @Override
+    @DELETE
+    @Path("/{idCliente}")
+    @ApiOperation(value = "Remover um cliente")
+    public Response remover(@PathParam("idCliente") Integer idCliente) throws EntidadeNaoEncontradaExcecao {
+        return super.remover(idCliente);
+    }
 
-	@Override
-	@PUT
-	@ApiOperation(value = "Atualizar um cliente", response = ClienteDto.class)
-	public Response atualizar(@ApiParam(value = "clienteDto") ClienteDto clienteDto) throws EntidadeNaoEncontradaExcecao, EntidadeJaExisteExcecao {
-		return super.atualizar(clienteDto);
-	}
+    @Override
+    @PUT
+    @ApiOperation(value = "Atualizar um cliente", response = ClienteDto.class)
+    public Response atualizar(@ApiParam(value = "clienteDto") ClienteDto clienteDto)
+            throws EntidadeNaoEncontradaExcecao, EntidadeJaExisteExcecao {
+        return super.atualizar(clienteDto);
+    }
 
-	@Override
-	@GET
-	@Path("/{idCliente}")
-	@ApiOperation(value = "Recuperar um cliente", response = ClienteDto.class)
-	public Response recuperar(@PathParam("idCliente") Integer idCliente) throws EntidadeNaoEncontradaExcecao {
-		return super.recuperar(idCliente);
-	}
+    @Override
+    @GET
+    @Path("/{idCliente}")
+    @ApiOperation(value = "Recuperar um cliente", response = ClienteDto.class)
+    public Response recuperar(@PathParam("idCliente") Integer idCliente) throws EntidadeNaoEncontradaExcecao {
+        return super.recuperar(idCliente);
+    }
 
 }

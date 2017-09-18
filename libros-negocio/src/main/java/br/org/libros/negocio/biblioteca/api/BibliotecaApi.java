@@ -26,47 +26,49 @@ import io.swagger.annotations.ApiParam;
 @Api(BibliotecaApi.PATH)
 public class BibliotecaApi extends AbstractApi<BibliotecaDto, Integer> {
 
-	public static final String PATH = "/bibliotecas";
+    public static final String PATH = "/bibliotecas";
 
-	public BibliotecaApi() {
-		apiPath = PATH;
-	}
+    public BibliotecaApi() {
+        apiPath = PATH;
+    }
 
-	@Override
-	@POST
-	@ApiOperation(value = "Adicionar uma biblioteca")
-	public Response adicionar(@ApiParam(value = "bibliotecaDto") BibliotecaDto bibliotecaDto) throws EntidadeJaExisteExcecao, EntidadeNaoEncontradaExcecao, URISyntaxException {
-		return super.adicionar(bibliotecaDto);
-	}
+    @Override
+    @POST
+    @ApiOperation(value = "Adicionar uma biblioteca")
+    public Response adicionar(@ApiParam(value = "bibliotecaDto") BibliotecaDto bibliotecaDto)
+            throws EntidadeJaExisteExcecao, EntidadeNaoEncontradaExcecao, URISyntaxException {
+        return super.adicionar(bibliotecaDto);
+    }
 
-	@Override
-	@GET
-	@ApiOperation(value = "Recuperar as bibliotecas", response = BibliotecaDto.class, responseContainer = "List")
-	public Response listar() {
-		return super.listar();
-	}
+    @Override
+    @GET
+    @ApiOperation(value = "Recuperar as bibliotecas", response = BibliotecaDto.class, responseContainer = "List")
+    public Response listar() {
+        return super.listar();
+    }
 
-	@Override
-	@DELETE
-	@Path("/{idBiblioteca}")
-	@ApiOperation(value = "Remover uma biblioteca")
-	public Response remover(@PathParam("idBiblioteca") Integer idBiblioteca) throws EntidadeNaoEncontradaExcecao {
-		return super.remover(idBiblioteca);
-	}
+    @Override
+    @DELETE
+    @Path("/{idBiblioteca}")
+    @ApiOperation(value = "Remover uma biblioteca")
+    public Response remover(@PathParam("idBiblioteca") Integer idBiblioteca) throws EntidadeNaoEncontradaExcecao {
+        return super.remover(idBiblioteca);
+    }
 
-	@Override
-	@PUT
-	@ApiOperation(value = "Atualizar uma biblioteca", response = BibliotecaDto.class)
-	public Response atualizar(@ApiParam(value = "bibliotecaDto") BibliotecaDto bibliotecaDto) throws EntidadeNaoEncontradaExcecao, EntidadeJaExisteExcecao {
-		return super.atualizar(bibliotecaDto);
-	}
+    @Override
+    @PUT
+    @ApiOperation(value = "Atualizar uma biblioteca", response = BibliotecaDto.class)
+    public Response atualizar(@ApiParam(value = "bibliotecaDto") BibliotecaDto bibliotecaDto)
+            throws EntidadeNaoEncontradaExcecao, EntidadeJaExisteExcecao {
+        return super.atualizar(bibliotecaDto);
+    }
 
-	@Override
-	@GET
-	@Path("/{idBiblioteca}")
-	@ApiOperation(value = "Recuperar uma biblioteca", response = BibliotecaDto.class)
-	public Response recuperar(@PathParam("idBiblioteca") Integer idBiblioteca) throws EntidadeNaoEncontradaExcecao {
-		return super.recuperar(idBiblioteca);
-	}
+    @Override
+    @GET
+    @Path("/{idBiblioteca}")
+    @ApiOperation(value = "Recuperar uma biblioteca", response = BibliotecaDto.class)
+    public Response recuperar(@PathParam("idBiblioteca") Integer idBiblioteca) throws EntidadeNaoEncontradaExcecao {
+        return super.recuperar(idBiblioteca);
+    }
 
 }

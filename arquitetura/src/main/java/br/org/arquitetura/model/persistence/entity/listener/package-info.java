@@ -1,5 +1,6 @@
 /**
- * Este pacote contém tipos relacionados com Listeneres de entidades da camada Persistence.
+ * Este pacote contém tipos relacionados com Listeneres de entidades da camada
+ * Persistence.
  * 
  * @since 0.0.1
  */

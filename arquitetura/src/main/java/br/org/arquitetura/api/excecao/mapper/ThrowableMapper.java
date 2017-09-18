@@ -11,12 +11,12 @@ import org.slf4j.LoggerFactory;
 
 @Provider
 public class ThrowableMapper implements ExceptionMapper<Throwable> {
-	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
-	@Override
-	public Response toResponse(Throwable th) {
-		logger.error(th.getMessage(), th);
-		return Response.serverError().build();
-	}
+    @Override
+    public Response toResponse(Throwable th) {
+        logger.error(th.getMessage(), th);
+        return Response.serverError().build();
+    }
 
 }

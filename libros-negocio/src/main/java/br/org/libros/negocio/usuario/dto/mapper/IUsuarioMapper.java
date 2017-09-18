@@ -13,6 +13,6 @@ import br.org.libros.negocio.usuario.model.persistence.entity.Usuario;
  */
 @Mapper
 public interface IUsuarioMapper extends IGenericMapper<Usuario, UsuarioDto> {
-	IUsuarioMapper INSTANCE = Mappers.getMapper(IUsuarioMapper.class);
+    IUsuarioMapper INSTANCE = Mappers.getMapper(IUsuarioMapper.class);
 
 }

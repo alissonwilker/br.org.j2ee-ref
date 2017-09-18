@@ -20,68 +20,68 @@ import br.org.arquitetura.view.utils.FacesMessageUtils;
  */
 public abstract class AbstractController<D, PK extends Serializable> implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	
-	private List<D> entidades;
+    private static final long serialVersionUID = 1L;
 
-	protected IBusinessFacade<D, PK> businessFacade;
+    private List<D> entidades;
 
-	/**
-	 * Cadastra uma Entidade representada pelo DTO.
-	 * 
-	 * @param dto
-	 *            o DTO que representa a Entidade a ser adicionada.
-	 * @return <i>true</i> se a Entidade foi adicionada com sucesso.
-	 *         <i>false</i>, caso contrário.
-	 */
-	public boolean adicionar(D dto) {
-		try {
-			businessFacade.adicionar(dto);
-			adicionarMensagemSucesso();
-			return true;
-		} catch (EntidadeJaExisteExcecao e) {
-			FacesMessageUtils.addInfoFacesMessage("excecao.itemJaCadastrado");
-			return false;
-		}
-		catch (EntidadeNaoEncontradaExcecao e) {
-			FacesMessageUtils.addInfoFacesMessage("excecao.itemNaoEncontrado");
-			return false;
-		}
-	}
+    protected IBusinessFacade<D, PK> businessFacade;
 
-	/**
-	 * Remove uma Entidade representada pelo DTO.
-	 * 
-	 * @param dto
-	 *            o DTO que representa a Entidade a ser removida.
-	 */
-	public void remover(D dto) {
-		try {
-			businessFacade.remover(dto);
-			adicionarMensagemSucesso();
-		} catch (EntidadeNaoEncontradaExcecao e) {
-			adicionarMensagemItemNaoEncontrado();
-		}
-	}
+    /**
+     * Cadastra uma Entidade representada pelo DTO.
+     * 
+     * @param dto
+     *            o DTO que representa a Entidade a ser adicionada.
+     * @return <i>true</i> se a Entidade foi adicionada com sucesso. <i>false</i>,
+     *         caso contrário.
+     */
+    public boolean adicionar(D dto) {
+        try {
+            businessFacade.adicionar(dto);
+            adicionarMensagemSucesso();
+            return true;
+        } catch (EntidadeJaExisteExcecao e) {
+            FacesMessageUtils.addInfoFacesMessage("excecao.itemJaCadastrado");
+            return false;
+        } catch (EntidadeNaoEncontradaExcecao e) {
+            FacesMessageUtils.addInfoFacesMessage("excecao.itemNaoEncontrado");
+            return false;
+        }
+    }
 
-	/**
-	 * Carrega os registros de Entidade cadastrados na base de dados e armazena-os na propriedade 'entidades'.
-	 * 
-	 */
-	public void carregarEntidades() {
-		entidades = businessFacade.listar();
-	}
+    /**
+     * Remove uma Entidade representada pelo DTO.
+     * 
+     * @param dto
+     *            o DTO que representa a Entidade a ser removida.
+     */
+    public void remover(D dto) {
+        try {
+            businessFacade.remover(dto);
+            adicionarMensagemSucesso();
+        } catch (EntidadeNaoEncontradaExcecao e) {
+            adicionarMensagemItemNaoEncontrado();
+        }
+    }
 
-	private void adicionarMensagemItemNaoEncontrado() {
-		FacesMessageUtils.addInfoFacesMessage("excecao.itemNaoEncontrado");
-	}
+    /**
+     * Carrega os registros de Entidade cadastrados na base de dados e armazena-os
+     * na propriedade 'entidades'.
+     * 
+     */
+    public void carregarEntidades() {
+        entidades = businessFacade.listar();
+    }
 
-	private void adicionarMensagemSucesso() {
-		FacesMessageUtils.addInfoFacesMessage("app.sucesso");
-	}
+    private void adicionarMensagemItemNaoEncontrado() {
+        FacesMessageUtils.addInfoFacesMessage("excecao.itemNaoEncontrado");
+    }
 
-	public List<D> getEntidades() {
-		return entidades;
-	}
+    private void adicionarMensagemSucesso() {
+        FacesMessageUtils.addInfoFacesMessage("app.sucesso");
+    }
+
+    public List<D> getEntidades() {
+        return entidades;
+    }
 
 }

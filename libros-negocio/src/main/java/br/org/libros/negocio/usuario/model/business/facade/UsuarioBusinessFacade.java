@@ -19,10 +19,10 @@ import br.org.libros.negocio.usuario.model.persistence.entity.Usuario;
 @Transactional
 public class UsuarioBusinessFacade extends AbstractBusinessFacade<Usuario, UsuarioDto, Integer> {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@PostConstruct
-	public void init() {
-		mapper = IUsuarioMapper.INSTANCE;
-	}
+    @PostConstruct
+    public void init() {
+        mapper = IUsuarioMapper.INSTANCE;
+    }
 }

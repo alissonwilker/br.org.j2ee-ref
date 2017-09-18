@@ -13,6 +13,6 @@ import br.org.libros.negocio.usuario.model.persistence.entity.Usuario;
 @Named
 @RequestScoped
 public class UsuarioDao extends LibrosAbstractDao<Usuario, Integer> {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
 }

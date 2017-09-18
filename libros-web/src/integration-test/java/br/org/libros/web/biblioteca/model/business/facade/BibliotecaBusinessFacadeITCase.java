@@ -22,24 +22,24 @@ import br.org.libros.web.AbstractIntegrationTest;
  */
 @RunWith(Arquillian.class)
 public class BibliotecaBusinessFacadeITCase extends AbstractIntegrationTest {
-	@Inject
-	private BibliotecaBusinessFacade bibliotecaBusinessFacade;
+    @Inject
+    private BibliotecaBusinessFacade bibliotecaBusinessFacade;
 
-	/**
-	 * Test method for
-	 * {@link br.org.arquitetura.model.business.facade.AbstractBusinessFacade#adicionar(java.lang.Object)}.
-	 */
-	@Test
-	public void testAdicionar() {
-		BibliotecaDto bibliotecaDto = new BibliotecaDto("nome1");
-		BibliotecaDto bibliotecaDtoResposta;
-		try {
-			bibliotecaDtoResposta = bibliotecaBusinessFacade.adicionar(bibliotecaDto);
-			Assert.assertEquals(bibliotecaDto.getNome(), bibliotecaDtoResposta.getNome());
-			Assert.assertNotNull(bibliotecaDtoResposta.getId());
-		} catch (EntidadeJaExisteExcecao | EntidadeNaoEncontradaExcecao e) {
-			fail("Entidade já existe ou não foi encontrada.");
-		}
-	}
+    /**
+     * Test method for
+     * {@link br.org.arquitetura.model.business.facade.AbstractBusinessFacade#adicionar(java.lang.Object)}.
+     */
+    @Test
+    public void testAdicionar() {
+        BibliotecaDto bibliotecaDto = new BibliotecaDto("nome1");
+        BibliotecaDto bibliotecaDtoResposta;
+        try {
+            bibliotecaDtoResposta = bibliotecaBusinessFacade.adicionar(bibliotecaDto);
+            Assert.assertEquals(bibliotecaDto.getNome(), bibliotecaDtoResposta.getNome());
+            Assert.assertNotNull(bibliotecaDtoResposta.getId());
+        } catch (EntidadeJaExisteExcecao | EntidadeNaoEncontradaExcecao e) {
+            fail("Entidade já existe ou não foi encontrada.");
+        }
+    }
 
 }

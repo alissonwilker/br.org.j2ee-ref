@@ -9,9 +9,9 @@ import br.org.arquitetura.excecao.EntidadeNaoEncontradaExcecao;
 @Provider
 public class EntidadeNaoEncontradaMapper implements ExceptionMapper<EntidadeNaoEncontradaExcecao> {
 
-	@Override
-	public Response toResponse(EntidadeNaoEncontradaExcecao exception) {
-		return Response.status(Response.Status.NOT_FOUND).build();
-	}
+    @Override
+    public Response toResponse(EntidadeNaoEncontradaExcecao exception) {
+        return Response.status(Response.Status.NOT_FOUND).build();
+    }
 
 }

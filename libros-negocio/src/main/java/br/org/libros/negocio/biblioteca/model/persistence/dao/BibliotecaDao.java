@@ -13,6 +13,6 @@ import br.org.libros.negocio.comum.model.persistence.dao.LibrosAbstractDao;
 @Named
 @RequestScoped
 public class BibliotecaDao extends LibrosAbstractDao<Biblioteca, Integer> {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
 }

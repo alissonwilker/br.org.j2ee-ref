@@ -11,49 +11,50 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Classe com métodos utilitários para facilitar acesso a diversos recursos oferecidos pelo JSF, como FacesContext, Resource Bundle...
+ * Classe com métodos utilitários para facilitar acesso a diversos recursos
+ * oferecidos pelo JSF, como FacesContext, Resource Bundle...
  *
  */
 public class JsfUtils {
-	public enum Pagina {
-		app, login;
-	}
+    public enum Pagina {
+        app, login;
+    }
 
-	public static FacesContext getFacesContext() {
-		return FacesContext.getCurrentInstance();
-	}
+    public static FacesContext getFacesContext() {
+        return FacesContext.getCurrentInstance();
+    }
 
-	public static Application getApplication() {
-		return getFacesContext().getApplication();
-	}
+    public static Application getApplication() {
+        return getFacesContext().getApplication();
+    }
 
-	public static UIViewRoot getViewRoot() {
-		return getFacesContext().getViewRoot();
-	}
+    public static UIViewRoot getViewRoot() {
+        return getFacesContext().getViewRoot();
+    }
 
-	public static void setLocale(Locale locale) {
-		getViewRoot().setLocale(locale);
-	}
+    public static void setLocale(Locale locale) {
+        getViewRoot().setLocale(locale);
+    }
 
-	public static ResourceBundle getResourceBundle(String key) {
-		return getApplication().getResourceBundle(getFacesContext(), key);
-	}
+    public static ResourceBundle getResourceBundle(String key) {
+        return getApplication().getResourceBundle(getFacesContext(), key);
+    }
 
-	public static HttpServletRequest getRequest() {
-		return (HttpServletRequest) getExternalContext().getRequest();
-	}
+    public static HttpServletRequest getRequest() {
+        return (HttpServletRequest) getExternalContext().getRequest();
+    }
 
-	public static ExternalContext getExternalContext() {
-		return JsfUtils.getFacesContext().getExternalContext();
-	}
+    public static ExternalContext getExternalContext() {
+        return JsfUtils.getFacesContext().getExternalContext();
+    }
 
-	public static String getRedirecionamentoComMensagens(Pagina pagina) {
-		getExternalContext().getFlash().setKeepMessages(true);
-		return "/pages/" + pagina.name() + "?faces-redirect=true";
-	}
+    public static String getRedirecionamentoComMensagens(Pagina pagina) {
+        getExternalContext().getFlash().setKeepMessages(true);
+        return "/pages/" + pagina.name() + "?faces-redirect=true";
+    }
 
-	public static void redirecionar(Pagina pagina) throws IOException {
-		getExternalContext().redirect(pagina.name() + ".xhtml");
-	}
+    public static void redirecionar(Pagina pagina) throws IOException {
+        getExternalContext().redirect(pagina.name() + ".xhtml");
+    }
 
 }

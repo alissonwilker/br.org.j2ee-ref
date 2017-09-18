@@ -8,7 +8,8 @@ import java.lang.annotation.Target;
 import javax.inject.Qualifier;
 
 /**
- * Esta interface representa um classificador para um evento CDI de entidade removida.
+ * Esta interface representa um classificador para um evento CDI de entidade
+ * removida.
  *
  */
 @Qualifier

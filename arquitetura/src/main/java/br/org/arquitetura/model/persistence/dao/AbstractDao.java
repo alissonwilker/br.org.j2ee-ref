@@ -25,97 +25,97 @@ import br.org.arquitetura.excecao.EntidadeNaoEncontradaExcecao;
  */
 public abstract class AbstractDao<E, PK extends Serializable> implements IDao<E, PK>, Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	protected EntityManager entityManager;
-	private Class<?> domain;
+    protected EntityManager entityManager;
+    private Class<?> domain;
 
-	protected void setEntityManager(EntityManager entityManager) {
-		this.entityManager = entityManager;
-	}
+    protected void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 
-	private Class<?> getDomainClass() {
-		if (this.domain == null) {
-			this.domain = getGenericTypeArgument(this.getClass(), 0);
-		}
-		return this.domain;
-	}
+    private Class<?> getDomainClass() {
+        if (this.domain == null) {
+            this.domain = getGenericTypeArgument(this.getClass(), 0);
+        }
+        return this.domain;
+    }
 
-	@SuppressWarnings("unchecked")
-	private static <T> Class<T> getGenericTypeArgument(final Class<?> clazz, final int idx) {
-		final Type type = clazz.getGenericSuperclass();
-		ParameterizedType paramType;
-		try {
-			paramType = (ParameterizedType) type;
-		} catch (ClassCastException cause) {
-			paramType = (ParameterizedType) ((Class<T>) type).getGenericSuperclass();
-		}
-		return (Class<T>) paramType.getActualTypeArguments()[idx];
-	}
+    @SuppressWarnings("unchecked")
+    private static <T> Class<T> getGenericTypeArgument(final Class<?> clazz, final int idx) {
+        final Type type = clazz.getGenericSuperclass();
+        ParameterizedType paramType;
+        try {
+            paramType = (ParameterizedType) type;
+        } catch (ClassCastException cause) {
+            paramType = (ParameterizedType) ((Class<T>) type).getGenericSuperclass();
+        }
+        return (Class<T>) paramType.getActualTypeArguments()[idx];
+    }
 
-	@Override
-	public E adicionar(E entidade) throws EntidadeJaExisteExcecao {
-		try {
-			entityManager.persist(entidade);
-			return entidade;
-		} catch (PersistenceException eeex) {
-			if (eeex.getCause() instanceof ConstraintViolationException) {
-				throw new EntidadeJaExisteExcecao(eeex);
-			} else {
-				throw eeex;
-			}
-		}
-	}
+    @Override
+    public E adicionar(E entidade) throws EntidadeJaExisteExcecao {
+        try {
+            entityManager.persist(entidade);
+            return entidade;
+        } catch (PersistenceException eeex) {
+            if (eeex.getCause() instanceof ConstraintViolationException) {
+                throw new EntidadeJaExisteExcecao(eeex);
+            } else {
+                throw eeex;
+            }
+        }
+    }
 
-	@Override
-	public void remover(PK chavePrimaria) throws EntidadeNaoEncontradaExcecao {
-		E entidade = recuperar(chavePrimaria);
-		remover(entidade);
-	}
+    @Override
+    public void remover(PK chavePrimaria) throws EntidadeNaoEncontradaExcecao {
+        E entidade = recuperar(chavePrimaria);
+        remover(entidade);
+    }
 
-	@Override
-	public void remover(E entidade) throws EntidadeNaoEncontradaExcecao {
-		try {
-			entidade = entityManager.merge(entidade);
-			entityManager.remove(entidade);
-			entityManager.flush(); // requerido para mandar mensagem JMS pelo
-									// EntityListener da Entidade.
-		} catch (IllegalArgumentException iaex) {
-			throw new EntidadeNaoEncontradaExcecao(iaex);
-		}
-	}
+    @Override
+    public void remover(E entidade) throws EntidadeNaoEncontradaExcecao {
+        try {
+            entidade = entityManager.merge(entidade);
+            entityManager.remove(entidade);
+            entityManager.flush(); // requerido para mandar mensagem JMS pelo
+                                   // EntityListener da Entidade.
+        } catch (IllegalArgumentException iaex) {
+            throw new EntidadeNaoEncontradaExcecao(iaex);
+        }
+    }
 
-	@Override
-	public E atualizar(E entidade) throws EntidadeNaoEncontradaExcecao, EntidadeJaExisteExcecao {
-		try {
-			E entidadeAtualizada = entityManager.merge(entidade);
-			entityManager.flush();
-			return entidadeAtualizada;
-		} catch (IllegalArgumentException iaex) {
-			throw new EntidadeNaoEncontradaExcecao(iaex);
-		} catch (PersistenceException eeex) {
-			if (eeex.getCause() instanceof ConstraintViolationException) {
-				throw new EntidadeJaExisteExcecao(eeex);
-			} else {
-				throw eeex;
-			}
-		}
-	}
+    @Override
+    public E atualizar(E entidade) throws EntidadeNaoEncontradaExcecao, EntidadeJaExisteExcecao {
+        try {
+            E entidadeAtualizada = entityManager.merge(entidade);
+            entityManager.flush();
+            return entidadeAtualizada;
+        } catch (IllegalArgumentException iaex) {
+            throw new EntidadeNaoEncontradaExcecao(iaex);
+        } catch (PersistenceException eeex) {
+            if (eeex.getCause() instanceof ConstraintViolationException) {
+                throw new EntidadeJaExisteExcecao(eeex);
+            } else {
+                throw eeex;
+            }
+        }
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public E recuperar(PK chavePrimaria) throws EntidadeNaoEncontradaExcecao {
-		E entity = (E) entityManager.find(getDomainClass(), chavePrimaria);
-		if (entity == null) {
-			throw new EntidadeNaoEncontradaExcecao();
-		}
-		return entity;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public E recuperar(PK chavePrimaria) throws EntidadeNaoEncontradaExcecao {
+        E entity = (E) entityManager.find(getDomainClass(), chavePrimaria);
+        if (entity == null) {
+            throw new EntidadeNaoEncontradaExcecao();
+        }
+        return entity;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<E> listar() {
-		return entityManager.createQuery("from " + getDomainClass().getSimpleName()).getResultList();
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<E> listar() {
+        return entityManager.createQuery("from " + getDomainClass().getSimpleName()).getResultList();
+    }
 
 }

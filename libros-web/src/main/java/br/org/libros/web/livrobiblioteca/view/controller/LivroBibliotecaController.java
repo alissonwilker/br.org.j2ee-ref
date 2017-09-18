@@ -17,12 +17,12 @@ import br.org.libros.negocio.livrobiblioteca.dto.LivroBibliotecaDto;
 @ViewScoped
 public class LivroBibliotecaController extends AbstractController<LivroBibliotecaDto, Integer> {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@PostConstruct
-	@Inject
-	public void init(IBusinessFacade<LivroBibliotecaDto, Integer> businessFacade) {
-		this.businessFacade = businessFacade;
-	}
-	
+    @PostConstruct
+    @Inject
+    public void init(IBusinessFacade<LivroBibliotecaDto, Integer> businessFacade) {
+        this.businessFacade = businessFacade;
+    }
+
 }

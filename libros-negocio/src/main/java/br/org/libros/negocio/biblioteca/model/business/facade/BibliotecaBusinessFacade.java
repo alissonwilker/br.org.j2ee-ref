@@ -19,11 +19,11 @@ import br.org.libros.negocio.biblioteca.model.persistence.entity.Biblioteca;
 @Transactional
 public class BibliotecaBusinessFacade extends AbstractBusinessFacade<Biblioteca, BibliotecaDto, Integer> {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@PostConstruct
-	public void init() {
-		mapper = IBibliotecaMapper.INSTANCE;
-	}
+    @PostConstruct
+    public void init() {
+        mapper = IBibliotecaMapper.INSTANCE;
+    }
 
 }

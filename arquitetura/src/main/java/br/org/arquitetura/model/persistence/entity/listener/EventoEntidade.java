@@ -7,36 +7,36 @@ import java.io.Serializable;
  *
  */
 public class EventoEntidade implements Serializable {
-	private static final long serialVersionUID = 1L;
-	private Serializable payload;
-	private Tipo tipo;
+    private static final long serialVersionUID = 1L;
+    private Serializable payload;
+    private Tipo tipo;
 
-	public enum Tipo {
-		EntidadeAtualizada, EntidadePersistida, EntidadeRemovida
-	}
+    public enum Tipo {
+        EntidadeAtualizada, EntidadePersistida, EntidadeRemovida
+    }
 
-	public EventoEntidade() {
-	}
+    public EventoEntidade() {
+    }
 
-	public EventoEntidade(Tipo tipo, Serializable payload) {
-		setPayload(payload);
-		setTipo(tipo);
-	}
+    public EventoEntidade(Tipo tipo, Serializable payload) {
+        setPayload(payload);
+        setTipo(tipo);
+    }
 
-	public Serializable getPayload() {
-		return payload;
-	}
+    public Serializable getPayload() {
+        return payload;
+    }
 
-	public void setPayload(Serializable payload) {
-		this.payload = payload;
-	}
+    public void setPayload(Serializable payload) {
+        this.payload = payload;
+    }
 
-	public Tipo getTipo() {
-		return tipo;
-	}
+    public Tipo getTipo() {
+        return tipo;
+    }
 
-	public void setTipo(Tipo tipo) {
-		this.tipo = tipo;
-	}
+    public void setTipo(Tipo tipo) {
+        this.tipo = tipo;
+    }
 
 }

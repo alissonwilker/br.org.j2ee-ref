@@ -14,14 +14,14 @@ import br.org.libros.negocio.livrobiblioteca.model.persistence.entity.LivroBibli
 @Named
 @RequestScoped
 public class LivroBibliotecaDao extends LibrosAbstractDao<LivroBiblioteca, Integer> {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Override
-	public void remover(LivroBiblioteca entidade) throws EntidadeNaoEncontradaExcecao {
-		entityManager.createNativeQuery("delete from BIBLIOTECA_LIVROBIBLIOTECA where LIVROS_ID = :id")
-				.setParameter("id", entidade.getId()).executeUpdate();
-		entityManager.flush();
-		super.remover(entidade);
-	}
+    @Override
+    public void remover(LivroBiblioteca entidade) throws EntidadeNaoEncontradaExcecao {
+        entityManager.createNativeQuery("delete from BIBLIOTECA_LIVROBIBLIOTECA where LIVROS_ID = :id")
+                .setParameter("id", entidade.getId()).executeUpdate();
+        entityManager.flush();
+        super.remover(entidade);
+    }
 
 }

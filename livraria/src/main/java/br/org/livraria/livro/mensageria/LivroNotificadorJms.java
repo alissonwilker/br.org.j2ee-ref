@@ -16,17 +16,17 @@ import br.org.arquitetura.mensageria.AbstractNotificadorJms;
  */
 @Stateless
 public class LivroNotificadorJms extends AbstractNotificadorJms {
-	@Resource(mappedName = "java:/jms/queue/ExpiryQueue")
-	private Queue fila;
+    @Resource(mappedName = "java:/jms/queue/ExpiryQueue")
+    private Queue fila;
 
-	@Inject
-	@JMSConnectionFactory("java:jboss/DefaultJMSConnectionFactory")
-	private JMSContext contextoJms;
+    @Inject
+    @JMSConnectionFactory("java:jboss/DefaultJMSConnectionFactory")
+    private JMSContext contextoJms;
 
-	@PostConstruct
-	public void init() {
-		setFila(fila);
-		setContextoJms(contextoJms);
-	}
+    @PostConstruct
+    public void init() {
+        setFila(fila);
+        setContextoJms(contextoJms);
+    }
 
 }

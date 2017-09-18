@@ -30,57 +30,57 @@ import br.org.libros.negocio.livrobiblioteca.model.persistence.entity.LivroBibli
 @Table(name = "Biblioteca", uniqueConstraints = { @UniqueConstraint(columnNames = { "ID" }) })
 public class Biblioteca implements IEntidade {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID", nullable = false, unique = true, length = 10)
-	@NotNull
-	@Max(Integer.MAX_VALUE)
-	private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", nullable = false, unique = true, length = 10)
+    @NotNull
+    @Max(Integer.MAX_VALUE)
+    private int id;
 
-	@Column(name = "NOME", length = 20, unique = true, nullable = false)
-	@NotNull
-	@Size(max = 20)
-	private String nome;
+    @Column(name = "NOME", length = 20, unique = true, nullable = false)
+    @NotNull
+    @Size(max = 20)
+    private String nome;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@BatchSize(size = 10)
-	private List<LivroBiblioteca> livros;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @BatchSize(size = 10)
+    private List<LivroBiblioteca> livros;
 
-	@Valid
-	public Biblioteca() {
-	}
+    @Valid
+    public Biblioteca() {
+    }
 
-	@Valid
-	public Biblioteca(String nome) {
-		setNome(nome);
-	}
+    @Valid
+    public Biblioteca(String nome) {
+        setNome(nome);
+    }
 
-	@Override
-	public int getId() {
-		return id;
-	}
+    @Override
+    public int getId() {
+        return id;
+    }
 
-	@Override
-	public void setId(int id) {
-		this.id = id;
-	}
+    @Override
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public String getNome() {
-		return nome;
-	}
+    public String getNome() {
+        return nome;
+    }
 
-	public void setNome(@NotNull @Size(max = 20) String nome) {
-		this.nome = nome;
-	}
+    public void setNome(@NotNull @Size(max = 20) String nome) {
+        this.nome = nome;
+    }
 
-	public List<LivroBiblioteca> getLivros() {
-		return livros;
-	}
+    public List<LivroBiblioteca> getLivros() {
+        return livros;
+    }
 
-	public void setLivros(List<LivroBiblioteca> livros) {
-		this.livros = livros;
-	}
+    public void setLivros(List<LivroBiblioteca> livros) {
+        this.livros = livros;
+    }
 
 }

@@ -9,9 +9,9 @@ import br.org.arquitetura.excecao.EntidadeJaExisteExcecao;
 @Provider
 public class EntidadeJaExisteMapper implements ExceptionMapper<EntidadeJaExisteExcecao> {
 
-	@Override
-	public Response toResponse(EntidadeJaExisteExcecao exception) {
-		return Response.status(Response.Status.CONFLICT).build();
-	}
+    @Override
+    public Response toResponse(EntidadeJaExisteExcecao exception) {
+        return Response.status(Response.Status.CONFLICT).build();
+    }
 
 }

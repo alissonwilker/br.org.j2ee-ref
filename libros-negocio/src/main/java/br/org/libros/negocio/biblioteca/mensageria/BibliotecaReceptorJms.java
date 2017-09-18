@@ -21,25 +21,25 @@ import br.org.libros.negocio.livrobiblioteca.dto.LivroBibliotecaDto;
  * @see br.org.arquitetura.mensageria.AbstractReceptorJms
  */
 @MessageDriven(activationConfig = {
-		@ActivationConfigProperty(propertyName = "messageSelector", propertyValue = "tipoEvento='EntidadeRemovida'"),
-		@ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
-		@ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "java:/jms/queue/ExpiryQueue") })
+        @ActivationConfigProperty(propertyName = "messageSelector", propertyValue = "tipoEvento='EntidadeRemovida'"),
+        @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
+        @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "java:/jms/queue/ExpiryQueue") })
 public class BibliotecaReceptorJms extends AbstractReceptorJms {
-	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
-	@Inject
-	private IBusinessFacade<LivroBibliotecaDto, Integer> livroBibliotecaBusinessFacade;
+    @Inject
+    private IBusinessFacade<LivroBibliotecaDto, Integer> livroBibliotecaBusinessFacade;
 
-	@Override
-	public void onMessage(Message mensagem) {
-		try {
-			Integer chavePrimaria = mensagem.getBody(Integer.class);
-			logger.info("mensagem JMS recebida pelo módulo Biblioteca: " + chavePrimaria);
-			livroBibliotecaBusinessFacade.remover(chavePrimaria);
-		} catch (JMSException jmsExc) {
-			logger.error(jmsExc.getMessage(), jmsExc);
-		} catch (EntidadeNaoEncontradaExcecao eneExc) {
-			//comportamento normal, não há o que tratar
-		}
-	}
+    @Override
+    public void onMessage(Message mensagem) {
+        try {
+            Integer chavePrimaria = mensagem.getBody(Integer.class);
+            logger.info("mensagem JMS recebida pelo módulo Biblioteca: " + chavePrimaria);
+            livroBibliotecaBusinessFacade.remover(chavePrimaria);
+        } catch (JMSException jmsExc) {
+            logger.error(jmsExc.getMessage(), jmsExc);
+        } catch (EntidadeNaoEncontradaExcecao eneExc) {
+            // comportamento normal, não há o que tratar
+        }
+    }
 }

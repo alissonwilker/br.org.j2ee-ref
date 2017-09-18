@@ -10,18 +10,19 @@ import javax.persistence.PersistenceContextType;
 import br.org.arquitetura.model.persistence.dao.AbstractDao;
 
 /**
- * Classe abstrata que implementa comportamento padrão dos DAO's do módulo Livro.
+ * Classe abstrata que implementa comportamento padrão dos DAO's do módulo
+ * Livro.
  * 
  * @see br.org.arquitetura.model.persistence.dao.AbstractDao
  */
 public abstract class LivrariaAbstractDao<E, PK extends Serializable> extends AbstractDao<E, PK> {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@PersistenceContext(unitName = "LivrariaPersistenceUnit", type = PersistenceContextType.TRANSACTION)
-	protected EntityManager entityManager;
+    @PersistenceContext(unitName = "LivrariaPersistenceUnit", type = PersistenceContextType.TRANSACTION)
+    protected EntityManager entityManager;
 
-	@PostConstruct
-	public void init() {
-		setEntityManager(entityManager);
-	}
+    @PostConstruct
+    public void init() {
+        setEntityManager(entityManager);
+    }
 }

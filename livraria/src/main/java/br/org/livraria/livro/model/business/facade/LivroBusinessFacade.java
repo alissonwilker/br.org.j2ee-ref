@@ -19,10 +19,10 @@ import br.org.livraria.livro.model.persistence.entity.Livro;
 @Transactional
 public class LivroBusinessFacade extends AbstractBusinessFacade<Livro, LivroDto, Integer> {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@PostConstruct
-	public void init() {
-		mapper = ILivroMapper.INSTANCE;
-	}
+    @PostConstruct
+    public void init() {
+        mapper = ILivroMapper.INSTANCE;
+    }
 }

@@ -23,41 +23,41 @@ import br.org.arquitetura.model.business.IBusiness;
  * @see br.org.arquitetura.model.business.facade.IBusinessFacade
  */
 public abstract class AbstractBusinessFacade<E, D, PK extends Serializable> implements IBusinessFacade<D, PK> {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Inject
-	private IBusiness<E, PK> business;
+    @Inject
+    private IBusiness<E, PK> business;
 
-	protected IGenericMapper<E, D> mapper;
+    protected IGenericMapper<E, D> mapper;
 
-	@Override
-	public D adicionar(D dto) throws EntidadeJaExisteExcecao, EntidadeNaoEncontradaExcecao {
-		return mapper.converterParaDto(business.adicionar(mapper.converterParaEntidade(dto)));
-	}
+    @Override
+    public D adicionar(D dto) throws EntidadeJaExisteExcecao, EntidadeNaoEncontradaExcecao {
+        return mapper.converterParaDto(business.adicionar(mapper.converterParaEntidade(dto)));
+    }
 
-	@Override
-	public List<D> listar() {
-		return mapper.converterParaDtos(business.listar());
-	}
+    @Override
+    public List<D> listar() {
+        return mapper.converterParaDtos(business.listar());
+    }
 
-	@Override
-	public void remover(D dto) throws EntidadeNaoEncontradaExcecao {
-		business.remover(mapper.converterParaEntidade(dto));
-	}
+    @Override
+    public void remover(D dto) throws EntidadeNaoEncontradaExcecao {
+        business.remover(mapper.converterParaEntidade(dto));
+    }
 
-	@Override
-	public D atualizar(D dto) throws EntidadeNaoEncontradaExcecao, EntidadeJaExisteExcecao {
-		return mapper.converterParaDto(business.atualizar(mapper.converterParaEntidade(dto)));
-	}
+    @Override
+    public D atualizar(D dto) throws EntidadeNaoEncontradaExcecao, EntidadeJaExisteExcecao {
+        return mapper.converterParaDto(business.atualizar(mapper.converterParaEntidade(dto)));
+    }
 
-	@Override
-	public D recuperar(PK chavePrimaria) throws EntidadeNaoEncontradaExcecao {
-		return mapper.converterParaDto(business.recuperar(chavePrimaria));
-	}
+    @Override
+    public D recuperar(PK chavePrimaria) throws EntidadeNaoEncontradaExcecao {
+        return mapper.converterParaDto(business.recuperar(chavePrimaria));
+    }
 
-	@Override
-	public void remover(PK chavePrimaria) throws EntidadeNaoEncontradaExcecao {
-		business.remover(chavePrimaria);
-	}
+    @Override
+    public void remover(PK chavePrimaria) throws EntidadeNaoEncontradaExcecao {
+        business.remover(chavePrimaria);
+    }
 
 }

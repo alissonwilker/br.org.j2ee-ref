@@ -13,12 +13,12 @@ import br.org.arquitetura.utils.VerificadorIsbn;
  */
 public class IsbnBeanValidator implements ConstraintValidator<Isbn, String> {
 
-	@Override
-	public boolean isValid(String isbn, ConstraintValidatorContext constraintContext) {
-		return VerificadorIsbn.isValido(isbn);
-	}
+    @Override
+    public boolean isValid(String isbn, ConstraintValidatorContext constraintContext) {
+        return VerificadorIsbn.isValido(isbn);
+    }
 
-	@Override
-	public void initialize(Isbn constraintAnnotation) {
-	}
+    @Override
+    public void initialize(Isbn constraintAnnotation) {
+    }
 }

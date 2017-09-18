@@ -14,6 +14,6 @@ import br.org.libros.negocio.livrobiblioteca.dto.mapper.ILivroBibliotecaMapper;
  */
 @Mapper(uses = ILivroBibliotecaMapper.class)
 public interface IBibliotecaMapper extends IGenericMapper<Biblioteca, BibliotecaDto> {
-	IBibliotecaMapper INSTANCE = Mappers.getMapper(IBibliotecaMapper.class);
+    IBibliotecaMapper INSTANCE = Mappers.getMapper(IBibliotecaMapper.class);
 
 }
