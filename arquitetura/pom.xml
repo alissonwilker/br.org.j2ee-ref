@@ -13,6 +13,16 @@
 	</parent>
 
 	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<version>${maven-pmd.version}</version>
+				<configuration>
+					<excludeFromFailureFile>${project.basedir}/exclude-pmd.properties</excludeFromFailureFile>
+				</configuration>
+			</plugin>
+		</plugins>
 		<finalName>arquitetura</finalName>
 	</build>
 </project>

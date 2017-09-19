@@ -19,16 +19,17 @@ import br.org.arquitetura.excecao.EntidadeNaoEncontradaExcecao;
  * @see br.org.arquitetura.model.business.IBusiness
  */
 public interface IBusinessFacade<D, PK extends Serializable> extends Serializable {
-    public D adicionar(D dto) throws EntidadeJaExisteExcecao, EntidadeNaoEncontradaExcecao;
+    
+    D adicionar(D dto) throws EntidadeJaExisteExcecao, EntidadeNaoEncontradaExcecao;
 
-    public List<D> listar();
+    List<D> listar();
 
-    public void remover(D dto) throws EntidadeNaoEncontradaExcecao;
+    void remover(D dto) throws EntidadeNaoEncontradaExcecao;
 
-    public void remover(PK chavePrimaria) throws EntidadeNaoEncontradaExcecao;
+    void remover(PK chavePrimaria) throws EntidadeNaoEncontradaExcecao;
 
-    public D atualizar(D dto) throws EntidadeNaoEncontradaExcecao, EntidadeJaExisteExcecao;
+    D atualizar(D dto) throws EntidadeNaoEncontradaExcecao, EntidadeJaExisteExcecao;
 
-    public D recuperar(PK chavePrimaria) throws EntidadeNaoEncontradaExcecao;
+    D recuperar(PK chavePrimaria) throws EntidadeNaoEncontradaExcecao;
 
 }

@@ -25,14 +25,14 @@ public interface IDao<E, PK extends Serializable> {
      * @throws EntidadeJaExisteExcecao
      *             se a Entidade já existir na base.
      */
-    public E adicionar(E entidade) throws EntidadeJaExisteExcecao;
+    E adicionar(E entidade) throws EntidadeJaExisteExcecao;
 
     /**
      * Lista todos os registros da Entidade que existem na base da dados.
      * 
      * @return uma lista com os registros da Entidade.
      */
-    public List<E> listar();
+    List<E> listar();
 
     /**
      * Remove uma Entidade da base de dados.
@@ -42,7 +42,7 @@ public interface IDao<E, PK extends Serializable> {
      * @throws EntidadeNaoEncontradaExcecao
      *             se a Entidade não for encontrada para remoção.
      */
-    public void remover(E entidade) throws EntidadeNaoEncontradaExcecao;
+    void remover(E entidade) throws EntidadeNaoEncontradaExcecao;
 
     /**
      * Remove uma Entidade a partir da chave primária.
@@ -52,7 +52,7 @@ public interface IDao<E, PK extends Serializable> {
      * @throws EntidadeNaoEncontradaExcecao
      *             se a Entidade correspondente à chave primária não for encontrada.
      */
-    public void remover(PK chavePrimaria) throws EntidadeNaoEncontradaExcecao;
+    void remover(PK chavePrimaria) throws EntidadeNaoEncontradaExcecao;
 
     /**
      * Atualiza o registro de uma Entidade na base de dados.
@@ -65,7 +65,7 @@ public interface IDao<E, PK extends Serializable> {
      * @throws EntidadeJaExisteExcecao
      *             se ocorrer violação de constraint.
      */
-    public E atualizar(E entidade) throws EntidadeNaoEncontradaExcecao, EntidadeJaExisteExcecao;
+    E atualizar(E entidade) throws EntidadeNaoEncontradaExcecao, EntidadeJaExisteExcecao;
 
     /**
      * Recupera uma Entidade da base de dados a partir da chave primária.
@@ -76,6 +76,6 @@ public interface IDao<E, PK extends Serializable> {
      * @throws EntidadeNaoEncontradaExcecao
      *             se a Entidade não for encontrada na base.
      */
-    public E recuperar(PK chavePrimaria) throws EntidadeNaoEncontradaExcecao;
+    E recuperar(PK chavePrimaria) throws EntidadeNaoEncontradaExcecao;
 
 }

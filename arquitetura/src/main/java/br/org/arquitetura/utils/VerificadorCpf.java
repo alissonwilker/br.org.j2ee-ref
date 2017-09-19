@@ -19,8 +19,8 @@ public class VerificadorCpf {
         }
 
         try {
-            return (cpf.length() == 11 && !isCpfPadrao(cpf)
-                    && calcularDigitoVerificador(cpf.substring(0, 9)).equals(cpf.substring(9, 11)));
+            return cpf.length() == 11 && !isCpfPadrao(cpf)
+                    && calcularDigitoVerificador(cpf.substring(0, 9)).equals(cpf.substring(9, 11));
         } catch (NumberFormatException nfe) {
             return false;
         }

@@ -11,7 +11,6 @@ import javax.jms.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import br.org.arquitetura.excecao.EntidadeNaoEncontradaExcecao;
 import br.org.arquitetura.mensageria.AbstractReceptorJms;
 import br.org.arquitetura.model.business.facade.IBusinessFacade;
 import br.org.libros.negocio.livrobiblioteca.dto.LivroBibliotecaDto;
@@ -38,8 +37,6 @@ public class BibliotecaReceptorJms extends AbstractReceptorJms {
             livroBibliotecaBusinessFacade.remover(chavePrimaria);
         } catch (JMSException jmsExc) {
             logger.error(jmsExc.getMessage(), jmsExc);
-        } catch (EntidadeNaoEncontradaExcecao eneExc) {
-            // comportamento normal, não há o que tratar
         }
     }
 }

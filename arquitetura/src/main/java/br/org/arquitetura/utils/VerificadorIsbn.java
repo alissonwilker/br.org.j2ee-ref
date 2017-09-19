@@ -19,8 +19,8 @@ public class VerificadorIsbn {
         }
 
         try {
-            return (isbn.length() == 13 && (isbn.startsWith("978") || isbn.startsWith("979"))
-                    && calcularDigitoVerificador(isbn.substring(0, 12)).equals(isbn.substring(12, 13)));
+            return isbn.length() == 13 && (isbn.startsWith("978") || isbn.startsWith("979"))
+                    && calcularDigitoVerificador(isbn.substring(0, 12)).equals(isbn.substring(12, 13));
         } catch (NumberFormatException nfe) {
             return false;
         }
