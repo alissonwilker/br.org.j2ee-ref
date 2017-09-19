@@ -27,7 +27,7 @@ public abstract class AbstractDao<E, PK extends Serializable> implements IDao<E,
 
     private static final long serialVersionUID = 1L;
 
-    protected EntityManager entityManager;
+    private EntityManager entityManager;
     private Class<?> domain;
 
     protected void setEntityManager(EntityManager entityManager) {

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+	<Match>
+		<Class name="br.org.arquitetura.api.AbstractApi" />
+		<Field name="apiPath"/>
+		<Bug pattern="UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD"/>
+	</Match>
+	<Match>
+		<Class name="br.org.arquitetura.model.business.facade.AbstractBusinessFacade" />
+		<Field name="mapper"/>
+		<Bug pattern="UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD"/>
+	</Match>
+	<Match>
+		<Class name="br.org.arquitetura.view.controller.AbstractController" />
+		<Field name="businessFacade"/>
+		<Bug pattern="UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD"/>
+	</Match>
+	<Match>
+		<Class name="br.org.arquitetura.mensageria.AbstractNotificadorJms" />
+		<Field name="contextoJms"/>
+		<Bug pattern="UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR"/>
+	</Match>
+</FindBugsFilter>

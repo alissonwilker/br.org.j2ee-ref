@@ -155,27 +155,49 @@
 				</executions>
 			</plugin>
 			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>${maven-findbugs.version}</version>
+				<configuration>
+					<effort>Max</effort>
+					<threshold>Low</threshold>
+					<xmlOutput>true</xmlOutput>
+					<xmlOutputDirectory>${findbugs.outputdir}</xmlOutputDirectory>
+					<findbugsXmlOutputDirectory>${findbugs.outputdir}</findbugsXmlOutputDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-pmd-plugin</artifactId>
 				<version>${maven-pmd.version}</version>
+				<configuration>
+					<targetDirectory>${project.build.directory}/pmd</targetDirectory>
+					<linkXref>${linkXRef.enabled}</linkXref>
+					<sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
+					<minimumTokens>100</minimumTokens>
+					<targetJdk>${maven.compiler.source}</targetJdk>
+					<excludes>
+						<exclude>**/*Bean.java</exclude>
+						<exclude>**/generated/*.java</exclude>
+					</excludes>
+					<excludeRoots>
+						<excludeRoot>${project.basedir}/target/generated-sources</excludeRoot>
+					</excludeRoots>
+				</configuration>
 				<executions>
 					<execution>
-						<configuration>
-							<linkXref>${linkXRef.enabled}</linkXref>
-							<sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
-							<minimumTokens>100</minimumTokens>
-							<targetJdk>${maven.compiler.source}</targetJdk>
-							<excludes>
-								<exclude>**/*Bean.java</exclude>
-								<exclude>**/generated/*.java</exclude>
-							</excludes>
-							<excludeRoots>
-								<excludeRoot>${project.basedir}/target/generated-sources</excludeRoot>
-							</excludeRoots>
-						</configuration>
+						<id>pmd</id>
+						<phase>validate</phase>
 						<goals>
-							<goal>check</goal>
 							<goal>cpd-check</goal>
+							<goal>check</goal>
 						</goals>
 					</execution>
 				</executions>
@@ -189,6 +211,8 @@
 						<id>checkstyle</id>
 						<phase>validate</phase>
 						<configuration>
+							<outputFile>${checkstyle.outputdir}/checkstyle-result.xml</outputFile>
+							<cacheFile>${checkstyle.outputdir}/checkstyle-cachefile</cacheFile>
 							<configLocation>google_checks.xml</configLocation>
 							<encoding>${project.build.sourceEncoding}</encoding>
 							<consoleOutput>false</consoleOutput>
@@ -295,7 +319,10 @@
 		<project.webappdir>${project.basedir}/src/main/webapp</project.webappdir>
 		<project.apidocsdir>${project.webappdir}/api-docs</project.apidocsdir>
 		<project.javadocsdir>${project.webappdir}/${javadocsdir}</project.javadocsdir>
+		<checkstyle.outputdir>${project.build.directory}/checkstyle</checkstyle.outputdir>
+		<findbugs.outputdir>${project.build.directory}/findbugs</findbugs.outputdir>
 		<swagger.version>3.1.5</swagger.version>
+		<maven-findbugs.version>3.0.5</maven-findbugs.version>
 		<maven-checkstyle.version>2.17</maven-checkstyle.version>
 		<maven-pmd.version>3.8</maven-pmd.version>
 		<maven-jxr.version>2.5</maven-jxr.version>

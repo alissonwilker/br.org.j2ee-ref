@@ -32,7 +32,7 @@ public class IsbnConverter implements Converter {
          * torna-se 978-242342342-0.
          */
         String isbn = String.valueOf(value);
-        if (isbn != null && isbn.length() == 13)
+        if (isbn.length() == 13)
             isbn = isbn.substring(0, 3) + "-" + isbn.substring(3, 12) + "-" + isbn.charAt(12);
 
         return isbn;

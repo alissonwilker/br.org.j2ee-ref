@@ -36,13 +36,14 @@ public class LivroBibliotecaBusiness extends AbstractBusiness<LivroBiblioteca, I
         ObjectMapper jsonToObjectMapper = new ObjectMapper();
         List<LivroBiblioteca> livrosBibliotecas = null;
         try {
-            livrosBibliotecas = jsonToObjectMapper.readValue(jsonArrayResponse.toString(),
-                    new TypeReference<List<LivroBiblioteca>>() {
-                    });
+            livrosBibliotecas = jsonToObjectMapper.readValue(jsonArrayResponse.toString(), new ListaLivroBiblioteca());
         } catch (IOException e) {
             throw new RuntimeExcecao(e);
         }
         return livrosBibliotecas;
     }
 
+}
+
+class ListaLivroBiblioteca extends TypeReference<List<LivroBiblioteca>> {
 }

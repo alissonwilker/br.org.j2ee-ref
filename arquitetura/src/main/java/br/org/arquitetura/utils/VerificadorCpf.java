@@ -47,10 +47,10 @@ public class VerificadorCpf {
         for (int i = 0; i < num.length(); i++) {
             soma += Integer.parseInt(num.substring(i, i + 1)) * peso--;
         }
-        if (soma % 11 == 0 | soma % 11 == 1) {
-            primDig = new Integer(0);
+        if (soma % 11 == 0 || soma % 11 == 1) {
+            primDig = Integer.valueOf(0);
         } else {
-            primDig = new Integer(11 - (soma % 11));
+            primDig = Integer.valueOf(11 - (soma % 11));
         }
         soma = 0;
         peso = 11;
@@ -58,10 +58,10 @@ public class VerificadorCpf {
             soma += Integer.parseInt(num.substring(i, i + 1)) * peso--;
         }
         soma += primDig.intValue() * 2;
-        if (soma % 11 == 0 | soma % 11 == 1) {
-            segDig = new Integer(0);
+        if (soma % 11 == 0 || soma % 11 == 1) {
+            segDig = Integer.valueOf(0);
         } else {
-            segDig = new Integer(11 - (soma % 11));
+            segDig = Integer.valueOf(11 - (soma % 11));
         }
         return primDig.toString() + segDig.toString();
     }
