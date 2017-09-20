@@ -1,0 +1,6 @@
+/target/
+swagger.json
+*javadocs*
+.*
+!.gitignore
+MANIFEST.MF

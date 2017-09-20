@@ -4,7 +4,7 @@
 	<groupId>br.org</groupId>
 	<artifactId>j2ee-ref</artifactId>
 	<packaging>pom</packaging>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 
 	<modules>
 		<module>libros-negocio</module>
@@ -206,6 +206,18 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
 				<version>${maven-checkstyle.version}</version>
+				<dependencies>
+					<dependency>
+						<groupId>com.puppycrawl.tools</groupId>
+						<artifactId>checkstyle</artifactId>
+						<version>${checkstyle.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>br.org.j2ee-ref</groupId>
+						<artifactId>build-tools</artifactId>
+						<version>${build-tools.version}</version>
+					</dependency>
+				</dependencies>
 				<executions>
 					<execution>
 						<id>checkstyle</id>
@@ -213,7 +225,7 @@
 						<configuration>
 							<outputFile>${checkstyle.outputdir}/checkstyle-result.xml</outputFile>
 							<cacheFile>${checkstyle.outputdir}/checkstyle-cachefile</cacheFile>
-							<configLocation>google_checks.xml</configLocation>
+							<configLocation>checkstyle_custom_checks.xml</configLocation>
 							<encoding>${project.build.sourceEncoding}</encoding>
 							<consoleOutput>false</consoleOutput>
 							<failsOnError>true</failsOnError>
@@ -322,6 +334,8 @@
 		<checkstyle.outputdir>${project.build.directory}/checkstyle</checkstyle.outputdir>
 		<findbugs.outputdir>${project.build.directory}/findbugs</findbugs.outputdir>
 		<swagger.version>3.1.5</swagger.version>
+		<checkstyle.version>8.2</checkstyle.version>
+		<build-tools.version>0.0.2-SNAPSHOT</build-tools.version>
 		<maven-findbugs.version>3.0.5</maven-findbugs.version>
 		<maven-checkstyle.version>2.17</maven-checkstyle.version>
 		<maven-pmd.version>3.8</maven-pmd.version>
