@@ -227,6 +227,7 @@
 							<outputFile>${checkstyle.outputdir}/checkstyle-result.xml</outputFile>
 							<cacheFile>${checkstyle.outputdir}/checkstyle-cachefile</cacheFile>
 							<configLocation>checkstyle_custom_checks.xml</configLocation>
+          					<packageNamesLocation>checkstyle_packages.xml</packageNamesLocation>
 							<encoding>${project.build.sourceEncoding}</encoding>
 							<consoleOutput>false</consoleOutput>
 							<failsOnError>true</failsOnError>
