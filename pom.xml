@@ -1,12 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>br.org</groupId>
-	<artifactId>j2ee-ref</artifactId>
-	<packaging>pom</packaging>
+	<groupId>br.org.j2ee-ref</groupId>
+	<artifactId>j2ee-ref-parent</artifactId>
 	<version>0.0.2-SNAPSHOT</version>
+	<packaging>pom</packaging>
 
 	<modules>
+		<module>build-tools</module>
 		<module>libros-negocio</module>
 		<module>libros-web</module>
 		<module>arquitetura</module>
@@ -213,9 +214,9 @@
 						<version>${checkstyle.version}</version>
 					</dependency>
 					<dependency>
-						<groupId>br.org.j2ee-ref</groupId>
-						<artifactId>build-tools</artifactId>
-						<version>${build-tools.version}</version>
+						<groupId>${project.groupId}</groupId>
+						<artifactId>j2ee-ref-build-tools</artifactId>
+						<version>${project.version}</version>
 					</dependency>
 				</dependencies>
 				<executions>
@@ -335,7 +336,6 @@
 		<findbugs.outputdir>${project.build.directory}/findbugs</findbugs.outputdir>
 		<swagger.version>3.1.5</swagger.version>
 		<checkstyle.version>8.2</checkstyle.version>
-		<build-tools.version>0.0.2-SNAPSHOT</build-tools.version>
 		<maven-findbugs.version>3.0.5</maven-findbugs.version>
 		<maven-checkstyle.version>2.17</maven-checkstyle.version>
 		<maven-pmd.version>3.8</maven-pmd.version>

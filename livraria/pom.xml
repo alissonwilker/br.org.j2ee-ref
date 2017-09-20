@@ -1,22 +1,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>br.org.j2ee-ref</groupId>
-	<artifactId>livraria</artifactId>
+	<artifactId>j2ee-ref-livraria</artifactId>
 	<packaging>war</packaging>
-	<version>0.0.2-SNAPSHOT</version>
 
 	<parent>
-		<groupId>br.org</groupId>
-		<artifactId>j2ee-ref</artifactId>
+		<groupId>br.org.j2ee-ref</groupId>
+		<artifactId>j2ee-ref-parent</artifactId>
 		<version>0.0.2-SNAPSHOT</version>
 	</parent>
 
 	<dependencies>
 		<dependency>
-			<groupId>br.org.j2ee-ref</groupId>
-			<artifactId>arquitetura</artifactId>
-			<version>0.0.2-SNAPSHOT</version>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>j2ee-ref-arquitetura</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 
