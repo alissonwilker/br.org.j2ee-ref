@@ -154,77 +154,77 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>findbugs-maven-plugin</artifactId>
-				<version>${maven-findbugs.version}</version>
-				<configuration>
-					<effort>Max</effort>
-					<threshold>Low</threshold>
-					<xmlOutput>true</xmlOutput>
-					<xmlOutputDirectory>${findbugs.outputdir}</xmlOutputDirectory>
-					<findbugsXmlOutputDirectory>${findbugs.outputdir}</findbugsXmlOutputDirectory>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>check</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-pmd-plugin</artifactId>
-				<version>${maven-pmd.version}</version>
-				<configuration>
-					<targetDirectory>${project.build.directory}/pmd</targetDirectory>
-					<linkXref>${linkXRef.enabled}</linkXref>
-					<sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
-					<minimumTokens>100</minimumTokens>
-					<targetJdk>${maven.compiler.source}</targetJdk>
-					<excludes>
-						<exclude>**/*Bean.java</exclude>
-						<exclude>**/generated/*.java</exclude>
-					</excludes>
-					<excludeRoots>
-						<excludeRoot>${project.basedir}/target/generated-sources</excludeRoot>
-					</excludeRoots>
-				</configuration>
-				<executions>
-					<execution>
-						<id>pmd</id>
-						<phase>validate</phase>
-						<goals>
-							<goal>cpd-check</goal>
-							<goal>check</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>${maven-checkstyle.version}</version>
-				<executions>
-					<execution>
-						<id>checkstyle</id>
-						<phase>validate</phase>
-						<configuration>
-							<outputFile>${checkstyle.outputdir}/checkstyle-result.xml</outputFile>
-							<cacheFile>${checkstyle.outputdir}/checkstyle-cachefile</cacheFile>
-							<configLocation>google_checks.xml</configLocation>
-							<encoding>${project.build.sourceEncoding}</encoding>
-							<consoleOutput>false</consoleOutput>
-							<failsOnError>true</failsOnError>
-							<linkXRef>${linkXRef.enabled}</linkXRef>
-						</configuration>
-						<goals>
-							<goal>checkstyle</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+<!-- 			<plugin> -->
+<!-- 				<groupId>org.codehaus.mojo</groupId> -->
+<!-- 				<artifactId>findbugs-maven-plugin</artifactId> -->
+<!-- 				<version>${maven-findbugs.version}</version> -->
+<!-- 				<configuration> -->
+<!-- 					<effort>Max</effort> -->
+<!-- 					<threshold>Low</threshold> -->
+<!-- 					<xmlOutput>true</xmlOutput> -->
+<!-- 					<xmlOutputDirectory>${findbugs.outputdir}</xmlOutputDirectory> -->
+<!-- 					<findbugsXmlOutputDirectory>${findbugs.outputdir}</findbugsXmlOutputDirectory> -->
+<!-- 				</configuration> -->
+<!-- 				<executions> -->
+<!-- 					<execution> -->
+<!-- 						<goals> -->
+<!-- 							<goal>check</goal> -->
+<!-- 						</goals> -->
+<!-- 					</execution> -->
+<!-- 				</executions> -->
+<!-- 			</plugin> -->
+<!-- 			<plugin> -->
+<!-- 				<groupId>org.apache.maven.plugins</groupId> -->
+<!-- 				<artifactId>maven-pmd-plugin</artifactId> -->
+<!-- 				<version>${maven-pmd.version}</version> -->
+<!-- 				<configuration> -->
+<!-- 					<targetDirectory>${project.build.directory}/pmd</targetDirectory> -->
+<!-- 					<linkXref>${linkXRef.enabled}</linkXref> -->
+<!-- 					<sourceEncoding>${project.build.sourceEncoding}</sourceEncoding> -->
+<!-- 					<minimumTokens>100</minimumTokens> -->
+<!-- 					<targetJdk>${maven.compiler.source}</targetJdk> -->
+<!-- 					<excludes> -->
+<!-- 						<exclude>**/*Bean.java</exclude> -->
+<!-- 						<exclude>**/generated/*.java</exclude> -->
+<!-- 					</excludes> -->
+<!-- 					<excludeRoots> -->
+<!-- 						<excludeRoot>${project.basedir}/target/generated-sources</excludeRoot> -->
+<!-- 					</excludeRoots> -->
+<!-- 				</configuration> -->
+<!-- 				<executions> -->
+<!-- 					<execution> -->
+<!-- 						<id>pmd</id> -->
+<!-- 						<phase>validate</phase> -->
+<!-- 						<goals> -->
+<!-- 							<goal>cpd-check</goal> -->
+<!-- 							<goal>check</goal> -->
+<!-- 						</goals> -->
+<!-- 					</execution> -->
+<!-- 				</executions> -->
+<!-- 			</plugin> -->
+<!-- 			<plugin> -->
+<!-- 				<groupId>org.apache.maven.plugins</groupId> -->
+<!-- 				<artifactId>maven-checkstyle-plugin</artifactId> -->
+<!-- 				<version>${maven-checkstyle.version}</version> -->
+<!-- 				<executions> -->
+<!-- 					<execution> -->
+<!-- 						<id>checkstyle</id> -->
+<!-- 						<phase>validate</phase> -->
+<!-- 						<configuration> -->
+<!-- 							<outputFile>${checkstyle.outputdir}/checkstyle-result.xml</outputFile> -->
+<!-- 							<cacheFile>${checkstyle.outputdir}/checkstyle-cachefile</cacheFile> -->
+<!-- 							<configLocation>google_checks.xml</configLocation> -->
+<!-- 							<encoding>${project.build.sourceEncoding}</encoding> -->
+<!-- 							<consoleOutput>false</consoleOutput> -->
+<!-- 							<failsOnError>${failOnError.enabled}</failsOnError> -->
+<!-- 							<linkXRef>${linkXRef.enabled}</linkXRef> -->
+<!-- 						</configuration> -->
+<!-- 						<goals> -->
+<!-- 							<goal>checkstyle</goal> -->
+<!-- 						</goals> -->
+<!-- 					</execution> -->
+<!-- 				</executions> -->
+<!-- 			</plugin> -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
@@ -348,6 +348,7 @@
 		<wildfly.version>11.0.0.CR1</wildfly.version>
 		<wildfly-arquillian.version>2.1.0.Final</wildfly-arquillian.version>
 		<linkXRef.enabled>true</linkXRef.enabled>
+		<failOnError.enabled>true</failOnError.enabled>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>

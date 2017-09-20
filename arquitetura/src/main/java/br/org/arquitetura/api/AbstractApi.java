@@ -15,6 +15,7 @@ import br.org.arquitetura.dto.IDto;
 import br.org.arquitetura.excecao.EntidadeJaExisteExcecao;
 import br.org.arquitetura.excecao.EntidadeNaoEncontradaExcecao;
 import br.org.arquitetura.model.business.facade.IBusinessFacade;
+import br.org.arquitetura.model.persistence.dao.AbstractDao;
 
 /**
  * Classe abstrata que contém comportamento padrão de APIs do sistema.
@@ -34,6 +35,7 @@ public abstract class AbstractApi<D extends IDto, PK extends Serializable> {
     protected IBusinessFacade<D, PK> businessFacade;
 
     public Response adicionar(D dto) throws EntidadeJaExisteExcecao, EntidadeNaoEncontradaExcecao, URISyntaxException {
+        AbstractDao<Object, Serializable> teste;
         dto = businessFacade.adicionar(dto);
         return Response.created(new URI(apiPath + "/" + dto.getId())).build();
     }

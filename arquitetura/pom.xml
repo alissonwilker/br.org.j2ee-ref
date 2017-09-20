@@ -15,6 +15,26 @@
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>de.andrena.tools.macker</groupId>
+				<artifactId>macker-maven-plugin</artifactId>
+				<version>1.0.2</version>
+				<configuration>
+					<rule>${project.basedir}/macker-rules.xml</rule>
+<!-- 					<outputDirectory>${project.build.directory}/macker</outputDirectory> -->
+    			        <outputName>macker-out.xml</outputName>
+					<failOnError>true</failOnError>
+					<verbose>true</verbose>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>macker</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>findbugs-maven-plugin</artifactId>
 				<version>${maven-findbugs.version}</version>
