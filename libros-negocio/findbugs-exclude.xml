@@ -2,10 +2,13 @@
 <FindBugsFilter>
 	<Match>
 		<Class name="br.org.libros.negocio.biblioteca.api.BibliotecaApi" />
-		<Bug pattern="JAXRS_ENDPOINT"/>
+		<Bug pattern="JAXRS_ENDPOINT" />
 	</Match>
 	<Match>
 		<Class name="br.org.libros.negocio.cliente.api.ClienteApi" />
-		<Bug pattern="JAXRS_ENDPOINT"/>
+		<Bug pattern="JAXRS_ENDPOINT" />
+	</Match>
+	<Match>
+		<Source name="target" />
 	</Match>
 </FindBugsFilter>

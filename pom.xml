@@ -332,6 +332,30 @@
 				<artifactId>maven-dependency-plugin</artifactId>
 				<version>${maven-dependency.version}</version>
 			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco.version}</version>
+				<executions>
+					<execution>
+						<id>default-prepare-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>post-unit-test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+						<configuration>
+							<dataFile>${project.build.directory}/jacoco.exec</dataFile>
+							<outputDirectory>${project.build.directory}/jacoco</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
@@ -344,6 +368,7 @@
 		<findbugs.outputdir>${project.build.directory}/findbugs</findbugs.outputdir>
 		<swagger.version>3.1.5</swagger.version>
 		<checkstyle.version>8.2</checkstyle.version>
+		<jacoco.version>0.7.9</jacoco.version>
 		<findsecbugs.version>1.7.1</findsecbugs.version>
 		<maven-findbugs.version>3.0.5</maven-findbugs.version>
 		<maven-checkstyle.version>2.17</maven-checkstyle.version>

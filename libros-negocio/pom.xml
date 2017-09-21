@@ -29,7 +29,5 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		
-		<finalName>libros-negocio</finalName>
 	</build>
 </project>
