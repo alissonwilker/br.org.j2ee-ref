@@ -19,6 +19,17 @@
 	</dependencies>
 
 	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>${maven-findbugs.version}</version>
+				<configuration>
+					<excludeFilterFile>${project.basedir}/findbugs-exclude.xml</excludeFilterFile>
+				</configuration>
+			</plugin>
+		</plugins>
+		
 		<finalName>libros-negocio</finalName>
 	</build>
 </project>

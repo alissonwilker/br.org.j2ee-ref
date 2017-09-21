@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import br.org.arquitetura.excecao.EntidadeJaExisteExcecao;
 import br.org.arquitetura.excecao.EntidadeNaoEncontradaExcecao;
+import br.org.libros.negocio.comum.utils.LogSanitizer;
 import br.org.libros.negocio.usuario.dto.UsuarioDto;
 import br.org.libros.negocio.usuario.model.business.facade.UsuarioBusinessFacade;
 
@@ -42,7 +43,7 @@ public class AppStartupConfigurator {
                     .adicionar(new UsuarioDto("admin", "21232f297a57a5a743894a0e4a801fc3", "ADMINISTRATOR"));
             usuarioBusinessFacade.adicionar(new UsuarioDto("user", "ee11cbb19052e40b07aac0ca060c23ee", "USER"));
         } catch (EntidadeJaExisteExcecao | EntidadeNaoEncontradaExcecao e) {
-            logger.error(e.getMessage(), e);
+            logger.error(LogSanitizer.sanitize(e.getMessage()), e);
         }
     }
 

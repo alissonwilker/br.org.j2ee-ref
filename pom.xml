@@ -165,6 +165,13 @@
 					<xmlOutput>true</xmlOutput>
 					<xmlOutputDirectory>${findbugs.outputdir}</xmlOutputDirectory>
 					<findbugsXmlOutputDirectory>${findbugs.outputdir}</findbugsXmlOutputDirectory>
+					<plugins>
+						<plugin>
+							<groupId>com.h3xstream.findsecbugs</groupId>
+							<artifactId>findsecbugs-plugin</artifactId>
+							<version>${findsecbugs.version}</version>
+						</plugin>
+					</plugins>
 				</configuration>
 				<executions>
 					<execution>
@@ -227,7 +234,7 @@
 							<outputFile>${checkstyle.outputdir}/checkstyle-result.xml</outputFile>
 							<cacheFile>${checkstyle.outputdir}/checkstyle-cachefile</cacheFile>
 							<configLocation>checkstyle_custom_checks.xml</configLocation>
-          					<packageNamesLocation>checkstyle_packages.xml</packageNamesLocation>
+							<packageNamesLocation>checkstyle_packages.xml</packageNamesLocation>
 							<encoding>${project.build.sourceEncoding}</encoding>
 							<consoleOutput>false</consoleOutput>
 							<failsOnError>true</failsOnError>
@@ -337,6 +344,7 @@
 		<findbugs.outputdir>${project.build.directory}/findbugs</findbugs.outputdir>
 		<swagger.version>3.1.5</swagger.version>
 		<checkstyle.version>8.2</checkstyle.version>
+		<findsecbugs.version>1.7.1</findsecbugs.version>
 		<maven-findbugs.version>3.0.5</maven-findbugs.version>
 		<maven-checkstyle.version>2.17</maven-checkstyle.version>
 		<maven-pmd.version>3.8</maven-pmd.version>

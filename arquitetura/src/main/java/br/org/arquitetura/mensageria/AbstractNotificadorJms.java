@@ -11,10 +11,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import br.org.arquitetura.model.persistence.entity.listener.EventoEntidade;
+import br.org.arquitetura.model.persistence.entity.listener.EventoEntidade.Tipo;
 import br.org.arquitetura.model.persistence.entity.listener.IEntidadeAtualizada;
 import br.org.arquitetura.model.persistence.entity.listener.IEntidadePersistida;
 import br.org.arquitetura.model.persistence.entity.listener.IEntidadeRemovida;
-import br.org.arquitetura.model.persistence.entity.listener.EventoEntidade.Tipo;
+import br.org.arquitetura.utils.LogSanitizer;
 
 /**
  * Classe abstrata responsável por enviar notificações de eventos através de
@@ -60,6 +61,6 @@ public abstract class AbstractNotificadorJms {
      */
     protected void enviarMensagemJms(Tipo tipo, Serializable payloadDoEvento) {
         contextoJms.createProducer().setProperty("tipoEvento", tipo.name()).send(fila, payloadDoEvento);
-        logger.info("mensagem JMS enviada: " + payloadDoEvento);
+        logger.info("mensagem JMS enviada: " + LogSanitizer.sanitize((String)payloadDoEvento));
     }
 }

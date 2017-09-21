@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+	<Match>
+		<Class name="br.org.libros.negocio.biblioteca.api.BibliotecaApi" />
+		<Bug pattern="JAXRS_ENDPOINT"/>
+	</Match>
+	<Match>
+		<Class name="br.org.libros.negocio.cliente.api.ClienteApi" />
+		<Bug pattern="JAXRS_ENDPOINT"/>
+	</Match>
+</FindBugsFilter>

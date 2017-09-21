@@ -30,7 +30,7 @@
 	<module name="TreeWalker">
 		<!-- Checks personalizados -->
 		<module name="MethodLimit">
-			<property name="severity" value="${checkstyle.MethodLimit.severity}" default="error" />
+			<property name="severity" value="${checkstyle.MethodLimit.severity}" default="warning" />
 			<property name="max" value="${checkstyle.MethodLimit.max}" default="2" />
 		</module>
 
