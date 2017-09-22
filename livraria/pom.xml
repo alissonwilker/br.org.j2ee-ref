@@ -16,6 +16,27 @@
 			<artifactId>j2ee-ref-arquitetura</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-jaxrs</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct-jdk8</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -23,7 +44,6 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>findbugs-maven-plugin</artifactId>
-				<version>${maven-findbugs.version}</version>
 				<configuration>
 					<excludeFilterFile>${project.basedir}/findbugs-exclude.xml</excludeFilterFile>
 				</configuration>
@@ -31,30 +51,17 @@
 			<plugin>
 				<groupId>com.github.kongchen</groupId>
 				<artifactId>swagger-maven-plugin</artifactId>
-				<version>${swagger.version}</version>
 				<configuration>
 					<apiSources>
 						<apiSource>
 							<locations>br.org.livraria.livro.api</locations>
 							<info>
 								<title>API's do Livraria</title>
-								<version>${project.version}</version>
 							</info>
 							<host>${ambiente.testes}</host>
-							<basePath>/api</basePath>
-							<schemes>http</schemes>
-							<swaggerDirectory>${project.apidocsdir}</swaggerDirectory>
 						</apiSource>
 					</apiSources>
 				</configuration>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>

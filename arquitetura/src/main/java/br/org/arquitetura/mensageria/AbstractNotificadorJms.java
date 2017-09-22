@@ -60,7 +60,9 @@ public abstract class AbstractNotificadorJms {
      *            conteúdo do evento que será enviado na mensagem JMS.
      */
     protected void enviarMensagemJms(Tipo tipo, Serializable payloadDoEvento) {
-        contextoJms.createProducer().setProperty("tipoEvento", tipo.name()).send(fila, payloadDoEvento);
-        logger.info("mensagem JMS enviada: " + LogSanitizer.sanitize((String)payloadDoEvento));
+        if (tipo != null && payloadDoEvento != null) {
+            contextoJms.createProducer().setProperty("tipoEvento", tipo.name()).send(fila, payloadDoEvento);
+            logger.info("mensagem JMS enviada: " + LogSanitizer.sanitize(payloadDoEvento.toString()));
+        }
     }
 }
