@@ -6,7 +6,7 @@
 	<version>0.0.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<!-- definição dos submódulos do projeto -->
+	<!-- definicao dos submodulos do projeto -->
 	<modules>
 		<module>build-tools</module>
 		<module>libros-negocio</module>
@@ -22,7 +22,7 @@
 		<!-- <url>scm:https://git.pje.csjt.jus.br/pje2/pje-arquiteturabase</url> -->
 	</scm>
 
-	<!-- definição das versões das dependências -->
+	<!-- definicao das versoes das dependencias -->
 	<dependencyManagement>
 		<dependencies>
 			<!-- https://mvnrepository.com/artifact/org.jboss.arquillian/arquillian-bom -->
@@ -129,7 +129,7 @@
 	</dependencyManagement>
 
 	<build>
-		<!-- definição das versões dos plugins -->
+		<!-- definicao das versoes dos plugins -->
 		<pluginManagement>
 			<plugins>
 				<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-jxr-plugin -->
@@ -445,7 +445,7 @@
 			</plugins>
 		</pluginManagement>
 
-		<!-- configuração dos recursos do projeto -->
+		<!-- configuracao dos recursos do projeto -->
 		<resources>
 			<resource>
 				<directory>${project.resourcesdir}</directory>
@@ -514,7 +514,7 @@
 		<findbugs.outputdir>${project.build.directory}/findbugs</findbugs.outputdir>
 		<linkXRef.enabled>true</linkXRef.enabled>
 
-		<!-- versões das dependências -->
+		<!-- versoes das dependencias -->
 		<checkstyle.version>8.2</checkstyle.version>
 		<shrinkwrap-resolver.version>3.0.0-beta-2</shrinkwrap-resolver.version>
 		<mapstruct.version>1.1.0.Final</mapstruct.version>
@@ -531,7 +531,7 @@
 		<wildfly-arquillian.version>2.1.0.Final</wildfly-arquillian.version>
 		<wildfly.version>11.0.0.CR1</wildfly.version>
 
-		<!-- versões dos plugins -->
+		<!-- versoes dos plugins -->
 		<maven-release.version>2.5.3</maven-release.version>
 		<maven-resources.version>3.0.2</maven-resources.version>
 		<maven-jacoco.version>0.7.9</maven-jacoco.version>
