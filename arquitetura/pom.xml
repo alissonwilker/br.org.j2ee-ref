@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>br.org.j2ee-ref</groupId>
 		<artifactId>j2ee-ref-parent</artifactId>
-		<version>0.0.3-SNAPSHOT</version>
+		<version>0.0.3</version>
 	</parent>
 
 	<dependencies>
