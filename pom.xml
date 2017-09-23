@@ -15,6 +15,13 @@
 		<module>livraria</module>
 	</modules>
 
+	<scm>
+		<!-- <connection>scm:git:ssh://github.com/alissonwilker/br.org.j2ee-ref.git</connection> -->
+		<developerConnection>scm:git:ssh://github.com/alissonwilker/br.org.j2ee-ref.git</developerConnection>
+		<!-- <tag>head</tag> -->
+		<!-- <url>scm:https://git.pje.csjt.jus.br/pje2/pje-arquiteturabase</url> -->
+	</scm>
+
 	<!-- definição das versões das dependências -->
 	<dependencyManagement>
 		<dependencies>
@@ -429,6 +436,12 @@
 						<encoding>${project.resourcesEncoding}</encoding>
 					</configuration>
 				</plugin>
+				<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-release-plugin -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>${maven-release.version}</version>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 
@@ -489,7 +502,7 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		
+
 		<!-- propriedades do projeto -->
 		<javadocsdir>javadocs</javadocsdir>
 		<project.webappdir>${project.basedir}/src/main/webapp</project.webappdir>
@@ -500,7 +513,7 @@
 		<checkstyle.outputdir>${project.build.directory}/checkstyle</checkstyle.outputdir>
 		<findbugs.outputdir>${project.build.directory}/findbugs</findbugs.outputdir>
 		<linkXRef.enabled>true</linkXRef.enabled>
-		
+
 		<!-- versões das dependências -->
 		<checkstyle.version>8.2</checkstyle.version>
 		<shrinkwrap-resolver.version>3.0.0-beta-2</shrinkwrap-resolver.version>
@@ -517,8 +530,9 @@
 		<rest-assured.version>3.0.3</rest-assured.version>
 		<wildfly-arquillian.version>2.1.0.Final</wildfly-arquillian.version>
 		<wildfly.version>11.0.0.CR1</wildfly.version>
-		
+
 		<!-- versões dos plugins -->
+		<maven-release.version>2.5.3</maven-release.version>
 		<maven-resources.version>3.0.2</maven-resources.version>
 		<maven-jacoco.version>0.7.9</maven-jacoco.version>
 		<maven-findsecbugs.version>1.7.1</maven-findsecbugs.version>
