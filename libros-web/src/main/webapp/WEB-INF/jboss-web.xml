@@ -3,6 +3,6 @@
 	PUBLIC "-//JBoss//DTD JBOSS 5.0//EN"
 	"http://www.jboss.org/j2ee/dtd/jboss-web_5_0.dtd">
 <jboss-web>
-	<context-root>libros</context-root>
 	<security-domain>LibrosSecurityDomain</security-domain>
+	<context-root>libros</context-root>
 </jboss-web>
