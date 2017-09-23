@@ -8,11 +8,11 @@
 
 	<!-- definicao dos submodulos do projeto -->
 	<modules>
-		<module>build-tools</module>
-		<module>libros-negocio</module>
-		<module>libros-web</module>
-		<module>arquitetura</module>
-		<module>livraria</module>
+		<module>j2ee-ref-build-tools</module>
+		<module>j2ee-ref-libros-negocio</module>
+		<module>j2ee-ref-libros-web</module>
+		<module>j2ee-ref-arquitetura</module>
+		<module>j2ee-ref-livraria</module>
 	</modules>
 
 	<!-- URL do projeto -->
