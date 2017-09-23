@@ -6,6 +6,7 @@
 	<version>0.0.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
+	<!-- definição dos submódulos do projeto -->
 	<modules>
 		<module>build-tools</module>
 		<module>libros-negocio</module>
@@ -14,6 +15,7 @@
 		<module>livraria</module>
 	</modules>
 
+	<!-- definição das versões das dependências -->
 	<dependencyManagement>
 		<dependencies>
 			<!-- https://mvnrepository.com/artifact/org.jboss.arquillian/arquillian-bom -->
@@ -120,6 +122,7 @@
 	</dependencyManagement>
 
 	<build>
+		<!-- definição das versões dos plugins -->
 		<pluginManagement>
 			<plugins>
 				<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-jxr-plugin -->
@@ -385,30 +388,6 @@
 						</execution>
 					</executions>
 				</plugin>
-				<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-war-plugin -->
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-war-plugin</artifactId>
-					<version>${maven-war.version}</version>
-					<configuration>
-						<webResources>
-							<resource>
-								<directory>${project.webappdir}</directory>
-								<excludes>
-									<exclude>**/*.filtered</exclude>
-								</excludes>
-								<filtering>false</filtering>
-							</resource>
-							<resource>
-								<directory>${project.webappdir}</directory>
-								<includes>
-									<include>**/*.filtered</include>
-								</includes>
-								<filtering>true</filtering>
-							</resource>
-						</webResources>
-					</configuration>
-				</plugin>
 				<!-- https://mvnrepository.com/artifact/com.github.kongchen/swagger-maven-plugin -->
 				<plugin>
 					<groupId>com.github.kongchen</groupId>
@@ -441,9 +420,37 @@
 					<artifactId>maven-surefire-plugin</artifactId>
 					<version>${maven-surefire.version}</version>
 				</plugin>
+				<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-resources-plugin -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>${maven-resources.version}</version>
+					<configuration>
+						<encoding>${project.resourcesEncoding}</encoding>
+					</configuration>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 
+		<!-- configuração dos recursos do projeto -->
+		<resources>
+			<resource>
+				<directory>${project.resourcesdir}</directory>
+				<excludes>
+					<exclude>**/*.properties</exclude>
+				</excludes>
+				<filtering>false</filtering>
+			</resource>
+			<resource>
+				<directory>${project.resourcesdir}</directory>
+				<includes>
+					<include>**/*.properties</include>
+				</includes>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+
+		<!-- plugins executados a cada build do projeto -->
 		<plugins>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -477,19 +484,24 @@
 	</build>
 
 	<properties>
+		<!-- propriedades default do Maven -->
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
+		
+		<!-- propriedades do projeto -->
 		<javadocsdir>javadocs</javadocsdir>
 		<project.webappdir>${project.basedir}/src/main/webapp</project.webappdir>
 		<project.apidocsdir>${project.webappdir}/api-docs</project.apidocsdir>
 		<project.javadocsdir>${project.webappdir}/${javadocsdir}</project.javadocsdir>
+		<project.resourcesdir>${project.basedir}/src/main/resources</project.resourcesdir>
+		<project.resourcesEncoding>ISO-8859-1</project.resourcesEncoding>
 		<checkstyle.outputdir>${project.build.directory}/checkstyle</checkstyle.outputdir>
 		<findbugs.outputdir>${project.build.directory}/findbugs</findbugs.outputdir>
 		<linkXRef.enabled>true</linkXRef.enabled>
-
+		
+		<!-- versões das dependências -->
 		<checkstyle.version>8.2</checkstyle.version>
 		<shrinkwrap-resolver.version>3.0.0-beta-2</shrinkwrap-resolver.version>
 		<mapstruct.version>1.1.0.Final</mapstruct.version>
@@ -505,7 +517,9 @@
 		<rest-assured.version>3.0.3</rest-assured.version>
 		<wildfly-arquillian.version>2.1.0.Final</wildfly-arquillian.version>
 		<wildfly.version>11.0.0.CR1</wildfly.version>
-
+		
+		<!-- versões dos plugins -->
+		<maven-resources.version>3.0.2</maven-resources.version>
 		<maven-jacoco.version>0.7.9</maven-jacoco.version>
 		<maven-findsecbugs.version>1.7.1</maven-findsecbugs.version>
 		<maven-swagger.version>3.1.5</maven-swagger.version>
