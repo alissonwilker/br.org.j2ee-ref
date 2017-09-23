@@ -15,19 +15,42 @@
 		<module>livraria</module>
 	</modules>
 
+	<!-- URL do projeto -->
+	<url>${repository.url}/${project.repositorySiteDir}</url>
+
 	<!-- configuracao do SCM para release -->
 	<scm>
-		<developerConnection>scm:git:git@github.com:alissonwilker/br.org.j2ee-ref.git</developerConnection>
+		<url>${project.scmUrl}</url>
+		<developerConnection>scm:git:git@${scm.domain}:${project.scmContext}.git</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
 
 	<!-- configuracao do repositorio de distribuicao de artefatos -->
 	<distributionManagement>
+		<downloadUrl>${repository.url}/${repository.releasesDir}</downloadUrl>
+		<site>
+			<id>${repository.domain}</id>
+			<url>${repository.uploadUrl}/${project.repositorySiteDir}</url>
+		</site>
 		<repository>
-			<id>alissonwilker.000webhostapp.com</id>
-			<url>ftp://files.000webhost.com/public_html</url>
+			<id>${repository.domain}</id>
+			<url>${repository.uploadUrl}/${repository.releasesDir}</url>
 		</repository>
 	</distributionManagement>
+
+	<!-- link para o gerenciador de pendencias do projeto -->
+	<issueManagement>
+		<system>GitHub Issue Tracker</system>
+		<url>${project.scmUrl}/issues</url>
+	</issueManagement>
+
+	<!-- licenca de software do projeto -->
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>https://opensource.org/licenses/MIT</url>
+		</license>
+	</licenses>
 
 	<!-- definicao das versoes das dependencias -->
 	<dependencyManagement>
@@ -522,11 +545,21 @@
 
 		<!-- propriedades do projeto -->
 		<javadocsdir>javadocs</javadocsdir>
+		<scm.domain>github.com</scm.domain>
+		<scm.url>https://${scm.domain}</scm.url>
+		<repository.domain>alissonwilker.000webhostapp.com</repository.domain>
+		<repository.url>http://${repository.domain}</repository.url>
+		<repository.uploadUrl>ftp://files.000webhost.com/public_html</repository.uploadUrl>
 		<project.webappdir>${project.basedir}/src/main/webapp</project.webappdir>
 		<project.apidocsdir>${project.webappdir}/api-docs</project.apidocsdir>
 		<project.javadocsdir>${project.webappdir}/${javadocsdir}</project.javadocsdir>
 		<project.resourcesdir>${project.basedir}/src/main/resources</project.resourcesdir>
 		<project.resourcesEncoding>ISO-8859-1</project.resourcesEncoding>
+		<project.scmNamespace>alissonwilker</project.scmNamespace>
+		<project.scmContext>${project.scmNamespace}/${project.groupId}</project.scmContext>
+		<project.scmUrl>${scm.url}/${project.scmContext}</project.scmUrl>
+		<repository.releasesDir>releases</repository.releasesDir>
+		<project.repositorySiteDir>site/${project.groupId}</project.repositorySiteDir>
 		<checkstyle.outputdir>${project.build.directory}/checkstyle</checkstyle.outputdir>
 		<findbugs.outputdir>${project.build.directory}/findbugs</findbugs.outputdir>
 		<linkXRef.enabled>true</linkXRef.enabled>
