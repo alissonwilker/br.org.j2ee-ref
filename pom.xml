@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>br.org.j2ee-ref</groupId>
 	<artifactId>j2ee-ref-parent</artifactId>
-	<version>0.0.3</version>
+	<version>0.0.4-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<!-- definicao dos submodulos do projeto -->
@@ -24,7 +24,7 @@
 		<!-- <tag>head</tag> -->
 		<!-- <url>scm:https://git.pje.csjt.jus.br/pje2/pje-arquiteturabase</url> -->
 <!-- 		<tag>j2ee-ref-parent-0.0.2</tag> -->
-	  <tag>j2ee-ref-parent-0.0.3</tag>
+	  <tag>HEAD</tag>
   </scm>
 
 	<!-- definicao das versoes das dependencias -->
