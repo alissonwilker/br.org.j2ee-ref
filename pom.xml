@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>br.org.j2ee-ref</groupId>
 	<artifactId>j2ee-ref-parent</artifactId>
@@ -14,18 +15,11 @@
 		<module>livraria</module>
 	</modules>
 
+	<!-- configuracao do SCM para release -->
 	<scm>
-<!-- 		<url>https://github.com/alissonwilker/br.org.j2ee-ref</url> -->
-<!-- 		<connection>scm:git:git@github.com:alissonwilker/br.org.j2ee-ref.git</connection> -->
 		<developerConnection>scm:git:git@github.com:alissonwilker/br.org.j2ee-ref.git</developerConnection>
-		
-				<!-- <connection>scm:git:ssh://github.com/alissonwilker/br.org.j2ee-ref.git</connection> -->
-<!-- 		<developerConnection>scm:git:ssh://github.com/alissonwilker/br.org.j2ee-ref.git</developerConnection> -->
-		<!-- <tag>head</tag> -->
-		<!-- <url>scm:https://git.pje.csjt.jus.br/pje2/pje-arquiteturabase</url> -->
-<!-- 		<tag>j2ee-ref-parent-0.0.2</tag> -->
-	  <tag>HEAD</tag>
-  </scm>
+		<tag>HEAD</tag>
+	</scm>
 
 	<!-- definicao das versoes das dependencias -->
 	<dependencyManagement>
