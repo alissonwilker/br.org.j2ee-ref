@@ -21,6 +21,14 @@
 		<tag>HEAD</tag>
 	</scm>
 
+	<!-- configuracao do repositorio de distribuicao de artefatos -->
+	<distributionManagement>
+		<repository>
+			<id>alissonwilker.000webhostapp.com</id>
+			<url>ftp://files.000webhost.com/public_html</url>
+		</repository>
+	</distributionManagement>
+
 	<!-- definicao das versoes das dependencias -->
 	<dependencyManagement>
 		<dependencies>
@@ -444,6 +452,16 @@
 			</plugins>
 		</pluginManagement>
 
+		<!-- extensoes necessarias para o build do projeto -->
+		<extensions>
+			<!-- https://mvnrepository.com/artifact/org.apache.maven.wagon/wagon-ftp -->
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ftp</artifactId>
+				<version>${maven-wagon.version}</version>
+			</extension>
+		</extensions>
+
 		<!-- configuracao dos recursos do projeto -->
 		<resources>
 			<resource>
@@ -531,6 +549,7 @@
 		<wildfly.version>11.0.0.CR1</wildfly.version>
 
 		<!-- versoes dos plugins -->
+		<maven-wagon.version>3.0.0</maven-wagon.version>
 		<maven-release.version>2.5.3</maven-release.version>
 		<maven-resources.version>3.0.2</maven-resources.version>
 		<maven-jacoco.version>0.7.9</maven-jacoco.version>
