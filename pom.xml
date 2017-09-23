@@ -1,9 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>br.org.j2ee-ref</groupId>
 	<artifactId>j2ee-ref-parent</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.2</version>
 	<packaging>pom</packaging>
 
 	<!-- definicao dos submodulos do projeto -->
@@ -20,7 +19,8 @@
 		<developerConnection>scm:git:ssh://github.com/alissonwilker/br.org.j2ee-ref.git</developerConnection>
 		<!-- <tag>head</tag> -->
 		<!-- <url>scm:https://git.pje.csjt.jus.br/pje2/pje-arquiteturabase</url> -->
-	</scm>
+	  <tag>j2ee-ref-parent-0.0.2</tag>
+  </scm>
 
 	<!-- definicao das versoes das dependencias -->
 	<dependencyManagement>
