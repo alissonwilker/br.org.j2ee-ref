@@ -52,7 +52,7 @@
 		</license>
 	</licenses>
 
-	<!-- definicao das versoes das dependencias -->
+	<!-- definicao das versoes e escopo das dependencias -->
 	<dependencyManagement>
 		<dependencies>
 			<!-- https://mvnrepository.com/artifact/org.jboss.arquillian/arquillian-bom -->
@@ -133,6 +133,13 @@
 				<version>${hibernate.version}</version>
 				<scope>provided</scope>
 			</dependency>
+			<!-- https://mvnrepository.com/artifact/com.puppycrawl.tools/checkstyle -->
+			<dependency>
+				<groupId>com.puppycrawl.tools</groupId>
+				<artifactId>checkstyle</artifactId>
+				<version>${checkstyle.version}</version>
+				<scope>provided</scope>
+			</dependency>
 
 			<!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
 			<dependency>
@@ -162,6 +169,12 @@
 		<!-- definicao das versoes dos plugins -->
 		<pluginManagement>
 			<plugins>
+				<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-project-info-reports-plugin -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-project-info-reports-plugin</artifactId>
+					<version>${maven-project-info-reports.version}</version>
+				</plugin>
 				<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-jxr-plugin -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -249,11 +262,6 @@
 							<groupId>com.puppycrawl.tools</groupId>
 							<artifactId>checkstyle</artifactId>
 							<version>${checkstyle.version}</version>
-						</dependency>
-						<dependency>
-							<groupId>${project.groupId}</groupId>
-							<artifactId>j2ee-ref-build-tools</artifactId>
-							<version>${project.version}</version>
 						</dependency>
 					</dependencies>
 					<executions>
@@ -592,6 +600,7 @@
 		<maven-findbugs.version>3.0.5</maven-findbugs.version>
 		<maven-checkstyle.version>2.17</maven-checkstyle.version>
 		<maven-pmd.version>3.8</maven-pmd.version>
+		<maven-project-info-reports.version>2.9</maven-project-info-reports.version>
 		<maven-jxr.version>2.5</maven-jxr.version>
 		<maven-clean.version>3.0.0</maven-clean.version>
 		<maven-javadoc.version>3.0.0-M1</maven-javadoc.version>
