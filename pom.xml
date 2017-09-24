@@ -559,7 +559,8 @@
 		<project.scmContext>${project.scmNamespace}/${project.groupId}</project.scmContext>
 		<project.scmUrl>${scm.url}/${project.scmContext}</project.scmUrl>
 		<repository.releasesDir>releases</repository.releasesDir>
-		<project.repositorySiteDir>site/${project.groupId}</project.repositorySiteDir>
+		<repository.sitesDir>sites</repository.sitesDir>
+		<project.repositorySiteDir>${repository.sitesDir}/${project.groupId}</project.repositorySiteDir>
 		<checkstyle.outputdir>${project.build.directory}/checkstyle</checkstyle.outputdir>
 		<findbugs.outputdir>${project.build.directory}/findbugs</findbugs.outputdir>
 		<linkXRef.enabled>true</linkXRef.enabled>
