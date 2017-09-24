@@ -25,7 +25,7 @@ public class BibliotecaApiITCase extends AbstractIntegrationTest {
 
     /**
      * Test method for
-     * {@link br.org.libros.negocio.biblioteca.api.BibliotecaApi#adicionar(java.lang.String)}
+     * {@link br.org.libros.negocio.biblioteca.api.BibliotecaApi#adicionar(BibliotecaDto)}
      * and {@link br.org.libros.negocio.biblioteca.api.BibliotecaApi#listar()}.
      */
     @Test

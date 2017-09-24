@@ -2,6 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>j2ee-ref-libros-negocio</artifactId>
 	<packaging>jar</packaging>
+	<name>${project.artifactId}</name>
 
 	<parent>
 		<groupId>br.org.j2ee-ref</groupId>
