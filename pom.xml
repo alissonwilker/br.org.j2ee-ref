@@ -37,6 +37,10 @@
 			<id>${repository.domain}</id>
 			<url>${repository.uploadUrl}/${repository.releasesDir}</url>
 		</repository>
+		<snapshotRepository>
+			<id>${repository.domain}</id>
+			<url>${repository.uploadUrl}/${repository.snapshotsDir}</url>
+		</snapshotRepository>
 	</distributionManagement>
 
 	<!-- link para o gerenciador de pendencias do projeto -->
@@ -612,6 +616,7 @@
 		<project.scmContext>${project.scmNamespace}/${project.groupId}</project.scmContext>
 		<project.scmUrl>${scm.url}/${project.scmContext}</project.scmUrl>
 		<repository.releasesDir>releases</repository.releasesDir>
+		<repository.snapshotsDir>snapshots</repository.snapshotsDir>
 		<repository.sitesDir>sites</repository.sitesDir>
 		<project.repositorySiteDir>${repository.sitesDir}/${project.groupId}</project.repositorySiteDir>
 		<checkstyle.outputdir>${project.build.directory}/checkstyle</checkstyle.outputdir>
