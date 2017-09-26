@@ -15,6 +15,7 @@ import br.org.libros.negocio.biblioteca.model.persistence.entity.Biblioteca;
 import br.org.libros.negocio.livrobiblioteca.model.persistence.entity.LivroBiblioteca;
 
 /**
+ * Componente de negócio da Biblioteca.
  * 
  * @see br.org.arquitetura.model.business.AbstractBusiness
  */

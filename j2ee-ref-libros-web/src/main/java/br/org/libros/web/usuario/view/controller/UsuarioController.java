@@ -14,6 +14,7 @@ import br.org.arquitetura.view.utils.JsfUtils.Pagina;
 import br.org.libros.negocio.usuario.dto.UsuarioDto;
 
 /**
+ * Controller de Usuario.
  * 
  * @see br.org.arquitetura.view.controller.AbstractController
  */

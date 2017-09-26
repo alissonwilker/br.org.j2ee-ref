@@ -11,6 +11,7 @@ import br.org.libros.negocio.usuario.dto.mapper.IUsuarioMapper;
 import br.org.libros.negocio.usuario.model.persistence.entity.Usuario;
 
 /**
+ * Fachada de Usuario.
  * 
  * @see br.org.arquitetura.model.business.facade.AbstractBusinessFacade
  */

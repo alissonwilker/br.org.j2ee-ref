@@ -11,6 +11,7 @@ import br.org.libros.negocio.biblioteca.dto.mapper.IBibliotecaMapper;
 import br.org.libros.negocio.biblioteca.model.persistence.entity.Biblioteca;
 
 /**
+ * Fachada da Biblioteca.
  * 
  * @see br.org.arquitetura.model.business.facade.AbstractBusinessFacade
  */

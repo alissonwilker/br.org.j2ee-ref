@@ -18,6 +18,7 @@ import br.org.arquitetura.model.business.AbstractBusiness;
 import br.org.libros.negocio.livrobiblioteca.model.persistence.entity.LivroBiblioteca;
 
 /**
+ * Componente de negócio de LivroBiblioteca.
  * 
  * @see br.org.arquitetura.model.business.AbstractBusiness
  */
@@ -32,11 +33,12 @@ public class LivroBibliotecaBusiness extends AbstractBusiness<LivroBiblioteca, I
         // TODO substituir endereço hardcoded por um service discovery
         Client client = ClientBuilder.newClient();
         JsonArray jsonArrayResponse = client.target("http://localhost:8080/livraria/api/livros/")
-                .request(MediaType.APPLICATION_JSON).get(JsonArray.class);
+                        .request(MediaType.APPLICATION_JSON).get(JsonArray.class);
         ObjectMapper jsonToObjectMapper = new ObjectMapper();
         List<LivroBiblioteca> livrosBibliotecas = null;
         try {
-            livrosBibliotecas = jsonToObjectMapper.readValue(jsonArrayResponse.toString(), new ListaLivroBiblioteca());
+            livrosBibliotecas = jsonToObjectMapper.readValue(jsonArrayResponse.toString(),
+                            new TypeReference<List<LivroBiblioteca>>() { });
         } catch (IOException e) {
             throw new RuntimeExcecao(e);
         }
@@ -45,5 +47,5 @@ public class LivroBibliotecaBusiness extends AbstractBusiness<LivroBiblioteca, I
 
 }
 
-class ListaLivroBiblioteca extends TypeReference<List<LivroBiblioteca>> {
-}
+//class ListaLivroBiblioteca extends TypeReference<List<LivroBiblioteca>> {
+//}

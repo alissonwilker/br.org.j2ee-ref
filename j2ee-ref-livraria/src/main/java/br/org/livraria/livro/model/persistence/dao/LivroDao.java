@@ -7,6 +7,7 @@ import br.org.livraria.comum.model.persistence.dao.LivrariaAbstractDao;
 import br.org.livraria.livro.model.persistence.entity.Livro;
 
 /**
+ * DAO de Livro.
  * 
  * @see br.org.livraria.comum.model.persistence.dao.LivrariaAbstractDao
  */

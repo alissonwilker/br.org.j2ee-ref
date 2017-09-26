@@ -7,6 +7,7 @@ import br.org.arquitetura.model.business.AbstractBusiness;
 import br.org.libros.negocio.cliente.model.persistence.entity.Cliente;
 
 /**
+ * Componente de negócio de Cliente.
  * 
  * @see br.org.arquitetura.model.business.AbstractBusiness
  */

@@ -11,6 +11,7 @@ import javax.jms.Queue;
 import br.org.arquitetura.mensageria.AbstractNotificadorJms;
 
 /**
+ * Notificador de mensagens JMS de Livro.
  * 
  * @see br.org.arquitetura.mensageria.AbstractNotificadorJms
  */

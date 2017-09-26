@@ -11,6 +11,7 @@ import br.org.livraria.livro.dto.mapper.ILivroMapper;
 import br.org.livraria.livro.model.persistence.entity.Livro;
 
 /**
+ * Fachada de Livro.
  * 
  * @see br.org.arquitetura.model.business.facade.AbstractBusinessFacade
  */

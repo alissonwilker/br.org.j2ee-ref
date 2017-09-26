@@ -8,6 +8,7 @@ import br.org.libros.negocio.cliente.dto.ClienteDto;
 import br.org.libros.negocio.cliente.model.persistence.entity.Cliente;
 
 /**
+ * Mapper para converter entidade de Cliente em DTO e vice-versa.
  * 
  * @see br.org.arquitetura.dto.mapper.IGenericMapper
  */

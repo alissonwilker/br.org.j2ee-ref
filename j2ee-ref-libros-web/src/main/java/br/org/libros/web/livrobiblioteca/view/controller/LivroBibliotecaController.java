@@ -10,6 +10,7 @@ import br.org.arquitetura.view.controller.AbstractController;
 import br.org.libros.negocio.livrobiblioteca.dto.LivroBibliotecaDto;
 
 /**
+ * Controller de LivroBiblioteca.
  * 
  * @see br.org.arquitetura.view.controller.AbstractController
  */

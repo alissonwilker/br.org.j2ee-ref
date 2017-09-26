@@ -19,6 +19,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 /**
+ * API de Cliente.
  * 
  * @see br.org.arquitetura.api.AbstractApi
  */

@@ -7,6 +7,7 @@ import br.org.libros.negocio.biblioteca.model.persistence.entity.Biblioteca;
 import br.org.libros.negocio.comum.model.persistence.dao.LibrosAbstractDao;
 
 /**
+ * DAO da Biblioteca.
  * 
  * @see br.org.libros.negocio.comum.model.persistence.dao.LibrosAbstractDao
  */

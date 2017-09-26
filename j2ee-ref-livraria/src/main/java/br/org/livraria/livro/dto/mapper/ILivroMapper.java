@@ -8,6 +8,7 @@ import br.org.livraria.livro.dto.LivroDto;
 import br.org.livraria.livro.model.persistence.entity.Livro;
 
 /**
+ * Mapper para converter entidade de Livro em DTO e vice-versa.
  * 
  * @see br.org.arquitetura.dto.mapper.IGenericMapper
  */

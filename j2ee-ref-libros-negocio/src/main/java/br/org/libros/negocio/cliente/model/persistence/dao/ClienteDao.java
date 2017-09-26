@@ -7,6 +7,7 @@ import br.org.libros.negocio.cliente.model.persistence.entity.Cliente;
 import br.org.libros.negocio.comum.model.persistence.dao.LibrosAbstractDao;
 
 /**
+ * DAO de Cliente.
  * 
  * @see br.org.libros.negocio.comum.model.persistence.dao.LibrosAbstractDao
  */

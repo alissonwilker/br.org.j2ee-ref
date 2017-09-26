@@ -8,6 +8,7 @@ import br.org.libros.negocio.usuario.dto.UsuarioDto;
 import br.org.libros.negocio.usuario.model.persistence.entity.Usuario;
 
 /**
+ * Mapper para converter entidade de Usuario em DTO e vice-versa.
  * 
  * @see br.org.arquitetura.dto.mapper.IGenericMapper
  */

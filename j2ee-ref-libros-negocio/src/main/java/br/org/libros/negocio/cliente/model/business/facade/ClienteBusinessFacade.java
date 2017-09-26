@@ -11,6 +11,7 @@ import br.org.libros.negocio.cliente.dto.mapper.IClienteMapper;
 import br.org.libros.negocio.cliente.model.persistence.entity.Cliente;
 
 /**
+ * Fachada de Cliente.
  * 
  * @see br.org.arquitetura.model.business.facade.AbstractBusinessFacade
  */

@@ -12,6 +12,7 @@ import br.org.arquitetura.view.utils.JsfUtils.Pagina;
 import br.org.livraria.livro.dto.LivroDto;
 
 /**
+ * Controller de Livro.
  * 
  * @see br.org.arquitetura.view.controller.AbstractController
  */

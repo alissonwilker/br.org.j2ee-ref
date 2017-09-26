@@ -17,6 +17,7 @@ import br.org.libros.negocio.comum.utils.LogSanitizer;
 import br.org.libros.negocio.livrobiblioteca.dto.LivroBibliotecaDto;
 
 /**
+ * MDB para receber mensagens JMS.
  * 
  * @see br.org.arquitetura.mensageria.AbstractReceptorJms
  */
