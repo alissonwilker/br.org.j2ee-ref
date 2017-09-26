@@ -90,6 +90,7 @@
 				<groupId>org.primefaces</groupId>
 				<artifactId>primefaces</artifactId>
 				<version>${primefaces.version}</version>
+				<scope>runtime</scope>
 			</dependency>
 
 			<!-- https://mvnrepository.com/artifact/io.swagger/swagger-jaxrs -->
@@ -393,22 +394,15 @@
 					<version>${maven-dependency.version}</version>
 					<executions>
 						<execution>
-							<id>unpack</id>
-							<phase>process-test-classes</phase>
+							<id>analyze</id>
+							<phase>package</phase>
 							<goals>
-								<goal>unpack</goal>
+								<goal>analyze-only</goal>
 							</goals>
 							<configuration>
-								<artifactItems>
-									<artifactItem>
-										<groupId>org.wildfly</groupId>
-										<artifactId>wildfly-dist</artifactId>
-										<version>${wildfly.version}</version>
-										<type>zip</type>
-										<overWrite>false</overWrite>
-										<outputDirectory>${project.build.directory}</outputDirectory>
-									</artifactItem>
-								</artifactItems>
+								<failOnWarning>true</failOnWarning>
+								<ignoredUsedUndeclaredDependencies>*</ignoredUsedUndeclaredDependencies>
+								<ignoreNonCompile>true</ignoreNonCompile>
 							</configuration>
 						</execution>
 					</executions>
@@ -520,6 +514,10 @@
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 			</plugin>
 			<plugin>
@@ -582,6 +580,17 @@
 					<reportSet>
 						<reports>
 							<report>report</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>analyze-report</report>
 						</reports>
 					</reportSet>
 				</reportSets>
