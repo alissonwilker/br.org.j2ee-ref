@@ -15,17 +15,17 @@ import br.org.arquitetura.model.persistence.dao.IDao;
  *
  * @param <E>
  *            tipo da Entidade.
- * @param <PK>
+ * @param <P>
  *            tipo da chave primária da Entidade.
  * 
  * @see br.org.arquitetura.model.business.IBusiness
  */
-public abstract class AbstractBusiness<E, PK extends Serializable> implements IBusiness<E, PK>, Serializable {
+public abstract class AbstractBusiness<E, P extends Serializable> implements IBusiness<E, P>, Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Inject
-    private IDao<E, PK> dao;
+    private IDao<E, P> dao;
 
     @Override
     public E adicionar(E entidade) throws EntidadeJaExisteExcecao, EntidadeNaoEncontradaExcecao {
@@ -38,7 +38,7 @@ public abstract class AbstractBusiness<E, PK extends Serializable> implements IB
     }
 
     @Override
-    public void remover(PK chavePrimaria) throws EntidadeNaoEncontradaExcecao {
+    public void remover(P chavePrimaria) throws EntidadeNaoEncontradaExcecao {
         dao.remover(chavePrimaria);
     }
 
@@ -53,7 +53,7 @@ public abstract class AbstractBusiness<E, PK extends Serializable> implements IB
     }
 
     @Override
-    public E recuperar(PK chavePrimaria) throws EntidadeNaoEncontradaExcecao {
+    public E recuperar(P chavePrimaria) throws EntidadeNaoEncontradaExcecao {
         return dao.recuperar(chavePrimaria);
     }
 

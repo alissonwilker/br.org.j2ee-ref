@@ -14,6 +14,7 @@ import javax.faces.convert.FacesConverter;
  */
 @FacesConverter(value = "isbnConverter")
 public class IsbnConverter implements Converter {
+    @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) throws ConverterException {
         /*
          * Irá converter ISBN formatado para um sem traço. Ex.: 978-242342342-0 torna-se
@@ -27,6 +28,7 @@ public class IsbnConverter implements Converter {
         return isbn;
     }
 
+    @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) throws ConverterException {
         /*
          * Irá converter ISBN não formatado para um com traço. Ex.: 9782423423420

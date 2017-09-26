@@ -26,12 +26,12 @@ import br.org.arquitetura.model.business.facade.IBusinessFacade;
  */
 @Consumes({ MediaType.APPLICATION_JSON })
 @Produces({ MediaType.APPLICATION_JSON })
-public abstract class AbstractApi<D extends IDto, PK extends Serializable> {
+public abstract class AbstractApi<D extends IDto, P extends Serializable> {
 
     protected String apiPath;
 
     @Inject
-    protected IBusinessFacade<D, PK> businessFacade;
+    protected IBusinessFacade<D, P> businessFacade;
 
     public Response adicionar(D dto) throws EntidadeJaExisteExcecao, EntidadeNaoEncontradaExcecao, URISyntaxException {
         dto = businessFacade.adicionar(dto);
@@ -43,7 +43,7 @@ public abstract class AbstractApi<D extends IDto, PK extends Serializable> {
         return Response.ok(dtos).build();
     }
 
-    public Response remover(PK chavePrimaria) throws EntidadeNaoEncontradaExcecao {
+    public Response remover(P chavePrimaria) throws EntidadeNaoEncontradaExcecao {
         businessFacade.remover(chavePrimaria);
         return Response.ok().build();
     }
@@ -53,7 +53,7 @@ public abstract class AbstractApi<D extends IDto, PK extends Serializable> {
         return Response.ok(dto).build();
     }
 
-    public Response recuperar(PK chavePrimaria) throws EntidadeNaoEncontradaExcecao {
+    public Response recuperar(P chavePrimaria) throws EntidadeNaoEncontradaExcecao {
         D dto = businessFacade.recuperar(chavePrimaria);
         return Response.ok(dto).build();
     }

@@ -13,12 +13,12 @@ import br.org.arquitetura.excecao.EntidadeNaoEncontradaExcecao;
  *
  * @param <D>
  *            tipo do DTO.
- * @param <PK>
+ * @param <P>
  *            tipo da chave primária da Entidade representada pelo DTO.
  * 
  * @see br.org.arquitetura.model.business.IBusiness
  */
-public interface IBusinessFacade<D, PK extends Serializable> extends Serializable {
+public interface IBusinessFacade<D, P extends Serializable> extends Serializable {
     
     D adicionar(D dto) throws EntidadeJaExisteExcecao, EntidadeNaoEncontradaExcecao;
 
@@ -26,10 +26,10 @@ public interface IBusinessFacade<D, PK extends Serializable> extends Serializabl
 
     void remover(D dto) throws EntidadeNaoEncontradaExcecao;
 
-    void remover(PK chavePrimaria) throws EntidadeNaoEncontradaExcecao;
+    void remover(P chavePrimaria) throws EntidadeNaoEncontradaExcecao;
 
     D atualizar(D dto) throws EntidadeNaoEncontradaExcecao, EntidadeJaExisteExcecao;
 
-    D recuperar(PK chavePrimaria) throws EntidadeNaoEncontradaExcecao;
+    D recuperar(P chavePrimaria) throws EntidadeNaoEncontradaExcecao;
 
 }

@@ -26,10 +26,22 @@ import br.org.arquitetura.model.persistence.entity.validator.CpfBeanValidator;
 @Documented
 public @interface Cpf {
 
+    /**
+     * Recupera a mensagem de erro de validacao.
+     * @return a mensagem de erro.
+     */
     String message() default "{cpf.invalido}";
 
+    /**
+     * Nao implementado.
+     * @return N/A.
+     */
     Class<?>[] groups() default {};
 
+    /**
+     * Nao implementado. 
+     * @return N/A.
+     */
     Class<? extends Payload>[] payload() default {};
 
 }

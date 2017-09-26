@@ -18,12 +18,12 @@ import br.org.arquitetura.excecao.EntidadeNaoEncontradaExcecao;
  *
  * @param <E>
  *            tipo da Entidade.
- * @param <PK>
+ * @param <P>
  *            tipo da chave primária da Entidade.
  * 
  * @see br.org.arquitetura.model.persistence.dao.IDao
  */
-public abstract class AbstractDao<E, PK extends Serializable> implements IDao<E, PK>, Serializable {
+public abstract class AbstractDao<E, P extends Serializable> implements IDao<E, P>, Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -68,7 +68,7 @@ public abstract class AbstractDao<E, PK extends Serializable> implements IDao<E,
     }
 
     @Override
-    public void remover(PK chavePrimaria) throws EntidadeNaoEncontradaExcecao {
+    public void remover(P chavePrimaria) throws EntidadeNaoEncontradaExcecao {
         E entidade = recuperar(chavePrimaria);
         remover(entidade);
     }
@@ -103,7 +103,7 @@ public abstract class AbstractDao<E, PK extends Serializable> implements IDao<E,
 
     @SuppressWarnings("unchecked")
     @Override
-    public E recuperar(PK chavePrimaria) throws EntidadeNaoEncontradaExcecao {
+    public E recuperar(P chavePrimaria) throws EntidadeNaoEncontradaExcecao {
         E entity = (E) entityManager.find(getDomainClass(), chavePrimaria);
         if (entity == null) {
             throw new EntidadeNaoEncontradaExcecao();

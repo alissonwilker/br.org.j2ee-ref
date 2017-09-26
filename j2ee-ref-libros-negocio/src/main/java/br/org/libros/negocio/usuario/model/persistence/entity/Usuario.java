@@ -50,6 +50,12 @@ public class Usuario implements IEntidade {
     public Usuario() {
     }
 
+    /**
+     * Construtor com alguns parametros para atributos da entidade.
+     * @param nome o nome do usuario.
+     * @param senha a senha do usuario.
+     * @param perfil o perfil de acesso do usuario.
+     */
     @Valid
     public Usuario(String nome, String senha, String perfil) {
         setNome(nome);

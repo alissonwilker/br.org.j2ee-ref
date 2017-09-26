@@ -17,16 +17,16 @@ import br.org.arquitetura.model.business.IBusiness;
  *            tipo da Entidade.
  * @param <D>
  *            tipo do DTO que representa a Entidade.
- * @param <PK>
+ * @param <P>
  *            tipo da chave primária da Entidade.
  * 
  * @see br.org.arquitetura.model.business.facade.IBusinessFacade
  */
-public abstract class AbstractBusinessFacade<E, D, PK extends Serializable> implements IBusinessFacade<D, PK> {
+public abstract class AbstractBusinessFacade<E, D, P extends Serializable> implements IBusinessFacade<D, P> {
     private static final long serialVersionUID = 1L;
 
     @Inject
-    private IBusiness<E, PK> business;
+    private IBusiness<E, P> business;
 
     protected IGenericMapper<E, D> mapper;
 
@@ -46,7 +46,7 @@ public abstract class AbstractBusinessFacade<E, D, PK extends Serializable> impl
     }
 
     @Override
-    public void remover(PK chavePrimaria) throws EntidadeNaoEncontradaExcecao {
+    public void remover(P chavePrimaria) throws EntidadeNaoEncontradaExcecao {
         business.remover(chavePrimaria);
     }
 
@@ -56,7 +56,7 @@ public abstract class AbstractBusinessFacade<E, D, PK extends Serializable> impl
     }
 
     @Override
-    public D recuperar(PK chavePrimaria) throws EntidadeNaoEncontradaExcecao {
+    public D recuperar(P chavePrimaria) throws EntidadeNaoEncontradaExcecao {
         return mapper.converterParaDto(business.recuperar(chavePrimaria));
     }
 

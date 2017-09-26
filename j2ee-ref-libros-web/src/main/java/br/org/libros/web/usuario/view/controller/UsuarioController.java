@@ -30,6 +30,11 @@ public class UsuarioController extends AbstractController<UsuarioDto, Integer> {
         return JsfUtils.getRequest().getUserPrincipal() != null;
     }
 
+    /**
+     * Recupera o nome do usuario autenticado no sistema.
+     * 
+     * @return o nome do usuario autenticado no sistema.
+     */
     public String getNomeUsuarioAutenticado() {
         Principal principal = JsfUtils.getRequest().getUserPrincipal();
         if (principal != null) {
@@ -38,6 +43,13 @@ public class UsuarioController extends AbstractController<UsuarioDto, Integer> {
         return null;
     }
 
+    /**
+     * Verifica se o usuario possui as roles especificadas.
+     * 
+     * @param roles
+     *            as roles especificadas.
+     * @return Verdadeiro, caso o usuario possua as roles. Falso, caso contrario.
+     */
     public boolean isUserInRole(String... roles) {
         boolean userIsInRole = false;
         int i = 0;
@@ -47,12 +59,27 @@ public class UsuarioController extends AbstractController<UsuarioDto, Integer> {
         return userIsInRole;
     }
 
+    /**
+     * Redireciona para a pagina principal se estiver autenticado.
+     * 
+     * @throws IOException
+     *             se ocorrer problema no redirecionamento.
+     */
     public void redirecionarSeAutenticado() throws IOException {
         if (isAutenticado()) {
             JsfUtils.redirecionar(Pagina.app);
         }
     }
 
+    /**
+     * Realiza login do usuario.
+     * 
+     * @param usuario
+     *            o usuario.
+     * @param senha
+     *            a senha.
+     * @return a pagina de redirecionamento.
+     */
     public String login(String usuario, String senha) {
         try {
             JsfUtils.getRequest().login(usuario, senha);
@@ -64,6 +91,11 @@ public class UsuarioController extends AbstractController<UsuarioDto, Integer> {
         return JsfUtils.getRedirecionamentoComMensagens(Pagina.app);
     }
 
+    /**
+     * Realiza logout do usuario.
+     * 
+     * @return a pagina de redirecionamento.
+     */
     public String logout() {
         try {
             JsfUtils.getRequest().logout();

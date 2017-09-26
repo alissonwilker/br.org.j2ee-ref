@@ -23,6 +23,12 @@ public class UsuarioDto implements IDto {
     public UsuarioDto() {
     }
 
+    /**
+     * Construtor do DTO com alguns atributos iniciais.
+     * @param nome o nome do usuario.
+     * @param senha a senha do usuario.
+     * @param perfil o perfil de acesso do usuario.
+     */
     public UsuarioDto(String nome, String senha, String perfil) {
         setNome(nome);
         setSenha(senha);

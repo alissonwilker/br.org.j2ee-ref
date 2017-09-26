@@ -15,16 +15,16 @@ import br.org.arquitetura.view.utils.FacesMessageUtils;
  *
  * @param <D>
  *            tipo do DTO que representa a Entidade.
- * @param <PK>
+ * @param <P>
  *            tipo da chave primária da Entidade.
  */
-public abstract class AbstractController<D, PK extends Serializable> implements Serializable {
+public abstract class AbstractController<D, P extends Serializable> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private List<D> entidades;
 
-    protected IBusinessFacade<D, PK> businessFacade;
+    protected IBusinessFacade<D, P> businessFacade;
 
     /**
      * Cadastra uma Entidade representada pelo DTO.

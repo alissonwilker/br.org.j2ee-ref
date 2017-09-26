@@ -11,12 +11,12 @@ import br.org.arquitetura.excecao.EntidadeNaoEncontradaExcecao;
  *
  * @param <E>
  *            tipo da Entidade.
- * @param <PK>
+ * @param <P>
  *            tipo da chave primária da Entidade.
  * 
  * @see br.org.arquitetura.model.persistence.dao.IDao
  */
-public interface IBusiness<E, PK extends Serializable> {
+public interface IBusiness<E, P extends Serializable> {
 
     E adicionar(E entidade) throws EntidadeJaExisteExcecao, EntidadeNaoEncontradaExcecao;
 
@@ -24,10 +24,10 @@ public interface IBusiness<E, PK extends Serializable> {
 
     void remover(E entidade) throws EntidadeNaoEncontradaExcecao;
 
-    void remover(PK chavePrimaria) throws EntidadeNaoEncontradaExcecao;
+    void remover(P chavePrimaria) throws EntidadeNaoEncontradaExcecao;
 
     E atualizar(E entidade) throws EntidadeNaoEncontradaExcecao, EntidadeJaExisteExcecao;
 
-    E recuperar(PK chavePrimaria) throws EntidadeNaoEncontradaExcecao;
+    E recuperar(P chavePrimaria) throws EntidadeNaoEncontradaExcecao;
 
 }

@@ -14,6 +14,7 @@ import javax.faces.convert.FacesConverter;
  */
 @FacesConverter(value = "cpfConverter")
 public class CpfConverter implements Converter {
+    @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) throws ConverterException {
         /*
          * Irá converter CPF formatado para um sem pontos e traço. Ex.: 355.245.198-87
@@ -27,6 +28,7 @@ public class CpfConverter implements Converter {
         return cpf;
     }
 
+    @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) throws ConverterException {
         /*
          * Irá converter CPF não formatado para um com pontos e traço. Ex.: 35524519887

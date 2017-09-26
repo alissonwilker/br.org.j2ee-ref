@@ -15,7 +15,7 @@ import br.org.arquitetura.model.persistence.dao.AbstractDao;
  * 
  * @see br.org.arquitetura.model.persistence.dao.AbstractDao
  */
-public abstract class LivrariaAbstractDao<E, PK extends Serializable> extends AbstractDao<E, PK> {
+public abstract class LivrariaAbstractDao<E, P extends Serializable> extends AbstractDao<E, P> {
     private static final long serialVersionUID = 1L;
 
     @PersistenceContext(unitName = "LivrariaPersistenceUnit", type = PersistenceContextType.TRANSACTION)

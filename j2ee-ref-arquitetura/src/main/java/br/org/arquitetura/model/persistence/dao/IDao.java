@@ -11,10 +11,10 @@ import br.org.arquitetura.excecao.EntidadeNaoEncontradaExcecao;
  *
  * @param <E>
  *            tipo da Entidade.
- * @param <PK>
+ * @param <P>
  *            tipo da chave primária da Entidade.
  */
-public interface IDao<E, PK extends Serializable> {
+public interface IDao<E, P extends Serializable> {
 
     /**
      * Adiciona um registro da Entidade na base de dados.
@@ -52,7 +52,7 @@ public interface IDao<E, PK extends Serializable> {
      * @throws EntidadeNaoEncontradaExcecao
      *             se a Entidade correspondente à chave primária não for encontrada.
      */
-    void remover(PK chavePrimaria) throws EntidadeNaoEncontradaExcecao;
+    void remover(P chavePrimaria) throws EntidadeNaoEncontradaExcecao;
 
     /**
      * Atualiza o registro de uma Entidade na base de dados.
@@ -76,6 +76,6 @@ public interface IDao<E, PK extends Serializable> {
      * @throws EntidadeNaoEncontradaExcecao
      *             se a Entidade não for encontrada na base.
      */
-    E recuperar(PK chavePrimaria) throws EntidadeNaoEncontradaExcecao;
+    E recuperar(P chavePrimaria) throws EntidadeNaoEncontradaExcecao;
 
 }

@@ -26,10 +26,22 @@ import br.org.arquitetura.model.persistence.entity.validator.IsbnBeanValidator;
 @Documented
 public @interface Isbn {
 
+    /**
+     * Recupera a mensagem de erro de validacao.
+     * @return a mensagem de erro.
+     */
     String message() default "{isbn.invalido}";
 
+    /**
+     * Nao implementado.
+     * @return N/A.
+     */
     Class<?>[] groups() default {};
 
+    /**
+     * Nao implementado. 
+     * @return N/A.
+     */
     Class<? extends Payload>[] payload() default {};
 
 }
