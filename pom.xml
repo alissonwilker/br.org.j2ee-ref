@@ -279,6 +279,8 @@
 								<consoleOutput>false</consoleOutput>
 								<failsOnError>true</failsOnError>
 								<linkXRef>${linkXRef.enabled}</linkXRef>
+								<consoleOutput>true</consoleOutput>
+								<suppressionsLocation>checkstyle_suppressions.xml</suppressionsLocation>
 							</configuration>
 							<goals>
 								<goal>checkstyle</goal>

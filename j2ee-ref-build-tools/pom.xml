@@ -31,6 +31,8 @@
 							<phase>validate</phase>
 							<configuration>
 								<configLocation>google_checks.xml</configLocation>
+								<suppressionsLocation>${project.resourcesdir}/checkstyle_suppressions.xml</suppressionsLocation>
+								<consoleOutput>false</consoleOutput>
 							</configuration>
 						</execution>
 					</executions>
