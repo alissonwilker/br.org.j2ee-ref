@@ -78,8 +78,7 @@ public abstract class AbstractDao<E, PK extends Serializable> implements IDao<E,
         try {
             entidade = entityManager.merge(entidade);
             entityManager.remove(entidade);
-            entityManager.flush(); // requerido para mandar mensagem JMS pelo
-                                   // EntityListener da Entidade.
+            entityManager.flush(); // requerido para mandar mensagem JMS pelo EntityListener.
         } catch (IllegalArgumentException iaex) {
             throw new EntidadeNaoEncontradaExcecao(iaex);
         }
@@ -115,7 +114,8 @@ public abstract class AbstractDao<E, PK extends Serializable> implements IDao<E,
     @SuppressWarnings("unchecked")
     @Override
     public List<E> listar() {
-        return entityManager.createQuery("from " + getDomainClass().getSimpleName()).getResultList();
+        return entityManager.createQuery("from " + getDomainClass().getSimpleName())
+                        .getResultList();
     }
 
 }

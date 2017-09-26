@@ -40,8 +40,8 @@ public class VerificadorCpf {
 
     // Créditos ao JavaFree.org pelo algoritmo de validação de CPF
     private static String calcularDigitoVerificador(String num) {
-
-        Integer primDig, segDig;
+        Integer primDig;
+        Integer segDig;
         int soma = 0;
         int peso = 10;
         for (int i = 0; i < num.length(); i++) {
