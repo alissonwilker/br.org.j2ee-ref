@@ -11,6 +11,11 @@
 	Diachenko, Roman Ivanov. -->
 
 <module name="Checker">
+
+	<module name="BeforeExecutionExclusionFileFilter">
+	  <property name="fileNamePattern" value="package\-info\.java$"/>
+	</module>
+
 	<property name="charset" value="UTF-8" />
 
 	<property name="severity" value="error" />
@@ -29,10 +34,7 @@
 
 	<module name="TreeWalker">
 		<!-- Checks personalizados -->
-		<module name="MethodLimit">
-			<property name="severity" value="${checkstyle.MethodLimit.severity}" default="ignore" />
-			<property name="max" value="${checkstyle.MethodLimit.max}" default="2" />
-		</module>
+		<module name="ArchitecturalConstraint"/>
 
 		<!-- Default Google Checks -->
 		<module name="OuterTypeFilename" />
