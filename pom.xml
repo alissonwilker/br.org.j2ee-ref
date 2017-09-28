@@ -185,7 +185,7 @@
 					<executions>
 						<execution>
 							<id>jxr</id>
-							<phase>validate</phase>
+							<phase>process-sources</phase>
 							<configuration>
 								<linkJavadoc>true</linkJavadoc>
 								<javadocDir>${project.javadocsdir}</javadocDir>
@@ -218,6 +218,7 @@
 					</configuration>
 					<executions>
 						<execution>
+							<phase>process-sources</phase>
 							<goals>
 								<goal>check</goal>
 							</goals>
@@ -246,7 +247,7 @@
 					<executions>
 						<execution>
 							<id>pmd</id>
-							<phase>validate</phase>
+							<phase>process-sources</phase>
 							<goals>
 								<goal>cpd-check</goal>
 								<goal>check</goal>
@@ -269,7 +270,7 @@
 					<executions>
 						<execution>
 							<id>checkstyle</id>
-							<phase>validate</phase>
+							<phase>process-sources</phase>
 							<configuration>
 								<outputFile>${checkstyle.outputdir}/checkstyle-result.xml</outputFile>
 								<cacheFile>${checkstyle.outputdir}/checkstyle-cachefile</cacheFile>
