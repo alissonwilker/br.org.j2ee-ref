@@ -2,7 +2,6 @@ package br.org.buildtools.checkstyle;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
@@ -16,15 +15,6 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 public abstract class CustomCheck extends AbstractCheck {
 
     /**
-     * Regular expression of the packages to ignore in all checks
-     */
-    private static final Pattern PACKAGES_TO_IGNORE = Pattern.compile("(br\\.gov\\.tcu\\.contas|br\\.gov\\.tcu\\.econtas" +
-            "|br\\.gov\\.tcu\\.vpost|br\\.gov\\.tcu\\.intmavenflip|br\\.gov\\.tcu\\.vista|br\\.gov\\.tcu\\.tce)");
-
-    /** Variable that is set when the package should be ignored for every check */
-    private boolean ignoreThisPackage = false;
-
-    /**
      * Returns the fully qualified package in a package definition or import statement.
      * 
      * @param packageDefOrImportAST an AST of type PACKAGE_DEF or IMPORT
@@ -32,8 +22,8 @@ public abstract class CustomCheck extends AbstractCheck {
      *         package definition statement or an import statement.
      */
     protected String fullyQualifiedPackage(DetailAST packageDefOrImportAST) {
-        if (packageDefOrImportAST == null || (packageDefOrImportAST.getType() != TokenTypes.PACKAGE_DEF &&
-                packageDefOrImportAST.getType() != TokenTypes.IMPORT)) {
+        if (packageDefOrImportAST == null || packageDefOrImportAST.getType() != TokenTypes.PACKAGE_DEF &&
+                packageDefOrImportAST.getType() != TokenTypes.IMPORT) {
             throw new IllegalArgumentException("Parameter packageDefOrImportAST must be a PACKAGE_DEF or IMPORT AST");
         }
         DetailAST dot = findFirstAstOfType(packageDefOrImportAST, TokenTypes.DOT);
@@ -64,6 +54,8 @@ public abstract class CustomCheck extends AbstractCheck {
     /**
      * Recursively traverse an expression tree and return all ASTs matching a specific token type.
      * 
+     * @param aAST the root of the branch to traverse.
+     * @param type the token type being looked for.
      * @return list of DetailAST objects found; returns empty List if none is found.
      */
     protected List<DetailAST> findAllAstsOfType(DetailAST aAST, int type) {
@@ -88,6 +80,8 @@ public abstract class CustomCheck extends AbstractCheck {
      * in the specified node itself, all children, and indirect descendants (the whole tree), whereas
      * {@link DetailAST#findFirstToken(int)} only searches the direct children.
      * 
+     * @param aAST the root of the branch to traverse.
+     * @param type the token type being looked for.
      * @return first DetailAST found or null if no node of the given type is found
      * 
      * @see DetailAST#findFirstToken(int)
@@ -111,6 +105,9 @@ public abstract class CustomCheck extends AbstractCheck {
      * Recursive method to traverse the IDENT-DOT-IDENT-DOT-...-IDENT-DOT-IDENT segment of a
      * PACKAGE_DEF or IMPORT token.
      * It builds the fully qualified package name in the StringBuilder parameter.
+     * 
+     * @param aAST the root of the branch to traverse.
+     * @param fullName the object in which the full name of the package will be put.
      */
     private void fullyQualifiedPackageAux(StringBuilder fullName, DetailAST aAST) {
         if (aAST.getType() == TokenTypes.IDENT) {
@@ -125,6 +122,10 @@ public abstract class CustomCheck extends AbstractCheck {
     }
 
     /**
+     * Verifies if an annotation is present for a class_def token.
+     * 
+     * @return true if the annotation is present. False, otherwise.
+     * 
      * @param aAST must be a TokenTypes.CLASS_DEF.
      * @param annotation annotation identifier without '@'
      */
@@ -142,6 +143,10 @@ public abstract class CustomCheck extends AbstractCheck {
     /**
      * Given an ASSIGN token, returns the name of the variable being assigned. The position of the variable IDENT token differs
      * whether the ASSIGN is part of a variable definition (declaration) or not.
+     * 
+     * @param assignToken the token that represents an assignment.
+     * 
+     * @return the name of the variable being assigned.
      */
     protected String getVarNameOfAssign(DetailAST assignToken) {
         if (assignToken.getType() != TokenTypes.ASSIGN) {
@@ -185,6 +190,8 @@ public abstract class CustomCheck extends AbstractCheck {
     }
 
     /**
+     * Gets the variable or parameter associated with a given identity token.
+     * 
      * @return the token (VARIABLE_DEF ou PARAMETER_DEF) where the specified variable (IDENT) was defined.
      * 
      * @param identToken the variable's IDENT
@@ -222,6 +229,8 @@ public abstract class CustomCheck extends AbstractCheck {
      * @param identToken Token do tipo IDENT da chamada de um método
      * @param closestLine Número da linha de início
      * @param isThisCall Boolean que define se a chamada ao método teve um 'this.'
+     * 
+     * @return o token do tipo VARIABLE_DEF associado ao IDENT token.
      * 
      * @author x05119695116 Rafael Costa
      */
@@ -262,6 +271,8 @@ public abstract class CustomCheck extends AbstractCheck {
      * @param identToken Token do tipo IDENT da chamada de um método
      * @param closestLine Número da linha de início
      * 
+     * @return o token do tipo PARAMETER_DEF associado ao IDENT token.
+     * 
      * @author x05119695116 Rafael Costa
      */
     private DetailAST findParameterDefForIdent(DetailAST identToken, int closestLine) {
@@ -287,6 +298,8 @@ public abstract class CustomCheck extends AbstractCheck {
      * 
      * @param defToken Token da definição da variável
      * 
+     * @return o token de escopo da variável passada por parâmetro.
+     * 
      * @author x05119695116 Rafael Costa
      */
     protected DetailAST getScopeOfDef(DetailAST defToken) {
@@ -295,14 +308,16 @@ public abstract class CustomCheck extends AbstractCheck {
                 parent.getType() != TokenTypes.METHOD_DEF) {
             parent = parent.getParent();
         }
-        return (parent);
+        return parent;
     }
 
     /**
      * Este método verifica se a classe classDefToken está
      * dentro de uma outra classe.
      * 
-     * @param defToken Token de definição da classe (CLASS_DEF)
+     * @param classDefToken Token de definição da classe (CLASS_DEF)
+     * 
+     * @return true se a classe classDefToken está dentro de uma outra classe. False, caso contrário.
      * 
      * @author x05119695116 Rafael Costa
      */
@@ -319,6 +334,9 @@ public abstract class CustomCheck extends AbstractCheck {
      * pelo token passado.
      * 
      * @param defToken Token VARIABLE_DEF ou PARAMETER_DEF
+     * 
+     * @return o nome literal da variável definida pelo token passado.
+     * 
      * @author x05119695116 Rafael Costa
      */
     protected String getVarNameInVariableOrParameterDef(DetailAST defToken) {
@@ -339,12 +357,14 @@ public abstract class CustomCheck extends AbstractCheck {
         //
         DetailAST identToken = defToken.getFirstChild();
         identToken = identToken.getNextSibling().getNextSibling();
-        return (identToken.getText());
+        return identToken.getText();
     }
 
     /**
      * Este método retorna o nome literal da variável definida
      * pelo token passado.
+     * 
+     * @return o nome literal da variável definida pelo token passado.
      * 
      * @param defToken Token de definição
      * @author x05119695116 Rafael Costa
