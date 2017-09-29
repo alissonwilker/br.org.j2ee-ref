@@ -63,12 +63,25 @@ public class RestricoesArquiteturais {
         restricoesPacotesArquiteturais.put(PacoteArquitetural.Api, pacotesRestritos);
     }
 
-    public Collection<TipoArquitetural> getTiposArquiteturais() {
-        return tiposArquiteturais;
-    }
-
-    public Collection<PacoteArquitetural> getPacotesRestritos(PacoteArquitetural pacote) {
+    private Collection<PacoteArquitetural> getPacotesRestritos(PacoteArquitetural pacote) {
         return restricoesPacotesArquiteturais.get(pacote);
+    }
+    
+    public boolean ehUmPacoteRestrito(String nomePacote, PacoteArquitetural pacoteArquitetural) {
+        Collection<PacoteArquitetural> restricoesPacote = getPacotesRestritos(pacoteArquitetural);
+        if (restricoesPacote != null) {
+            for (PacoteArquitetural pacoteArquiteturalRestrito : restricoesPacote) {
+                if (nomePacote.endsWith(pacoteArquiteturalRestrito.getNomePacote())) {
+                    return true;
+                }
+            }
+        }
+        
+        return false;
+    }
+    
+    public boolean ehUmTipoArquiteturalValido(TipoArquitetural tipoArquitetural) {
+        return tiposArquiteturais.contains(tipoArquitetural);
     }
 }
 

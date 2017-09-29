@@ -91,19 +91,11 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
         if (ast.getType() == TokenTypes.IMPORT || ast.getType() == TokenTypes.STATIC_IMPORT) {
             String importWithClassName = fullyQualifiedPackage(ast);
             String importName = importWithClassName.substring(0, importWithClassName.lastIndexOf("."));
-            Collection<PacoteArquitetural> restricoesPacote = restricoesArquiteturais
-                            .getPacotesRestritos(pacoteArquitetural);
-            if (restricoesPacote != null) {
-                for (PacoteArquitetural pacoteArquiteturalRestrito : restricoesPacote) {
-                    if (importName.endsWith(pacoteArquiteturalRestrito.getNomePacote())) {
-                        System.out.println(
-                                        "acessando pacote arquitetural restrito ######################################");
-                        log(ast.getLineNo(), MSG_PACOTE_RESTRITO, pacoteArquiteturalRestrito.getNomePacote(),
-                                        pacoteArquitetural.getNomePacote());
-                    }
-                }
-            }
 
+            if (restricoesArquiteturais.ehUmPacoteRestrito(importName, pacoteArquitetural)) {
+                System.out.println("acessando pacote arquitetural restrito ######################################");
+                log(ast.getLineNo(), MSG_PACOTE_RESTRITO, pacoteArquitetural.getNomePacote());
+            }
         }
 
         if (ast.getType() == CLASS_DEF || ast.getType() == INTERFACE_DEF) {
@@ -177,7 +169,7 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
             ta.setAnotacoes(anotacoes);
             ta.setInterfaces(interfaces);
 
-            if (!restricoesArquiteturais.getTiposArquiteturais().contains(ta)) {
+            if (!restricoesArquiteturais.ehUmTipoArquiteturalValido(ta)) {
                 System.out.println("não está conforme a arquitetura");
                 log(ast.getLineNo(), MSG_TIPO_INVALIDO, nomeClasseOuInterface);
             } else {
@@ -188,5 +180,3 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
     }
 
 }
-
-
