@@ -3,14 +3,19 @@ package br.org.buildtools.checkstyle;
 import java.util.Collection;
 import java.util.HashSet;
 
+import br.org.buildtools.checkstyle.TipoArquitetural.AnotacaoArquitetural;
+import br.org.buildtools.checkstyle.TipoArquitetural.TipoArquiteturalAbstrato;
+
 public class TipoArquitetural {
     private SufixoArquitetural sufixo;
     private PacoteArquitetural pacote;
     private TipoArquiteturalAbstrato pai;
     private Collection<AnotacaoArquitetural> anotacoes = new HashSet<AnotacaoArquitetural>();
     private Collection<InterfaceArquitetural> interfaces = new HashSet<InterfaceArquitetural>();
-
-    public static SufixoArquitetural getSufixoArquitetural(String nomeClasseOuInterface) {
+    
+    // TODO refatorar para incluir a possibilidade de um sufixo estar contido dentro de outro. Por exemplo: Dto e
+    // MapperDto.
+    public static SufixoArquitetural buscarSufixoArquitetural(String nomeClasseOuInterface) {
         SufixoArquitetural[] sufixos = SufixoArquitetural.values();
         int i;
         for (i = 0; i < sufixos.length; i++) {
@@ -20,8 +25,10 @@ public class TipoArquitetural {
         }
         return i < sufixos.length ? sufixos[i] : null;
     }
-
-    public static PacoteArquitetural getPacoteArquitetural(String nomePacote) {
+    
+    // TODO refatorar para incluir a possibilidade de um pacote estar contido dentro de outro. Por exemplo: api e
+    // excecao.api.
+    public static PacoteArquitetural buscarPacoteArquitetural(String nomePacote) {
         PacoteArquitetural[] pacotes = PacoteArquitetural.values();
         int i;
         for (i = 0; i < pacotes.length; i++) {
@@ -31,22 +38,94 @@ public class TipoArquitetural {
         }
         return i < pacotes.length ? pacotes[i] : null;
     }
-
+    
+    public static TipoArquiteturalAbstrato buscarTipoArquiteturalAbstrato(String nomePai) {
+        for (TipoArquiteturalAbstrato tipoArquiteturalAbstrato : TipoArquiteturalAbstrato.values()) {
+            if (tipoArquiteturalAbstrato.name().equals(nomePai)) {
+                return tipoArquiteturalAbstrato;
+            }
+        }
+        
+        return null;
+    }
+    
+    public static AnotacaoArquitetural buscarAnotacaoArquitetural(String nomeAnotacao) {
+        for (AnotacaoArquitetural anotacaoArquitetural : AnotacaoArquitetural.values()) {
+            if (anotacaoArquitetural.name().equals(nomeAnotacao)) {
+                return anotacaoArquitetural;
+            }
+        }
+        
+        return null;
+    }
+    
+    public static InterfaceArquitetural buscarInterfaceArquitetural(String nomeInterface) {
+        for (InterfaceArquitetural interfaceArquitetural : InterfaceArquitetural.values()) {
+            if (interfaceArquitetural.name().equals(nomeInterface)) {
+                return interfaceArquitetural;
+            }
+        }
+        
+        return null;
+    }
+    
     public TipoArquitetural(SufixoArquitetural sufixo, PacoteArquitetural pacote) {
         this.sufixo = sufixo;
         this.pacote = pacote;
     }
-
-    public void setAnotacoes(Collection<AnotacaoArquitetural> anotacoes) {
-        this.anotacoes = anotacoes;
+    
+    public void adicionarAnotacao(AnotacaoArquitetural anotacaoArquitetural) {
+        if (anotacaoArquitetural != null) {
+            anotacoes.add(anotacaoArquitetural);
+        }
     }
-
-    public void setInterfaces(Collection<InterfaceArquitetural> interfaces) {
-        this.interfaces = interfaces;
+    
+    public void adicionarInterface(InterfaceArquitetural interfaceArquitetural) {
+        if (interfaceArquitetural != null) {
+            interfaces.add(interfaceArquitetural);
+        }
     }
-
+    
     public void setPai(TipoArquiteturalAbstrato pai) {
         this.pai = pai;
+    }
+    
+    public SufixoArquitetural getSufixo() {
+        return sufixo;
+    }
+    
+    public PacoteArquitetural getPacote() {
+        return pacote;
+    }
+    
+    public TipoArquiteturalAbstrato getPai() {
+        return pai;
+    }
+
+    public Collection<AnotacaoArquitetural> getAnotacoes() {
+        return anotacoes;
+    }
+    
+    public Collection<InterfaceArquitetural> getInterfaces() {
+        return interfaces;
+    }
+
+    public boolean possuiAnotacao(AnotacaoArquitetural anotacao) {
+        for (AnotacaoArquitetural anotacaoArquitetural : anotacoes) {
+            if (anotacaoArquitetural.equals(anotacao)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean possuiInterface(InterfaceArquitetural interfaceArq) {
+        for (InterfaceArquitetural interfaceArquitetural : interfaces) {
+            if (interfaceArquitetural.equals(interfaceArq)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -60,7 +139,7 @@ public class TipoArquitetural {
         result = prime * result + ((sufixo == null) ? 0 : sufixo.hashCode());
         return result;
     }
-
+    
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -88,47 +167,46 @@ public class TipoArquitetural {
             return false;
         return true;
     }
-
+    
     enum AnotacaoArquitetural {
-        ManagedBean, ViewScoped, Path, Api;
+        ManagedBean, ViewScoped, Path, Api, Named, RequestScoped, Transactional;
     }
-
+    
     enum InterfaceArquitetural {
         IEntidade, IDto;
     }
-
+    
     enum SufixoArquitetural {
-        Dto, Controller, Api;
+        Dto, Controller, Api, BusinessFacade, Business, Dao;
     }
-
+    
     enum TipoArquiteturalAbstrato {
-        AbstractController, AbstractApi;
+        AbstractController, AbstractApi, AbstractBusinessFacade, AbstractBusiness, AbstractDao;
     }
-
+    
     enum PacoteArquitetural {
         Base("br.org"), Api("api"), ApiExcecaoMapper("api.excecao.mapper"), Dto("dto"), DtoMapper(
-                        "dto.mapper"), Excecao("excecao"), Mensageria("mensageria"), ModelBusiness(
-                                        "model.business"), ModelBusinessFacade(
-                                                        "model.business.facade"), ModelPersistenceDao(
-                                                                        "model.persistence.dao"), ModelPersistenceEntity(
-                                                                                        "model.persistence.entity"), ModelPersistenceEntityListener(
-                                                                                                        "model.persistence.entity.listener"), ModelPersistenceEntityValidator(
-                                                                                                                        "model.persistence.entity.validator"), ModelPersistenceEntityValidatorAnnotation(
-                                                                                                                                        "model.persistence.entity.validator.annotation"), Utils(
-                                                                                                                                                        "utils"), ViewController(
-                                                                                                                                                                        "view.controller"), ViewConverter(
-                                                                                                                                                                                        "view.converter"), ViewValidator(
-                                                                                                                                                                                                        "view.validator");
-
+                "dto.mapper"), Excecao("excecao"), Mensageria("mensageria"), ModelBusiness(
+                        "model.business"), ModelBusinessFacade("model.business.facade"), ModelPersistenceDao(
+                                "model.persistence.dao"), ModelPersistenceEntity(
+                                        "model.persistence.entity"), ModelPersistenceEntityListener(
+                                                "model.persistence.entity.listener"), ModelPersistenceEntityValidator(
+                                                        "model.persistence.entity.validator"), ModelPersistenceEntityValidatorAnnotation(
+                                                                "model.persistence.entity.validator.annotation"), Utils(
+                                                                        "utils"), ViewController(
+                                                                                "view.controller"), ViewConverter(
+                                                                                        "view.converter"), ViewValidator(
+                                                                                                "view.validator");
+        
         private String nomePacote;
-
+        
         private PacoteArquitetural(String nomePacote) {
             this.nomePacote = nomePacote;
         }
-
+        
         public String getNomePacote() {
             return nomePacote;
         }
     }
-}
 
+}

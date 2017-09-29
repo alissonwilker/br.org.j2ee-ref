@@ -12,71 +12,106 @@ import br.org.buildtools.checkstyle.TipoArquitetural.SufixoArquitetural;
 import br.org.buildtools.checkstyle.TipoArquitetural.TipoArquiteturalAbstrato;
 
 public class RestricoesArquiteturais {
-    private Collection<TipoArquitetural> tiposArquiteturais;
-    private Map<PacoteArquitetural, Collection<PacoteArquitetural>> restricoesPacotesArquiteturais;
-
+    private Collection<TipoArquitetural> tiposArquiteturais = new HashSet<TipoArquitetural>();
+    private Map<PacoteArquitetural, Collection<PacoteArquitetural>> restricoesPacotesArquiteturais = new HashMap<PacoteArquitetural, Collection<PacoteArquitetural>>();
+    
     public RestricoesArquiteturais() {
         instanciarTiposArquiteturais();
         instanciarRestricoesPacotesArquiteturais();
     }
-
+    
     private void instanciarTiposArquiteturais() {
-        tiposArquiteturais = new HashSet<TipoArquitetural>();
-
         tiposArquiteturais.add(criarDto());
         tiposArquiteturais.add(criarApi());
         tiposArquiteturais.add(criarViewController());
+        tiposArquiteturais.add(criarBusinessFacade());
+        tiposArquiteturais.add(criarBusiness());
+        tiposArquiteturais.add(criarDao());
     }
-
+    
+    private void instanciarRestricoesPacotesArquiteturais() {
+        restricoesPacotesArquiteturais.put(PacoteArquitetural.ViewController, criarRestricoesPacoteViewController());
+        restricoesPacotesArquiteturais.put(PacoteArquitetural.Api, criarRestricoesPacoteApi());
+    }
+    
     private TipoArquitetural criarDto() {
         TipoArquitetural dto = new TipoArquitetural(SufixoArquitetural.Dto, PacoteArquitetural.Dto);
-
-        Collection<InterfaceArquitetural> interfacesArquiteturais = new HashSet<InterfaceArquitetural>();
-        interfacesArquiteturais.add(InterfaceArquitetural.IDto);
-        dto.setInterfaces(interfacesArquiteturais);
+        
+        dto.adicionarInterface(InterfaceArquitetural.IDto);
         
         return dto;
+    }
+    
+    private TipoArquitetural criarBusinessFacade() {
+        TipoArquitetural businessFacade = new TipoArquitetural(SufixoArquitetural.BusinessFacade, PacoteArquitetural.ModelBusinessFacade);
+        businessFacade.setPai(TipoArquiteturalAbstrato.AbstractBusinessFacade);
+        
+        businessFacade.adicionarAnotacao(AnotacaoArquitetural.Named);
+        businessFacade.adicionarAnotacao(AnotacaoArquitetural.RequestScoped);
+        businessFacade.adicionarAnotacao(AnotacaoArquitetural.Transactional);
+        
+        return businessFacade;
+    }
+
+    private TipoArquitetural criarDao() {
+        TipoArquitetural dao = new TipoArquitetural(SufixoArquitetural.Dao, PacoteArquitetural.ModelPersistenceDao);
+//        dao.setPai(TipoArquiteturalAbstrato.AbstractDao);
+        
+        dao.adicionarAnotacao(AnotacaoArquitetural.Named);
+        dao.adicionarAnotacao(AnotacaoArquitetural.RequestScoped);
+        
+        return dao;
+    }
+
+    private TipoArquitetural criarBusiness() {
+        TipoArquitetural business = new TipoArquitetural(SufixoArquitetural.Business, PacoteArquitetural.ModelBusiness);
+        business.setPai(TipoArquiteturalAbstrato.AbstractBusiness);
+        
+        business.adicionarAnotacao(AnotacaoArquitetural.Named);
+        business.adicionarAnotacao(AnotacaoArquitetural.RequestScoped);
+        
+        return business;
     }
 
     private TipoArquitetural criarApi() {
         TipoArquitetural api = new TipoArquitetural(SufixoArquitetural.Api, PacoteArquitetural.Api);
         api.setPai(TipoArquiteturalAbstrato.AbstractApi);
-
-        Collection<AnotacaoArquitetural> anotacoesArquiteturais = new HashSet<AnotacaoArquitetural>();
-        anotacoesArquiteturais.add(AnotacaoArquitetural.Path);
-        anotacoesArquiteturais.add(AnotacaoArquitetural.Api);
-        api.setAnotacoes(anotacoesArquiteturais);
+        
+        api.adicionarAnotacao(AnotacaoArquitetural.Path);
+        api.adicionarAnotacao(AnotacaoArquitetural.Api);
         
         return api;
     }
-
+    
     private TipoArquitetural criarViewController() {
         TipoArquitetural viewController = new TipoArquitetural(SufixoArquitetural.Controller,
-                        PacoteArquitetural.ViewController);
+                PacoteArquitetural.ViewController);
+        
         viewController.setPai(TipoArquiteturalAbstrato.AbstractController);
-
-        Collection<AnotacaoArquitetural> anotacoesArquiteturais = new HashSet<AnotacaoArquitetural>();
-        anotacoesArquiteturais.add(AnotacaoArquitetural.ManagedBean);
-        anotacoesArquiteturais.add(AnotacaoArquitetural.ViewScoped);
-        viewController.setAnotacoes(anotacoesArquiteturais);
+        viewController.adicionarAnotacao(AnotacaoArquitetural.ManagedBean);
+        viewController.adicionarAnotacao(AnotacaoArquitetural.ViewScoped);
         
         return viewController;
     }
-
-    private void instanciarRestricoesPacotesArquiteturais() {
-        restricoesPacotesArquiteturais = new HashMap<PacoteArquitetural, Collection<PacoteArquitetural>>();
-
+    
+    private Collection<PacoteArquitetural> criarRestricoesPacoteApi() {
         Collection<PacoteArquitetural> pacotesRestritos = new HashSet<PacoteArquitetural>();
-
-        pacotesRestritos.add(PacoteArquitetural.Dto);
-        restricoesPacotesArquiteturais.put(PacoteArquitetural.ViewController, pacotesRestritos);
-
-        pacotesRestritos = new HashSet<PacoteArquitetural>();
-        pacotesRestritos.add(PacoteArquitetural.Api);
-        pacotesRestritos.add(PacoteArquitetural.Dto);
-        restricoesPacotesArquiteturais.put(PacoteArquitetural.Api, pacotesRestritos);
+        
+        pacotesRestritos.add(PacoteArquitetural.ModelBusiness);
+        pacotesRestritos.add(PacoteArquitetural.ModelPersistenceDao);
+        
+        return pacotesRestritos;
     }
-
+    
+    private Collection<PacoteArquitetural> criarRestricoesPacoteViewController() {
+        Collection<PacoteArquitetural> pacotesRestritos = new HashSet<PacoteArquitetural>();
+        
+        pacotesRestritos.add(PacoteArquitetural.ModelBusiness);
+        pacotesRestritos.add(PacoteArquitetural.ModelPersistenceDao);
+        
+        return pacotesRestritos;
+    }
+    
     private Collection<PacoteArquitetural> getPacotesRestritos(PacoteArquitetural pacote) {
         return restricoesPacotesArquiteturais.get(pacote);
     }
@@ -94,8 +129,85 @@ public class RestricoesArquiteturais {
         return false;
     }
     
-    public boolean ehUmTipoArquiteturalValido(TipoArquitetural tipoArquitetural) {
-        return tiposArquiteturais.contains(tipoArquitetural);
+    public boolean existeTipoArquitetural(TipoArquitetural tipo) {
+        return buscarTipoArquitetural(tipo) != null;
     }
+    
+    private TipoArquitetural buscarTipoArquitetural(TipoArquitetural tipo) {
+        if (tipo == null) {
+            throw new IllegalArgumentException();
+        }
+        
+        for (TipoArquitetural tipoArquitetural : tiposArquiteturais) {
+            if (tipoArquitetural.getSufixo().equals(tipo.getSufixo())
+                    && tipoArquitetural.getPacote().equals(tipo.getPacote())) {
+                return tipoArquitetural;
+            }
+        }
+        
+        return null;
+    }
+    
+    public boolean ehAnotacaoArquiteturalValida(TipoArquitetural tipo, AnotacaoArquitetural anotacao) {
+        TipoArquitetural tipoArquitetural = buscarTipoArquitetural(tipo);
+        
+        if (tipoArquitetural == null) {
+            return false;
+        }
+        
+        return tipoArquitetural.possuiAnotacao(anotacao);
+    }
+    
+    public boolean ehInterfaceArquiteturalValida(TipoArquitetural tipo, InterfaceArquitetural interfaceArquitetural) {
+        TipoArquitetural tipoArquitetural = buscarTipoArquitetural(tipo);
+        
+        if (tipoArquitetural == null) {
+            return false;
+        }
+        
+        return tipoArquitetural.possuiInterface(interfaceArquitetural);
+    }
+    
+    public Collection<AnotacaoArquitetural> recuperarAnotacoesAusentes(TipoArquitetural tipo) {
+        TipoArquitetural tipoArquitetural = buscarTipoArquitetural(tipo);
+        
+        if (tipoArquitetural == null) {
+            return null;
+        }
+        
+        Collection<AnotacaoArquitetural> anotacoesArquiteturaisAusentes = new HashSet<AnotacaoArquitetural>();
+        anotacoesArquiteturaisAusentes.addAll(tipoArquitetural.getAnotacoes());
+        anotacoesArquiteturaisAusentes.removeAll(tipo.getAnotacoes());
+        
+        return anotacoesArquiteturaisAusentes;
+    }
+    
+    public Collection<InterfaceArquitetural> recuperarInterfacesAusentes(TipoArquitetural tipo) {
+        TipoArquitetural tipoArquitetural = buscarTipoArquitetural(tipo);
+        
+        if (tipoArquitetural == null) {
+            return null;
+        }
+        
+        Collection<InterfaceArquitetural> interfacesArquiteturaisAusentes = new HashSet<InterfaceArquitetural>();
+        interfacesArquiteturaisAusentes.addAll(tipoArquitetural.getInterfaces());
+        interfacesArquiteturaisAusentes.removeAll(tipo.getInterfaces());
+        
+        return interfacesArquiteturaisAusentes;
+    }
+    
+    public boolean temHerancaValida(TipoArquitetural tipo) {
+        TipoArquitetural tipoArquitetural = buscarTipoArquitetural(tipo);
+        
+        if (tipoArquitetural == null) {
+            return false;
+        }
+        
+        if (tipoArquitetural.getPai() == null) {
+            return true;
+        }
+        
+        return tipoArquitetural.getPai().equals(tipo.getPai());
+    }
+    
 }
-
