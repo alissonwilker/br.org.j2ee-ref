@@ -23,30 +23,44 @@ public class RestricoesArquiteturais {
     private void instanciarTiposArquiteturais() {
         tiposArquiteturais = new HashSet<TipoArquitetural>();
 
-        Collection<AnotacaoArquitetural> anotacoesArquiteturais = new HashSet<AnotacaoArquitetural>();
+        tiposArquiteturais.add(criarDto());
+        tiposArquiteturais.add(criarApi());
+        tiposArquiteturais.add(criarViewController());
+    }
+
+    private TipoArquitetural criarDto() {
+        TipoArquitetural dto = new TipoArquitetural(SufixoArquitetural.Dto, PacoteArquitetural.Dto);
+
         Collection<InterfaceArquitetural> interfacesArquiteturais = new HashSet<InterfaceArquitetural>();
+        interfacesArquiteturais.add(InterfaceArquitetural.IDto);
+        dto.setInterfaces(interfacesArquiteturais);
+        
+        return dto;
+    }
 
-        TipoArquitetural viewController = new TipoArquitetural(SufixoArquitetural.Controller,
-                        PacoteArquitetural.ViewController);
-        viewController.setPai(TipoArquiteturalAbstrato.AbstractController);
-        anotacoesArquiteturais.add(AnotacaoArquitetural.ManagedBean);
-        anotacoesArquiteturais.add(AnotacaoArquitetural.ViewScoped);
-        viewController.setAnotacoes(anotacoesArquiteturais);
-
+    private TipoArquitetural criarApi() {
         TipoArquitetural api = new TipoArquitetural(SufixoArquitetural.Api, PacoteArquitetural.Api);
         api.setPai(TipoArquiteturalAbstrato.AbstractApi);
-        anotacoesArquiteturais = new HashSet<AnotacaoArquitetural>();
+
+        Collection<AnotacaoArquitetural> anotacoesArquiteturais = new HashSet<AnotacaoArquitetural>();
         anotacoesArquiteturais.add(AnotacaoArquitetural.Path);
         anotacoesArquiteturais.add(AnotacaoArquitetural.Api);
         api.setAnotacoes(anotacoesArquiteturais);
+        
+        return api;
+    }
 
-        TipoArquitetural dto = new TipoArquitetural(SufixoArquitetural.Dto, PacoteArquitetural.Dto);
-        interfacesArquiteturais.add(InterfaceArquitetural.IDto);
-        dto.setInterfaces(interfacesArquiteturais);
+    private TipoArquitetural criarViewController() {
+        TipoArquitetural viewController = new TipoArquitetural(SufixoArquitetural.Controller,
+                        PacoteArquitetural.ViewController);
+        viewController.setPai(TipoArquiteturalAbstrato.AbstractController);
 
-        tiposArquiteturais.add(dto);
-        tiposArquiteturais.add(api);
-        tiposArquiteturais.add(viewController);
+        Collection<AnotacaoArquitetural> anotacoesArquiteturais = new HashSet<AnotacaoArquitetural>();
+        anotacoesArquiteturais.add(AnotacaoArquitetural.ManagedBean);
+        anotacoesArquiteturais.add(AnotacaoArquitetural.ViewScoped);
+        viewController.setAnotacoes(anotacoesArquiteturais);
+        
+        return viewController;
     }
 
     private void instanciarRestricoesPacotesArquiteturais() {
