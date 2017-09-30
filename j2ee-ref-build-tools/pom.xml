@@ -34,7 +34,7 @@
 				<executions>
 					<execution>
 						<id>checkstyle</id>
-						<phase>validate</phase>
+						<phase>process-sources</phase>
 						<configuration>
 							<configLocation>google_checks.xml</configLocation>
 							<suppressionsLocation>${project.resourcesdir}/checkstyle_suppressions.xml</suppressionsLocation>
