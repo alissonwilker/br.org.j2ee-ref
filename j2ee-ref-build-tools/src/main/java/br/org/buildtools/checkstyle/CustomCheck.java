@@ -407,6 +407,8 @@ public abstract class CustomCheck extends AbstractCheck {
      * @param astClasseOuInterface
      *            um token do tipo CLASS_DEF ou INTERFACE_DEF.
      * @return o nome da classe ou interface associada ao token.
+     * 
+     * @author alissonwilker
      */
     protected String recuperarNomeDaClasseOuInterface(DetailAST astClasseOuInterface) {
         DetailAST directChild = astClasseOuInterface.getFirstChild();

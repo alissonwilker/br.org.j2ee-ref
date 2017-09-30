@@ -9,7 +9,7 @@ public class PrefixoInterfaceCheck extends CustomCheck {
     private static final String MSG_PREFIX = "restricaoArquitetural.";
     private static final String MSG_PREFIXO_ARQUITETURAL = MSG_PREFIX + "prefixoArquitetural";
 
-    private String prefixo;
+    private String prefixo = null;
 
     public void setPrefixo(String prefixo) {
         this.prefixo = prefixo;

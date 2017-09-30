@@ -1,5 +1,10 @@
 package br.org.buildtools.checkstyle;
 
+import static br.org.buildtools.arquitetura.ArquiteturaUtils.buscarAnotacaoArquitetural;
+import static br.org.buildtools.arquitetura.ArquiteturaUtils.buscarHerancaArquitetural;
+import static br.org.buildtools.arquitetura.ArquiteturaUtils.buscarInterfaceArquitetural;
+import static br.org.buildtools.arquitetura.ArquiteturaUtils.buscarPacoteArquitetural;
+import static br.org.buildtools.arquitetura.ArquiteturaUtils.buscarSufixoArquitetural;
 import static com.puppycrawl.tools.checkstyle.api.TokenTypes.ANNOTATION;
 import static com.puppycrawl.tools.checkstyle.api.TokenTypes.CLASS_DEF;
 import static com.puppycrawl.tools.checkstyle.api.TokenTypes.EXTENDS_CLAUSE;
@@ -16,11 +21,13 @@ import java.util.List;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 
-import br.org.buildtools.checkstyle.TipoArquitetural.AnotacaoArquitetural;
-import br.org.buildtools.checkstyle.TipoArquitetural.HerancaArquitetural;
-import br.org.buildtools.checkstyle.TipoArquitetural.InterfaceArquitetural;
-import br.org.buildtools.checkstyle.TipoArquitetural.PacoteArquitetural;
-import br.org.buildtools.checkstyle.TipoArquitetural.SufixoArquitetural;
+import br.org.buildtools.arquitetura.RestricoesArquiteturais;
+import br.org.buildtools.arquitetura.TipoArquitetural;
+import br.org.buildtools.arquitetura.enums.AnotacaoArquitetural;
+import br.org.buildtools.arquitetura.enums.HerancaArquitetural;
+import br.org.buildtools.arquitetura.enums.InterfaceArquitetural;
+import br.org.buildtools.arquitetura.enums.PacoteArquitetural;
+import br.org.buildtools.arquitetura.enums.SufixoArquitetural;
 
 public class ArchitecturalConstraintCheck extends CustomCheck {
 
@@ -39,7 +46,6 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
 
     private TipoArquitetural tipo;
     private PacoteArquitetural pacoteArquitetural;
-    private SufixoArquitetural sufixoArquitetural;
 
     public ArchitecturalConstraintCheck() {
         restricoesArquiteturais = new RestricoesArquiteturais();
@@ -69,7 +75,6 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
     private void limpaAtributosInstancia() {
         tipo = null;
         pacoteArquitetural = null;
-        sufixoArquitetural = null;
     }
 
     @Override
@@ -101,11 +106,9 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
         DetailAST astImplements = findFirstAstOfType(astClasseOuInterface, IMPLEMENTS_CLAUSE);
         if (astImplements != null) {
             List<DetailAST> astImplementsIdents = findAllAstsOfType(astImplements, IDENT);
-            if (astImplementsIdents != null) {
-                for (DetailAST astIdent : astImplementsIdents) {
-                    if (astIdent.getParent().getType() == IMPLEMENTS_CLAUSE) {
-                        verificarConformidadeInterfaceImplementada(astIdent);
-                    }
+            for (DetailAST astIdent : astImplementsIdents) {
+                if (astIdent.getParent().getType() == IMPLEMENTS_CLAUSE) {
+                    verificarConformidadeInterfaceImplementada(astIdent);
                 }
             }
         }
@@ -115,7 +118,7 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
 
     private void verificarSeFaltamInterfacesNoTipo(DetailAST astClasseOuInterface) {
         Collection<InterfaceArquitetural> interfacesAusentes = restricoesArquiteturais
-                        .recuperarInterfacesAusentes(tipo);
+            .recuperarInterfacesAusentes(tipo);
         if (interfacesAusentes != null && !interfacesAusentes.isEmpty()) {
 
             StringBuilder listaNomesInterfacesAusentes = null;
@@ -134,7 +137,7 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
 
     private void verificarConformidadeInterfaceImplementada(DetailAST astInterfaceIdent) {
         String nomeInterface = astInterfaceIdent.getText();
-        InterfaceArquitetural interfaceArquitetural = TipoArquitetural.buscarInterfaceArquitetural(nomeInterface);
+        InterfaceArquitetural interfaceArquitetural = buscarInterfaceArquitetural(nomeInterface);
         if (interfaceArquitetural != null) {
             if (restricoesArquiteturais.ehInterfaceArquiteturalValida(tipo, interfaceArquitetural)) {
                 tipo.adicionarInterface(interfaceArquitetural);
@@ -149,7 +152,7 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
         if (astExtends != null) {
             String nomePai = findFirstAstOfType(astExtends, IDENT).getText();
 
-            HerancaArquitetural herancaArquitetural = TipoArquitetural.buscarHerancaArquitetural(nomePai);
+            HerancaArquitetural herancaArquitetural = buscarHerancaArquitetural(nomePai);
             if (restricoesArquiteturais.ehHerancaValida(tipo, herancaArquitetural)) {
                 tipo.adicionarHeranca(herancaArquitetural);
             } else {
@@ -162,11 +165,9 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
         DetailAST astModifiers = findFirstAstOfType(astClasseOuInterface, MODIFIERS);
         if (astModifiers != null) {
             List<DetailAST> astModifiersIdents = findAllAstsOfType(astModifiers, IDENT);
-            if (astModifiersIdents != null) {
-                for (DetailAST astIdent : astModifiersIdents) {
-                    if (astIdent.getParent().getType() == ANNOTATION) {
-                        verificarConformidadeAnotacao(astIdent);
-                    }
+            for (DetailAST astIdent : astModifiersIdents) {
+                if (astIdent.getParent().getType() == ANNOTATION) {
+                    verificarConformidadeAnotacao(astIdent);
                 }
             }
         }
@@ -194,7 +195,7 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
 
     private void verificarConformidadeAnotacao(DetailAST astAnnotationIdent) {
         String nomeAnotacao = astAnnotationIdent.getText();
-        AnotacaoArquitetural anotacaoArquitetural = TipoArquitetural.buscarAnotacaoArquitetural(nomeAnotacao);
+        AnotacaoArquitetural anotacaoArquitetural = buscarAnotacaoArquitetural(nomeAnotacao);
         if (anotacaoArquitetural != null) {
             if (restricoesArquiteturais.ehAnotacaoArquiteturalValida(tipo, anotacaoArquitetural)) {
                 tipo.adicionarAnotacao(anotacaoArquitetural);
@@ -207,7 +208,7 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
     private void verificarConfomidadeTipo(DetailAST astClasseOuInterface) {
         String nomeClasse = recuperarNomeDaClasseOuInterface(astClasseOuInterface);
 
-        sufixoArquitetural = TipoArquitetural.buscarSufixoArquitetural(nomeClasse);
+        SufixoArquitetural sufixoArquitetural = buscarSufixoArquitetural(nomeClasse);
 
         if (sufixoArquitetural != null) {
             tipo = new TipoArquitetural(sufixoArquitetural, pacoteArquitetural);
@@ -239,7 +240,7 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
     }
 
     private void verificarConformidadePacoteArquitetural(DetailAST astPacote, String nomePacote) {
-        pacoteArquitetural = TipoArquitetural.buscarPacoteArquitetural(nomePacote);
+        pacoteArquitetural = buscarPacoteArquitetural(nomePacote);
 
         if (pacoteArquitetural == null) {
             log(astPacote.getLineNo(), MSG_PACOTE_ARQUITETURAL, nomePacote);
