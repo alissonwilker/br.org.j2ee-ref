@@ -1,9 +1,13 @@
 package br.org.buildtools.checkstyle;
 
+import static com.puppycrawl.tools.checkstyle.api.TokenTypes.ANNOTATION;
 import static com.puppycrawl.tools.checkstyle.api.TokenTypes.CLASS_DEF;
+import static com.puppycrawl.tools.checkstyle.api.TokenTypes.EXTENDS_CLAUSE;
 import static com.puppycrawl.tools.checkstyle.api.TokenTypes.IDENT;
+import static com.puppycrawl.tools.checkstyle.api.TokenTypes.IMPLEMENTS_CLAUSE;
 import static com.puppycrawl.tools.checkstyle.api.TokenTypes.IMPORT;
 import static com.puppycrawl.tools.checkstyle.api.TokenTypes.INTERFACE_DEF;
+import static com.puppycrawl.tools.checkstyle.api.TokenTypes.MODIFIERS;
 import static com.puppycrawl.tools.checkstyle.api.TokenTypes.PACKAGE_DEF;
 import static com.puppycrawl.tools.checkstyle.api.TokenTypes.STATIC_IMPORT;
 
@@ -11,7 +15,6 @@ import java.util.Collection;
 import java.util.List;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
-import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import br.org.buildtools.checkstyle.TipoArquitetural.AnotacaoArquitetural;
 import br.org.buildtools.checkstyle.TipoArquitetural.InterfaceArquitetural;
@@ -75,7 +78,7 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
             verificarConformidadePacote(ast);
         }
 
-        if (ast.getType() == TokenTypes.IMPORT || ast.getType() == TokenTypes.STATIC_IMPORT) {
+        if (ast.getType() == IMPORT || ast.getType() == STATIC_IMPORT) {
             verificarConformidadeImports(ast);
         }
 
@@ -98,12 +101,12 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
     }
 
     private void verificarConformidadeInterfaces(DetailAST astClasseOuInterface) {
-        DetailAST astImplements = findFirstAstOfType(astClasseOuInterface, TokenTypes.IMPLEMENTS_CLAUSE);
+        DetailAST astImplements = findFirstAstOfType(astClasseOuInterface, IMPLEMENTS_CLAUSE);
         if (astImplements != null) {
             List<DetailAST> astImplementsIdents = findAllAstsOfType(astImplements, IDENT);
             if (astImplementsIdents != null) {
                 for (DetailAST astIdent : astImplementsIdents) {
-                    if (astIdent.getParent().getType() == TokenTypes.IMPLEMENTS_CLAUSE) {
+                    if (astIdent.getParent().getType() == IMPLEMENTS_CLAUSE) {
                         verificarConformidadeInterface(astIdent);
                     }
                 }
@@ -145,7 +148,7 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
     }
 
     private void verificarConformidadeHeranca(DetailAST astClasseOuInterface) {
-        DetailAST astExtends = findFirstAstOfType(astClasseOuInterface, TokenTypes.EXTENDS_CLAUSE);
+        DetailAST astExtends = findFirstAstOfType(astClasseOuInterface, EXTENDS_CLAUSE);
         if (astExtends != null) {
             String nomePai = findFirstAstOfType(astExtends, IDENT).getText();
 
@@ -158,12 +161,12 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
     }
 
     private void verificarConformidadeAnotacoes(DetailAST astClasseOuInterface) {
-        DetailAST astModifiers = findFirstAstOfType(astClasseOuInterface, TokenTypes.MODIFIERS);
+        DetailAST astModifiers = findFirstAstOfType(astClasseOuInterface, MODIFIERS);
         if (astModifiers != null) {
-            List<DetailAST> astModifiersIdents = findAllAstsOfType(astModifiers, TokenTypes.IDENT);
+            List<DetailAST> astModifiersIdents = findAllAstsOfType(astModifiers, IDENT);
             if (astModifiersIdents != null) {
                 for (DetailAST astIdent : astModifiersIdents) {
-                    if (astIdent.getParent().getType() == TokenTypes.ANNOTATION) {
+                    if (astIdent.getParent().getType() == ANNOTATION) {
                         verificarConformidadeAnotacao(astIdent);
                     }
                 }
