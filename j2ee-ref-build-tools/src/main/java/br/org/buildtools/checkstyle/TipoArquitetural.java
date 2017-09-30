@@ -166,7 +166,7 @@ public class TipoArquitetural {
     }
     
     enum AnotacaoArquitetural {
-        ManagedBean, ViewScoped, Path, Api, Named, RequestScoped, Transactional;
+        ManagedBean, ViewScoped, Path, Api, Named, RequestScoped, Transactional, Stateless;
     }
     
     enum InterfaceArquitetural {
@@ -174,11 +174,11 @@ public class TipoArquitetural {
     }
     
     enum SufixoArquitetural {
-        Dto, Controller, Api, BusinessFacade, Business, Dao;
+        Dto, Controller, Api, BusinessFacade, Business, Dao, NotificadorJms;
     }
     
     enum TipoArquiteturalAbstrato {
-        AbstractController, AbstractApi, AbstractBusinessFacade, AbstractBusiness, AbstractDao;
+        AbstractController, AbstractApi, AbstractBusinessFacade, AbstractBusiness, AbstractDao, AbstractNotificadorJms;
     }
     
     enum PacoteArquitetural {

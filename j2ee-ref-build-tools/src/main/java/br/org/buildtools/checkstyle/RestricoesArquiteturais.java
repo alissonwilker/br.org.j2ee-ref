@@ -27,7 +27,8 @@ public class RestricoesArquiteturais {
         tiposArquiteturais.add(criarBusinessFacade());
         tiposArquiteturais.add(criarBusiness());
         tiposArquiteturais.add(criarDao());
-    }
+        tiposArquiteturais.add(criarNotificadorJms());
+   }
     
     private void instanciarRestricoesPacotesArquiteturais() {
         restricoesPacotesArquiteturais.put(PacoteArquitetural.ViewController, criarRestricoesPacoteViewController());
@@ -42,6 +43,15 @@ public class RestricoesArquiteturais {
         return dto;
     }
     
+    private TipoArquitetural criarNotificadorJms() {
+        TipoArquitetural notificadorJms = new TipoArquitetural(SufixoArquitetural.NotificadorJms, PacoteArquitetural.Mensageria);
+        notificadorJms.setPai(TipoArquiteturalAbstrato.AbstractNotificadorJms);
+        
+        notificadorJms.adicionarAnotacao(AnotacaoArquitetural.Stateless);
+        
+        return notificadorJms;
+    }
+
     private TipoArquitetural criarBusinessFacade() {
         TipoArquitetural businessFacade = new TipoArquitetural(SufixoArquitetural.BusinessFacade, PacoteArquitetural.ModelBusinessFacade);
         businessFacade.setPai(TipoArquiteturalAbstrato.AbstractBusinessFacade);
