@@ -33,11 +33,18 @@ public class RestricoesArquiteturais {
         tiposArquiteturais.add(criarReceptorJms());
         tiposArquiteturais.add(criarEntidade());
         tiposArquiteturais.add(criarUtils());
-   }
+    }
 
     private void instanciarRestricoesPacotesArquiteturais() {
-        restricoesPacotesArquiteturais.put(PacoteArquitetural.ViewController, criarRestricoesPacoteViewController());
         restricoesPacotesArquiteturais.put(PacoteArquitetural.Api, criarRestricoesPacoteApi());
+        restricoesPacotesArquiteturais.put(PacoteArquitetural.ViewController, criarRestricoesPacoteViewController());
+        restricoesPacotesArquiteturais.put(PacoteArquitetural.ModelBusinessFacade,
+                        criarRestricoesPacoteModelBusinessFacade());
+        restricoesPacotesArquiteturais.put(PacoteArquitetural.ModelBusiness, criarRestricoesPacoteModelBusiness());
+        restricoesPacotesArquiteturais.put(PacoteArquitetural.ModelPersistenceDao,
+                        criarRestricoesPacoteModelPersistenceDao());
+        restricoesPacotesArquiteturais.put(PacoteArquitetural.ModelPersistenceEntity, criarRestricoesPacoteModelPersistenceEntity());
+        restricoesPacotesArquiteturais.put(PacoteArquitetural.Mensageria, criarRestricoesPacoteMensageria());
     }
 
     private TipoArquitetural criarMapper() {
@@ -54,7 +61,7 @@ public class RestricoesArquiteturais {
 
         entidade.adicionarAnotacao(AnotacaoArquitetural.Entity);
         entidade.adicionarAnotacao(AnotacaoArquitetural.Table);
-        
+
         entidade.adicionarInterface(InterfaceArquitetural.IEntidade);
 
         return entidade;
@@ -118,11 +125,13 @@ public class RestricoesArquiteturais {
     }
 
     private TipoArquitetural criarAbstractDao() {
-        TipoArquitetural dao = new TipoArquitetural(SufixoArquitetural.AbstractDao, PacoteArquitetural.ModelPersistenceDao);
+        TipoArquitetural dao = new TipoArquitetural(SufixoArquitetural.AbstractDao,
+                        PacoteArquitetural.ModelPersistenceDao);
         dao.adicionarHeranca(HerancaArquitetural.AbstractDao);
 
         return dao;
     }
+
     private TipoArquitetural criarBusiness() {
         TipoArquitetural business = new TipoArquitetural(SufixoArquitetural.Business, PacoteArquitetural.ModelBusiness);
         business.adicionarHeranca(HerancaArquitetural.AbstractBusiness);
@@ -147,7 +156,7 @@ public class RestricoesArquiteturais {
         TipoArquitetural viewController = new TipoArquitetural(SufixoArquitetural.Controller,
                         PacoteArquitetural.ViewController);
         viewController.adicionarHeranca(HerancaArquitetural.AbstractController);
-        
+
         viewController.adicionarAnotacao(AnotacaoArquitetural.ManagedBean);
         viewController.adicionarAnotacao(AnotacaoArquitetural.ViewScoped);
 
@@ -157,8 +166,11 @@ public class RestricoesArquiteturais {
     private Collection<PacoteArquitetural> criarRestricoesPacoteApi() {
         Collection<PacoteArquitetural> pacotesRestritos = new HashSet<PacoteArquitetural>();
 
+        pacotesRestritos.add(PacoteArquitetural.ViewController);
         pacotesRestritos.add(PacoteArquitetural.ModelBusiness);
         pacotesRestritos.add(PacoteArquitetural.ModelPersistenceDao);
+        pacotesRestritos.add(PacoteArquitetural.ModelPersistenceEntity);
+        pacotesRestritos.add(PacoteArquitetural.Mensageria);
 
         return pacotesRestritos;
     }
@@ -166,8 +178,71 @@ public class RestricoesArquiteturais {
     private Collection<PacoteArquitetural> criarRestricoesPacoteViewController() {
         Collection<PacoteArquitetural> pacotesRestritos = new HashSet<PacoteArquitetural>();
 
+        pacotesRestritos.add(PacoteArquitetural.Api);
         pacotesRestritos.add(PacoteArquitetural.ModelBusiness);
         pacotesRestritos.add(PacoteArquitetural.ModelPersistenceDao);
+        pacotesRestritos.add(PacoteArquitetural.ModelPersistenceEntity);
+        pacotesRestritos.add(PacoteArquitetural.Mensageria);
+
+        return pacotesRestritos;
+    }
+
+    private Collection<PacoteArquitetural> criarRestricoesPacoteModelBusinessFacade() {
+        Collection<PacoteArquitetural> pacotesRestritos = new HashSet<PacoteArquitetural>();
+
+        pacotesRestritos.add(PacoteArquitetural.Api);
+        pacotesRestritos.add(PacoteArquitetural.ViewController);
+        pacotesRestritos.add(PacoteArquitetural.ModelPersistenceDao);
+        pacotesRestritos.add(PacoteArquitetural.Mensageria);
+
+        return pacotesRestritos;
+    }
+
+    private Collection<PacoteArquitetural> criarRestricoesPacoteModelBusiness() {
+        Collection<PacoteArquitetural> pacotesRestritos = new HashSet<PacoteArquitetural>();
+
+        pacotesRestritos.add(PacoteArquitetural.Api);
+        pacotesRestritos.add(PacoteArquitetural.ViewController);
+        pacotesRestritos.add(PacoteArquitetural.ModelBusinessFacade);
+        pacotesRestritos.add(PacoteArquitetural.Mensageria);
+
+        return pacotesRestritos;
+    }
+
+    private Collection<PacoteArquitetural> criarRestricoesPacoteModelPersistenceDao() {
+        Collection<PacoteArquitetural> pacotesRestritos = new HashSet<PacoteArquitetural>();
+
+        pacotesRestritos.add(PacoteArquitetural.Api);
+        pacotesRestritos.add(PacoteArquitetural.ViewController);
+        pacotesRestritos.add(PacoteArquitetural.ModelBusiness);
+        pacotesRestritos.add(PacoteArquitetural.ModelBusinessFacade);
+        pacotesRestritos.add(PacoteArquitetural.Mensageria);
+
+        return pacotesRestritos;
+    }
+
+    private Collection<PacoteArquitetural> criarRestricoesPacoteModelPersistenceEntity() {
+        Collection<PacoteArquitetural> pacotesRestritos = new HashSet<PacoteArquitetural>();
+
+        pacotesRestritos.add(PacoteArquitetural.Api);
+        pacotesRestritos.add(PacoteArquitetural.ViewController);
+        pacotesRestritos.add(PacoteArquitetural.ModelBusiness);
+        pacotesRestritos.add(PacoteArquitetural.ModelBusinessFacade);
+        pacotesRestritos.add(PacoteArquitetural.ModelPersistenceDao);
+        pacotesRestritos.add(PacoteArquitetural.Mensageria);
+        pacotesRestritos.add(PacoteArquitetural.Dto);
+
+        return pacotesRestritos;
+    }
+
+    private Collection<PacoteArquitetural> criarRestricoesPacoteMensageria() {
+        Collection<PacoteArquitetural> pacotesRestritos = new HashSet<PacoteArquitetural>();
+
+        pacotesRestritos.add(PacoteArquitetural.Api);
+        pacotesRestritos.add(PacoteArquitetural.ViewController);
+        pacotesRestritos.add(PacoteArquitetural.ModelBusiness);
+        pacotesRestritos.add(PacoteArquitetural.ModelPersistenceDao);
+        pacotesRestritos.add(PacoteArquitetural.ModelPersistenceEntity);
 
         return pacotesRestritos;
     }
@@ -262,7 +337,7 @@ public class RestricoesArquiteturais {
         if (tipoArquitetural == null) {
             return false;
         }
-        
+
         return tipoArquitetural.possuiHeranca(heranca);
     }
 
