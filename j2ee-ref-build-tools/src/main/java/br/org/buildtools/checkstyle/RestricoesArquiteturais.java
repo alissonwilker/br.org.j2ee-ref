@@ -55,7 +55,7 @@ public class RestricoesArquiteturais {
 
     private TipoArquitetural criarDao() {
         TipoArquitetural dao = new TipoArquitetural(SufixoArquitetural.Dao, PacoteArquitetural.ModelPersistenceDao);
-//        dao.setPai(TipoArquiteturalAbstrato.AbstractDao);
+        dao.setPai(TipoArquiteturalAbstrato.AbstractDao);
         
         dao.adicionarAnotacao(AnotacaoArquitetural.Named);
         dao.adicionarAnotacao(AnotacaoArquitetural.RequestScoped);

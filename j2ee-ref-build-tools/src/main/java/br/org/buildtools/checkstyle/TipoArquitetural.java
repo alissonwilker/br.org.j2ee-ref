@@ -3,9 +3,6 @@ package br.org.buildtools.checkstyle;
 import java.util.Collection;
 import java.util.HashSet;
 
-import br.org.buildtools.checkstyle.TipoArquitetural.AnotacaoArquitetural;
-import br.org.buildtools.checkstyle.TipoArquitetural.TipoArquiteturalAbstrato;
-
 public class TipoArquitetural {
     private SufixoArquitetural sufixo;
     private PacoteArquitetural pacote;
