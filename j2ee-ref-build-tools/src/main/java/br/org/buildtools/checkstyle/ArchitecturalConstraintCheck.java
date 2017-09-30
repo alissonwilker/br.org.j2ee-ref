@@ -148,7 +148,6 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
         DetailAST astExtends = findFirstAstOfType(astClasseOuInterface, TokenTypes.EXTENDS_CLAUSE);
         if (astExtends != null) {
             String nomePai = findFirstAstOfType(astExtends, IDENT).getText();
-            System.out.println(nomePai);
 
             tipo.setPai(TipoArquitetural.buscarTipoArquiteturalAbstrato(nomePai));
 
@@ -218,8 +217,6 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
         if (sufixoArquitetural == null) {
             log(astClasseOuInterface.getLineNo(), MSG_SUFIXO_ARQUITETURAL, nomeClasseOuInterface);
         }
-
-        System.out.println(sufixoArquitetural);
     }
 
     private String recuperarNomeDaClasseOuInterface(DetailAST astClasseOuInterface) {
@@ -233,7 +230,6 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
             nomeClasseOuInterface = directChild.getText();
         }
 
-        System.out.println(nomeClasseOuInterface);
         return nomeClasseOuInterface;
     }
 
@@ -242,7 +238,6 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
         String importApenasPacote = importComNomeClasse.substring(0, importComNomeClasse.lastIndexOf("."));
 
         if (restricoesArquiteturais.ehUmPacoteRestrito(importApenasPacote, pacoteArquitetural)) {
-            System.out.println("acessando pacote arquitetural restrito ######################################");
             log(astImport.getLineNo(), MSG_PACOTE_RESTRITO, pacoteArquitetural.getNomePacote());
         }
     }
@@ -251,7 +246,6 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
         limpaAtributosInstancia();
 
         String nomePacote = fullyQualifiedPackage(astPacote);
-        System.out.println(nomePacote);
 
         verificarConformidadePacoteBase(astPacote, nomePacote);
         verificarConformidadePacoteArquitetural(astPacote, nomePacote);
@@ -261,16 +255,12 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
         pacoteArquitetural = TipoArquitetural.buscarPacoteArquitetural(nomePacote);
 
         if (pacoteArquitetural == null) {
-            System.out.println("não pertence a um pacote arquitetural!! @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
             log(astPacote.getLineNo(), MSG_PACOTE_ARQUITETURAL, nomePacote);
         }
-
-        System.out.println(pacoteArquitetural.getNomePacote());
     }
 
     private void verificarConformidadePacoteBase(DetailAST astPacote, String nomePacote) {
         if (!nomePacote.startsWith(PacoteArquitetural.Base.getNomePacote())) {
-            System.out.println("pacote base errado!! @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
             log(astPacote.getLineNo(), MSG_PACOTE_BASE, nomePacote, PacoteArquitetural.Base);
         }
     }
