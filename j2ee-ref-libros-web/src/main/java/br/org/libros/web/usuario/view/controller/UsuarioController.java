@@ -3,8 +3,8 @@ package br.org.libros.web.usuario.view.controller;
 import java.io.IOException;
 import java.security.Principal;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Named;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.servlet.ServletException;
 
 import br.org.arquitetura.view.controller.AbstractController;
@@ -18,8 +18,8 @@ import br.org.libros.negocio.usuario.dto.UsuarioDto;
  * 
  * @see br.org.arquitetura.view.controller.AbstractController
  */
-@Named
-@RequestScoped
+@ManagedBean
+@ViewScoped
 public class UsuarioController extends AbstractController<UsuarioDto, Integer> {
 
     private static final long serialVersionUID = 1L;

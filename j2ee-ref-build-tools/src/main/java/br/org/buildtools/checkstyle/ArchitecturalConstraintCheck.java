@@ -17,6 +17,7 @@ import java.util.List;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 
 import br.org.buildtools.checkstyle.TipoArquitetural.AnotacaoArquitetural;
+import br.org.buildtools.checkstyle.TipoArquitetural.HerancaArquitetural;
 import br.org.buildtools.checkstyle.TipoArquitetural.InterfaceArquitetural;
 import br.org.buildtools.checkstyle.TipoArquitetural.PacoteArquitetural;
 import br.org.buildtools.checkstyle.TipoArquitetural.SufixoArquitetural;
@@ -27,7 +28,6 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
     private static final String MSG_PACOTE_BASE = MSG_PREFIX + "pacoteBase";
     private static final String MSG_PACOTE_ARQUITETURAL = MSG_PREFIX + "pacoteArquitetural";
     private static final String MSG_PACOTE_RESTRITO = MSG_PREFIX + "pacoteRestrito";
-    private static final String MSG_SUFIXO_ARQUITETURAL = MSG_PREFIX + "sufixoArquitetural";
     private static final String MSG_TIPO_INVALIDO = MSG_PREFIX + "tipoInvalido";
     private static final String MSG_ANOTACAO_INVALIDA = MSG_PREFIX + "anotacaoInvalida";
     private static final String MSG_ANOTACOES_AUSENTES = MSG_PREFIX + "anotacoesAusentes";
@@ -85,29 +85,26 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
         if (ast.getType() == CLASS_DEF || ast.getType() == INTERFACE_DEF) {
             verificarConformidadeClasseOuInterface(ast);
         }
-
     }
 
     private void verificarConformidadeClasseOuInterface(DetailAST astClasseOuInterface) {
-        verificarConformidadeSufixoArquitetural(astClasseOuInterface);
-
-        verificarConfomidadeTipoArquitetural(astClasseOuInterface);
+        verificarConfomidadeTipo(astClasseOuInterface);
 
         verificarConformidadeAnotacoes(astClasseOuInterface);
 
         verificarConformidadeHeranca(astClasseOuInterface);
 
-        verificarConformidadeInterfaces(astClasseOuInterface);
+        verificarConformidadeInterfacesImplementadas(astClasseOuInterface);
     }
 
-    private void verificarConformidadeInterfaces(DetailAST astClasseOuInterface) {
+    private void verificarConformidadeInterfacesImplementadas(DetailAST astClasseOuInterface) {
         DetailAST astImplements = findFirstAstOfType(astClasseOuInterface, IMPLEMENTS_CLAUSE);
         if (astImplements != null) {
             List<DetailAST> astImplementsIdents = findAllAstsOfType(astImplements, IDENT);
             if (astImplementsIdents != null) {
                 for (DetailAST astIdent : astImplementsIdents) {
                     if (astIdent.getParent().getType() == IMPLEMENTS_CLAUSE) {
-                        verificarConformidadeInterface(astIdent);
+                        verificarConformidadeInterfaceImplementada(astIdent);
                     }
                 }
             }
@@ -135,7 +132,7 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
         }
     }
 
-    private void verificarConformidadeInterface(DetailAST astInterfaceIdent) {
+    private void verificarConformidadeInterfaceImplementada(DetailAST astInterfaceIdent) {
         String nomeInterface = astInterfaceIdent.getText();
         InterfaceArquitetural interfaceArquitetural = TipoArquitetural.buscarInterfaceArquitetural(nomeInterface);
         if (interfaceArquitetural != null) {
@@ -152,10 +149,11 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
         if (astExtends != null) {
             String nomePai = findFirstAstOfType(astExtends, IDENT).getText();
 
-            tipo.setPai(TipoArquitetural.buscarTipoArquiteturalAbstrato(nomePai));
-
-            if (!restricoesArquiteturais.temHerancaValida(tipo)) {
-                log(astClasseOuInterface.getLineNo(), MSG_HERANCA_INVALIDA);
+            HerancaArquitetural herancaArquitetural = TipoArquitetural.buscarHerancaArquitetural(nomePai);
+            if (restricoesArquiteturais.ehHerancaValida(tipo, herancaArquitetural)) {
+                tipo.adicionarHeranca(herancaArquitetural);
+            } else {
+                log(astClasseOuInterface.getLineNo(), MSG_HERANCA_INVALIDA, nomePai);
             }
         }
     }
@@ -206,34 +204,20 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
         }
     }
 
-    private void verificarConfomidadeTipoArquitetural(DetailAST astClasseOuInterface) {
-        tipo = new TipoArquitetural(sufixoArquitetural, pacoteArquitetural);
+    private void verificarConfomidadeTipo(DetailAST astClasseOuInterface) {
+        String nomeClasse = recuperarNomeDaClasseOuInterface(astClasseOuInterface);
+
+        sufixoArquitetural = TipoArquitetural.buscarSufixoArquitetural(nomeClasse);
+
+        if (sufixoArquitetural != null) {
+            tipo = new TipoArquitetural(sufixoArquitetural, pacoteArquitetural);
+        } else {
+            tipo = new TipoArquitetural(pacoteArquitetural);
+        }
+
         if (!restricoesArquiteturais.existeTipoArquitetural(tipo)) {
             log(astClasseOuInterface.getLineNo(), MSG_TIPO_INVALIDO);
         }
-    }
-
-    private void verificarConformidadeSufixoArquitetural(DetailAST astClasseOuInterface) {
-        String nomeClasseOuInterface = recuperarNomeDaClasseOuInterface(astClasseOuInterface);
-
-        sufixoArquitetural = TipoArquitetural.buscarSufixoArquitetural(nomeClasseOuInterface);
-        if (sufixoArquitetural == null) {
-            log(astClasseOuInterface.getLineNo(), MSG_SUFIXO_ARQUITETURAL, nomeClasseOuInterface);
-        }
-    }
-
-    private String recuperarNomeDaClasseOuInterface(DetailAST astClasseOuInterface) {
-        DetailAST directChild = astClasseOuInterface.getFirstChild();
-        while (directChild != null && directChild.getType() != IDENT) {
-            directChild = directChild.getNextSibling();
-        }
-
-        String nomeClasseOuInterface = null;
-        if (directChild != null && directChild.getType() == IDENT) {
-            nomeClasseOuInterface = directChild.getText();
-        }
-
-        return nomeClasseOuInterface;
     }
 
     private void verificarConformidadeImports(DetailAST astImport) {
@@ -241,7 +225,7 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
         String importApenasPacote = importComNomeClasse.substring(0, importComNomeClasse.lastIndexOf("."));
 
         if (restricoesArquiteturais.ehUmPacoteRestrito(importApenasPacote, pacoteArquitetural)) {
-            log(astImport.getLineNo(), MSG_PACOTE_RESTRITO, pacoteArquitetural.getNomePacote());
+            log(astImport.getLineNo(), MSG_PACOTE_RESTRITO, pacoteArquitetural.getNomePacote(), importApenasPacote);
         }
     }
 

@@ -1,5 +1,7 @@
 package br.org.buildtools.checkstyle;
 
+import static com.puppycrawl.tools.checkstyle.api.TokenTypes.IDENT;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,19 +19,20 @@ public abstract class CustomCheck extends AbstractCheck {
     /**
      * Returns the fully qualified package in a package definition or import statement.
      * 
-     * @param packageDefOrImportAST an AST of type PACKAGE_DEF or IMPORT
-     * @return the fully qualified package name (e.g., "javax.jws.soap") that is in a
-     *         package definition statement or an import statement.
+     * @param packageDefOrImportAST
+     *            an AST of type PACKAGE_DEF or IMPORT
+     * @return the fully qualified package name (e.g., "javax.jws.soap") that is in a package definition
+     *         statement or an import statement.
      */
     protected String fullyQualifiedPackage(DetailAST packageDefOrImportAST) {
-        if (packageDefOrImportAST == null || packageDefOrImportAST.getType() != TokenTypes.PACKAGE_DEF &&
-                packageDefOrImportAST.getType() != TokenTypes.IMPORT) {
-            throw new IllegalArgumentException("Parameter packageDefOrImportAST must be a PACKAGE_DEF or IMPORT AST");
+        if (packageDefOrImportAST == null || packageDefOrImportAST.getType() != TokenTypes.PACKAGE_DEF
+                        && packageDefOrImportAST.getType() != TokenTypes.IMPORT && packageDefOrImportAST.getType() != TokenTypes.STATIC_IMPORT) {
+            throw new IllegalArgumentException("Parameter packageDefOrImportAST must be a PACKAGE_DEF or IMPORT or STATIC_IMPORT AST");
         }
         DetailAST dot = findFirstAstOfType(packageDefOrImportAST, TokenTypes.DOT);
         if (dot == null) {
             // package name is a single word
-            DetailAST packageName = findFirstAstOfType(packageDefOrImportAST, TokenTypes.IDENT);
+            DetailAST packageName = findFirstAstOfType(packageDefOrImportAST, IDENT);
             return packageName.getText();
         } else {
             // package name has at least one dot
@@ -40,8 +43,10 @@ public abstract class CustomCheck extends AbstractCheck {
     }
 
     /**
-     * @param classDefToken must be a CLASS_DEF AST.
-     * @return the name of the superclass or null if the class definition does not contain an extends clause
+     * @param classDefToken
+     *            must be a CLASS_DEF AST.
+     * @return the name of the superclass or null if the class definition does not contain an extends
+     *         clause
      */
     protected String getSuperClassName(DetailAST classDefToken) {
         DetailAST extendsClause = findFirstAstOfType(classDefToken, TokenTypes.EXTENDS_CLAUSE);
@@ -54,8 +59,10 @@ public abstract class CustomCheck extends AbstractCheck {
     /**
      * Recursively traverse an expression tree and return all ASTs matching a specific token type.
      * 
-     * @param aAST the root of the branch to traverse.
-     * @param type the token type being looked for.
+     * @param aAST
+     *            the root of the branch to traverse.
+     * @param type
+     *            the token type being looked for.
      * @return list of DetailAST objects found; returns empty List if none is found.
      */
     protected List<DetailAST> findAllAstsOfType(DetailAST aAST, int type) {
@@ -75,13 +82,16 @@ public abstract class CustomCheck extends AbstractCheck {
     }
 
     /**
-     * Recursively traverse a given AST and return the first AST node matching a specific token type within the given AST.
-     * This method differs from {@link DetailAST#findFirstToken(int)} in that it searches for the given type
-     * in the specified node itself, all children, and indirect descendants (the whole tree), whereas
-     * {@link DetailAST#findFirstToken(int)} only searches the direct children.
+     * Recursively traverse a given AST and return the first AST node matching a specific token type
+     * within the given AST. This method differs from {@link DetailAST#findFirstToken(int)} in that it
+     * searches for the given type in the specified node itself, all children, and indirect descendants
+     * (the whole tree), whereas {@link DetailAST#findFirstToken(int)} only searches the direct
+     * children.
      * 
-     * @param aAST the root of the branch to traverse.
-     * @param type the token type being looked for.
+     * @param aAST
+     *            the root of the branch to traverse.
+     * @param type
+     *            the token type being looked for.
      * @return first DetailAST found or null if no node of the given type is found
      * 
      * @see DetailAST#findFirstToken(int)
@@ -94,7 +104,8 @@ public abstract class CustomCheck extends AbstractCheck {
         if (aAST.getType() == type) {
             firstAst = aAST;
         } else {
-            for (DetailAST chld = aAST.getFirstChild(); chld != null && firstAst == null; chld = chld.getNextSibling()) {
+            for (DetailAST chld = aAST.getFirstChild(); chld != null
+                            && firstAst == null; chld = chld.getNextSibling()) {
                 firstAst = findFirstAstOfType(chld, type);
             }
         }
@@ -102,15 +113,16 @@ public abstract class CustomCheck extends AbstractCheck {
     }
 
     /**
-     * Recursive method to traverse the IDENT-DOT-IDENT-DOT-...-IDENT-DOT-IDENT segment of a
-     * PACKAGE_DEF or IMPORT token.
-     * It builds the fully qualified package name in the StringBuilder parameter.
+     * Recursive method to traverse the IDENT-DOT-IDENT-DOT-...-IDENT-DOT-IDENT segment of a PACKAGE_DEF
+     * or IMPORT token. It builds the fully qualified package name in the StringBuilder parameter.
      * 
-     * @param aAST the root of the branch to traverse.
-     * @param fullName the object in which the full name of the package will be put.
+     * @param aAST
+     *            the root of the branch to traverse.
+     * @param fullName
+     *            the object in which the full name of the package will be put.
      */
     private void fullyQualifiedPackageAux(StringBuilder fullName, DetailAST aAST) {
-        if (aAST.getType() == TokenTypes.IDENT) {
+        if (aAST.getType() == IDENT) {
             // end of the recursion.
             fullName.append(aAST.getText());
         } else {
@@ -126,13 +138,15 @@ public abstract class CustomCheck extends AbstractCheck {
      * 
      * @return true if the annotation is present. False, otherwise.
      * 
-     * @param aAST must be a TokenTypes.CLASS_DEF.
-     * @param annotation annotation identifier without '@'
+     * @param aAST
+     *            must be a TokenTypes.CLASS_DEF.
+     * @param annotation
+     *            annotation identifier without '@'
      */
     public boolean containsAnnotation(DetailAST aAST, String annotation) {
         List<DetailAST> annotations = findAllAstsOfType(aAST, TokenTypes.ANNOTATION);
         for (DetailAST an : annotations) {
-            DetailAST annotationName = an.findFirstToken(TokenTypes.IDENT);
+            DetailAST annotationName = an.findFirstToken(IDENT);
             if (annotationName != null && annotationName.getText().equals(annotation)) {
                 return true;
             }
@@ -141,10 +155,12 @@ public abstract class CustomCheck extends AbstractCheck {
     }
 
     /**
-     * Given an ASSIGN token, returns the name of the variable being assigned. The position of the variable IDENT token differs
-     * whether the ASSIGN is part of a variable definition (declaration) or not.
+     * Given an ASSIGN token, returns the name of the variable being assigned. The position of the
+     * variable IDENT token differs whether the ASSIGN is part of a variable definition (declaration) or
+     * not.
      * 
-     * @param assignToken the token that represents an assignment.
+     * @param assignToken
+     *            the token that represents an assignment.
      * 
      * @return the name of the variable being assigned.
      */
@@ -169,10 +185,12 @@ public abstract class CustomCheck extends AbstractCheck {
         } else if (TokenTypes.DOT == assignToken.getFirstChild().getType()) {
             // ASSIGN of member variable. Example: this.login = user.getLogin();
             // EXPR (ASSIGN (DOT (LITERAL_THIS, IDENT), right-side value tokens))
-            identToken = assignToken.getFirstChild().findFirstToken(TokenTypes.IDENT);
+            identToken = assignToken.getFirstChild().findFirstToken(IDENT);
         } else if (TokenTypes.ARRAY_INIT == assignToken.getFirstChild().getType()) {
-            // ASSIGN of array with initialization. Example: String[] headers = {"", "", "", "Distribution, "", "", "x", ""};
-            // VARIABLE_DEF (MODIFIERS, TYPE, IDENT, ASSIGN (ARRAY_INIT (EXPR (val tokens), COMMA, EXPR (val tokens), COMMA, ...))
+            // ASSIGN of array with initialization. Example: String[] headers = {"", "", "", "Distribution, "",
+            // "", "x", ""};
+            // VARIABLE_DEF (MODIFIERS, TYPE, IDENT, ASSIGN (ARRAY_INIT (EXPR (val tokens), COMMA, EXPR (val
+            // tokens), COMMA, ...))
             identToken = assignToken.getPreviousSibling();
         } else if (TokenTypes.LAMBDA == assignToken.getFirstChild().getType()) {
             // ASSIGN of a valute that contians a lambda expression.
@@ -181,7 +199,7 @@ public abstract class CustomCheck extends AbstractCheck {
         } else {
             // ASSIGN of variable previously declared. Example: x = 10;
             // EXPR (ASSIGN (IDENT, right-side value tokens))
-            identToken = assignToken.findFirstToken(TokenTypes.IDENT);
+            identToken = assignToken.findFirstToken(IDENT);
         }
         if (identToken != null) {
             return identToken.getText();
@@ -192,20 +210,22 @@ public abstract class CustomCheck extends AbstractCheck {
     /**
      * Gets the variable or parameter associated with a given identity token.
      * 
-     * @return the token (VARIABLE_DEF ou PARAMETER_DEF) where the specified variable (IDENT) was defined.
+     * @return the token (VARIABLE_DEF ou PARAMETER_DEF) where the specified variable (IDENT) was
+     *         defined.
      * 
-     * @param identToken the variable's IDENT
+     * @param identToken
+     *            the variable's IDENT
      * 
      * @author Rafael Costa
      */
     protected DetailAST getVariableOrParameterDefForIdent(DetailAST identToken) {
-        if (identToken.getType() != TokenTypes.IDENT) {
+        if (identToken.getType() != IDENT) {
             throw new IllegalArgumentException("The type of parameter identToken must be TokenTypes.IDENT");
         }
         DetailAST varDefToken = null;
         DetailAST parDefToken = null;
-        boolean hasThisPrefix =
-                identToken.getPreviousSibling() != null && identToken.getPreviousSibling().getType() == TokenTypes.LITERAL_THIS;
+        boolean hasThisPrefix = identToken.getPreviousSibling() != null
+                        && identToken.getPreviousSibling().getType() == TokenTypes.LITERAL_THIS;
         int closestLine = 0;
         varDefToken = findVariableDefForIdent(identToken, closestLine, hasThisPrefix);
 
@@ -223,12 +243,15 @@ public abstract class CustomCheck extends AbstractCheck {
     }
 
     /**
-     * Este método busca um token do tipo VARIABLE_DEF que
-     * corresponde ao IDENT de chamada de método passado.
+     * Este método busca um token do tipo VARIABLE_DEF que corresponde ao IDENT de chamada de método
+     * passado.
      * 
-     * @param identToken Token do tipo IDENT da chamada de um método
-     * @param closestLine Número da linha de início
-     * @param isThisCall Boolean que define se a chamada ao método teve um 'this.'
+     * @param identToken
+     *            Token do tipo IDENT da chamada de um método
+     * @param closestLine
+     *            Número da linha de início
+     * @param isThisCall
+     *            Boolean que define se a chamada ao método teve um 'this.'
      * 
      * @return o token do tipo VARIABLE_DEF associado ao IDENT token.
      * 
@@ -246,11 +269,11 @@ public abstract class CustomCheck extends AbstractCheck {
             if (getScopeOfDef(current).getType() == TokenTypes.CLASS_DEF) {
                 classDefToken = current;
             }
-            if (getVarNameInVariableOrParameterDef(current).equals(identToken.getText()) &&
-                    current.getLineNo() <= identToken.getLineNo()) {
+            if (getVarNameInVariableOrParameterDef(current).equals(identToken.getText())
+                            && current.getLineNo() <= identToken.getLineNo()) {
                 if (!isThisCall && current.getLineNo() > closestLine) {
-                    if (getScopeOfDef(current).getLineNo() == getScopeOfDef(identToken).getLineNo() ||
-                            getScopeOfDef(current).getLineNo() == root.getLineNo()) {
+                    if (getScopeOfDef(current).getLineNo() == getScopeOfDef(identToken).getLineNo()
+                                    || getScopeOfDef(current).getLineNo() == root.getLineNo()) {
                         defToken = current;
                         closestLine = current.getLineNo();
                     }
@@ -265,11 +288,13 @@ public abstract class CustomCheck extends AbstractCheck {
     }
 
     /**
-     * Este método busca um token do tipo PARAMETER_DEF que
-     * corresponde ao IDENT de chamada de método passado.
+     * Este método busca um token do tipo PARAMETER_DEF que corresponde ao IDENT de chamada de método
+     * passado.
      * 
-     * @param identToken Token do tipo IDENT da chamada de um método
-     * @param closestLine Número da linha de início
+     * @param identToken
+     *            Token do tipo IDENT da chamada de um método
+     * @param closestLine
+     *            Número da linha de início
      * 
      * @return o token do tipo PARAMETER_DEF associado ao IDENT token.
      * 
@@ -280,10 +305,9 @@ public abstract class CustomCheck extends AbstractCheck {
         DetailAST defToken = null;
         List<DetailAST> parameterDefs = findAllAstsOfType(root, TokenTypes.PARAMETER_DEF);
         for (DetailAST current : parameterDefs) {
-            if (getVarNameInVariableOrParameterDef(current).equals(identToken.getText()) &&
-                    current.getLineNo() <= identToken.getLineNo() &&
-                    current.getLineNo() > closestLine &&
-                    getScopeOfDef(current).getLineNo() == getScopeOfDef(identToken).getLineNo()) {
+            if (getVarNameInVariableOrParameterDef(current).equals(identToken.getText())
+                            && current.getLineNo() <= identToken.getLineNo() && current.getLineNo() > closestLine
+                            && getScopeOfDef(current).getLineNo() == getScopeOfDef(identToken).getLineNo()) {
                 defToken = current;
                 closestLine = current.getLineNo();
             }
@@ -293,10 +317,10 @@ public abstract class CustomCheck extends AbstractCheck {
     }
 
     /**
-     * Este método retorna o token de escopo da variável
-     * passada por parâmetro.
+     * Este método retorna o token de escopo da variável passada por parâmetro.
      * 
-     * @param defToken Token da definição da variável
+     * @param defToken
+     *            Token da definição da variável
      * 
      * @return o token de escopo da variável passada por parâmetro.
      * 
@@ -304,18 +328,18 @@ public abstract class CustomCheck extends AbstractCheck {
      */
     protected DetailAST getScopeOfDef(DetailAST defToken) {
         DetailAST parent = defToken;
-        while (parent.getType() != TokenTypes.CLASS_DEF && parent.getType() != TokenTypes.CTOR_DEF &&
-                parent.getType() != TokenTypes.METHOD_DEF) {
+        while (parent.getType() != TokenTypes.CLASS_DEF && parent.getType() != TokenTypes.CTOR_DEF
+                        && parent.getType() != TokenTypes.METHOD_DEF) {
             parent = parent.getParent();
         }
         return parent;
     }
 
     /**
-     * Este método verifica se a classe classDefToken está
-     * dentro de uma outra classe.
+     * Este método verifica se a classe classDefToken está dentro de uma outra classe.
      * 
-     * @param classDefToken Token de definição da classe (CLASS_DEF)
+     * @param classDefToken
+     *            Token de definição da classe (CLASS_DEF)
      * 
      * @return true se a classe classDefToken está dentro de uma outra classe. False, caso contrário.
      * 
@@ -330,10 +354,10 @@ public abstract class CustomCheck extends AbstractCheck {
     }
 
     /**
-     * Este método retorna o nome literal da variável definida
-     * pelo token passado.
+     * Este método retorna o nome literal da variável definida pelo token passado.
      * 
-     * @param defToken Token VARIABLE_DEF ou PARAMETER_DEF
+     * @param defToken
+     *            Token VARIABLE_DEF ou PARAMETER_DEF
      * 
      * @return o nome literal da variável definida pelo token passado.
      * 
@@ -361,12 +385,12 @@ public abstract class CustomCheck extends AbstractCheck {
     }
 
     /**
-     * Este método retorna o nome literal da variável definida
-     * pelo token passado.
+     * Este método retorna o nome literal da variável definida pelo token passado.
      * 
      * @return o nome literal da variável definida pelo token passado.
      * 
-     * @param defToken Token de definição
+     * @param defToken
+     *            Token de definição
      * @author x05119695116 Rafael Costa
      */
     protected DetailAST getClassToken(DetailAST defToken) {
@@ -375,6 +399,27 @@ public abstract class CustomCheck extends AbstractCheck {
             parent = parent.getParent();
         }
         return parent;
+    }
+
+    /**
+     * Recupera o nome da classe ou interface.
+     * 
+     * @param astClasseOuInterface
+     *            um token do tipo CLASS_DEF ou INTERFACE_DEF.
+     * @return o nome da classe ou interface associada ao token.
+     */
+    protected String recuperarNomeDaClasseOuInterface(DetailAST astClasseOuInterface) {
+        DetailAST directChild = astClasseOuInterface.getFirstChild();
+        while (directChild != null && directChild.getType() != IDENT) {
+            directChild = directChild.getNextSibling();
+        }
+
+        String nomeClasseOuInterface = null;
+        if (directChild != null && directChild.getType() == IDENT) {
+            nomeClasseOuInterface = directChild.getText();
+        }
+
+        return nomeClasseOuInterface;
     }
 
 }

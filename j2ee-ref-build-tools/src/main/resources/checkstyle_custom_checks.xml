@@ -35,6 +35,9 @@
 	<module name="TreeWalker">
 		<!-- Checks personalizados -->
 		<module name="ArchitecturalConstraint"/>
+		<module name="PrefixoInterface">
+			<property name="prefixo" value="I"/>
+		</module>
 
 		<!-- Default Google Checks -->
 		<module name="OuterTypeFilename" />

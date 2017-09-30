@@ -6,103 +6,120 @@ import java.util.HashSet;
 public class TipoArquitetural {
     private SufixoArquitetural sufixo;
     private PacoteArquitetural pacote;
-    private TipoArquiteturalAbstrato pai;
     private Collection<AnotacaoArquitetural> anotacoes = new HashSet<AnotacaoArquitetural>();
     private Collection<InterfaceArquitetural> interfaces = new HashSet<InterfaceArquitetural>();
-    
-    // TODO refatorar para incluir a possibilidade de um sufixo estar contido dentro de outro. Por exemplo: Dto e
-    // MapperDto.
-    public static SufixoArquitetural buscarSufixoArquitetural(String nomeClasseOuInterface) {
+    private Collection<HerancaArquitetural> herancas = new HashSet<HerancaArquitetural>();
+
+    public static SufixoArquitetural buscarSufixoArquitetural(String nomeClasse) {
         SufixoArquitetural[] sufixos = SufixoArquitetural.values();
+        SufixoArquitetural sufixo = null;
         int i;
         for (i = 0; i < sufixos.length; i++) {
-            if (nomeClasseOuInterface.endsWith(sufixos[i].name())) {
-                break;
+            if (nomeClasse.endsWith(sufixos[i].name())) {
+                if (sufixo == null) {
+                    sufixo = sufixos[i];
+                } else {
+                    if (sufixos[i].name().length() > sufixo.name().length()) {
+                        sufixo = sufixos[i];
+                    }
+                }
             }
         }
-        return i < sufixos.length ? sufixos[i] : null;
+
+        return sufixo;
     }
-    
-    // TODO refatorar para incluir a possibilidade de um pacote estar contido dentro de outro. Por exemplo: api e
-    // excecao.api.
+
     public static PacoteArquitetural buscarPacoteArquitetural(String nomePacote) {
         PacoteArquitetural[] pacotes = PacoteArquitetural.values();
+        PacoteArquitetural pacote = null;
         int i;
         for (i = 0; i < pacotes.length; i++) {
             if (nomePacote.endsWith(pacotes[i].getNomePacote())) {
-                break;
+                if (pacote == null) {
+                    pacote = pacotes[i];
+                } else {
+                    if (pacotes[i].name().length() > pacote.name().length()) {
+                        pacote = pacotes[i];
+                    }
+                }
             }
         }
-        return i < pacotes.length ? pacotes[i] : null;
+        return pacote;
     }
-    
-    public static TipoArquiteturalAbstrato buscarTipoArquiteturalAbstrato(String nomePai) {
-        for (TipoArquiteturalAbstrato tipoArquiteturalAbstrato : TipoArquiteturalAbstrato.values()) {
+
+    public static HerancaArquitetural buscarHerancaArquitetural(String nomePai) {
+        for (HerancaArquitetural tipoArquiteturalAbstrato : HerancaArquitetural.values()) {
             if (tipoArquiteturalAbstrato.name().equals(nomePai)) {
                 return tipoArquiteturalAbstrato;
             }
         }
-        
+
         return null;
     }
-    
+
     public static AnotacaoArquitetural buscarAnotacaoArquitetural(String nomeAnotacao) {
         for (AnotacaoArquitetural anotacaoArquitetural : AnotacaoArquitetural.values()) {
             if (anotacaoArquitetural.name().equals(nomeAnotacao)) {
                 return anotacaoArquitetural;
             }
         }
-        
+
         return null;
     }
-    
+
     public static InterfaceArquitetural buscarInterfaceArquitetural(String nomeInterface) {
         for (InterfaceArquitetural interfaceArquitetural : InterfaceArquitetural.values()) {
             if (interfaceArquitetural.name().equals(nomeInterface)) {
                 return interfaceArquitetural;
             }
         }
-        
+
         return null;
     }
-    
+
+    public TipoArquitetural(PacoteArquitetural pacote) {
+        this(SufixoArquitetural.NULL, pacote);
+    }
+
     public TipoArquitetural(SufixoArquitetural sufixo, PacoteArquitetural pacote) {
+        if (sufixo == null || pacote == null) {
+            throw new IllegalArgumentException();
+        }
+
         this.sufixo = sufixo;
         this.pacote = pacote;
     }
-    
+
     public void adicionarAnotacao(AnotacaoArquitetural anotacaoArquitetural) {
         if (anotacaoArquitetural != null) {
             anotacoes.add(anotacaoArquitetural);
         }
     }
-    
+
     public void adicionarInterface(InterfaceArquitetural interfaceArquitetural) {
         if (interfaceArquitetural != null) {
             interfaces.add(interfaceArquitetural);
         }
     }
-    
-    public void setPai(TipoArquiteturalAbstrato pai) {
-        this.pai = pai;
+
+    public void adicionarHeranca(HerancaArquitetural pai) {
+        if (pai != null) {
+            herancas.add(pai);
+        }
     }
-    
+
     public SufixoArquitetural getSufixo() {
         return sufixo;
     }
-    
+
     public PacoteArquitetural getPacote() {
         return pacote;
-    }
-    
-    public TipoArquiteturalAbstrato getPai() {
-        return pai;
     }
 
     public Collection<AnotacaoArquitetural> getAnotacoes() {
         return anotacoes;
     }
-    
+
     public Collection<InterfaceArquitetural> getInterfaces() {
         return interfaces;
     }
@@ -115,7 +132,7 @@ public class TipoArquitetural {
         }
         return false;
     }
-    
+
     public boolean possuiInterface(InterfaceArquitetural interfaceArq) {
         for (InterfaceArquitetural interfaceArquitetural : interfaces) {
             if (interfaceArquitetural.equals(interfaceArq)) {
@@ -125,85 +142,55 @@ public class TipoArquitetural {
         return false;
     }
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((anotacoes == null) ? 0 : anotacoes.hashCode());
-        result = prime * result + ((interfaces == null) ? 0 : interfaces.hashCode());
-        result = prime * result + ((pacote == null) ? 0 : pacote.hashCode());
-        result = prime * result + ((pai == null) ? 0 : pai.hashCode());
-        result = prime * result + ((sufixo == null) ? 0 : sufixo.hashCode());
-        return result;
-    }
-    
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        TipoArquitetural other = (TipoArquitetural) obj;
-        if (anotacoes == null) {
-            if (other.anotacoes != null)
-                return false;
-        } else if (!anotacoes.equals(other.anotacoes))
-            return false;
-        if (interfaces == null) {
-            if (other.interfaces != null)
-                return false;
-        } else if (!interfaces.equals(other.interfaces))
-            return false;
-        if (pacote != other.pacote)
-            return false;
-        if (pai != other.pai)
-            return false;
-        if (sufixo != other.sufixo)
-            return false;
-        return true;
+    public boolean possuiHeranca(HerancaArquitetural heranca) {
+        for (HerancaArquitetural herancaArquitetural : herancas) {
+            if (herancaArquitetural.equals(heranca)) {
+                return true;
+            }
+        }
+        
+        return herancas.size() == 0 && heranca == null ? true : false;
     }
     
     enum AnotacaoArquitetural {
-        ManagedBean, ViewScoped, Path, Api, Named, RequestScoped, Transactional, Stateless;
+        ManagedBean, ViewScoped, Path, Api, Named, RequestScoped, Transactional, Stateless, Mapper, Entity, Table, MessageDriven;
     }
-    
+
     enum InterfaceArquitetural {
         IEntidade, IDto;
     }
-    
+
     enum SufixoArquitetural {
-        Dto, Controller, Api, BusinessFacade, Business, Dao, NotificadorJms;
+        Dto, Controller, Api, BusinessFacade, Business, Dao, NotificadorJms, ReceptorJms, Mapper, AbstractDao, NULL;
     }
-    
-    enum TipoArquiteturalAbstrato {
-        AbstractController, AbstractApi, AbstractBusinessFacade, AbstractBusiness, AbstractDao, AbstractNotificadorJms;
+
+    enum HerancaArquitetural {
+        IGenericMapper, AbstractController, AbstractApi, AbstractBusinessFacade, AbstractBusiness, AbstractDao, AbstractNotificadorJms, LibrosAbstractDao, LivrariaAbstractDao, AbstractReceptorJms;
     }
-    
+
     enum PacoteArquitetural {
         Base("br.org"), Api("api"), ApiExcecaoMapper("api.excecao.mapper"), Dto("dto"), DtoMapper(
-                "dto.mapper"), Excecao("excecao"), Mensageria("mensageria"), ModelBusiness(
-                        "model.business"), ModelBusinessFacade("model.business.facade"), ModelPersistenceDao(
-                                "model.persistence.dao"), ModelPersistenceEntity(
-                                        "model.persistence.entity"), ModelPersistenceEntityListener(
-                                                "model.persistence.entity.listener"), ModelPersistenceEntityValidator(
-                                                        "model.persistence.entity.validator"), ModelPersistenceEntityValidatorAnnotation(
-                                                                "model.persistence.entity.validator.annotation"), Utils(
-                                                                        "utils"), ViewController(
-                                                                                "view.controller"), ViewConverter(
-                                                                                        "view.converter"), ViewValidator(
-                                                                                                "view.validator");
-        
+                        "dto.mapper"), Excecao("excecao"), Mensageria("mensageria"), ModelBusiness(
+                                        "model.business"), ModelBusinessFacade(
+                                                        "model.business.facade"), ModelPersistenceDao(
+                                                                        "model.persistence.dao"), ModelPersistenceEntity(
+                                                                                        "model.persistence.entity"), ModelPersistenceEntityListener(
+                                                                                                        "model.persistence.entity.listener"), ModelPersistenceEntityValidator(
+                                                                                                                        "model.persistence.entity.validator"), ModelPersistenceEntityValidatorAnnotation(
+                                                                                                                                        "model.persistence.entity.validator.annotation"), Utils(
+                                                                                                                                                        "utils"), ViewController(
+                                                                                                                                                                        "view.controller"), ViewConverter(
+                                                                                                                                                                                        "view.converter"), ViewValidator(
+                                                                                                                                                                                                        "view.validator");
+
         private String nomePacote;
-        
+
         private PacoteArquitetural(String nomePacote) {
             this.nomePacote = nomePacote;
         }
-        
+
         public String getNomePacote() {
             return nomePacote;
         }
     }
-
 }
