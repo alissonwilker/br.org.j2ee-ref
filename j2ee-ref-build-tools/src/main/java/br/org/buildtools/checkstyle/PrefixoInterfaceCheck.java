@@ -7,7 +7,7 @@ import com.puppycrawl.tools.checkstyle.api.DetailAST;
 public class PrefixoInterfaceCheck extends CustomCheck {
 
     private static final String MSG_PREFIX = "restricaoArquitetural.";
-    private static final String MSG_PREFIXO_ARQUITETURAL = MSG_PREFIX + "prefixoArquitetural";
+    private static final String MSG_PREFIXO_INTERFACE = MSG_PREFIX + "prefixoInterface";
 
     private String prefixo = null;
 
@@ -36,7 +36,7 @@ public class PrefixoInterfaceCheck extends CustomCheck {
 
         if (!(nomeInterface.startsWith(prefixo)
                         && nomeInterface.substring(prefixo.length(), prefixo.length() + 1).matches("[A-Z]"))) {
-            log(astInterface.getLineNo(), MSG_PREFIXO_ARQUITETURAL, nomeInterface, prefixo);
+            log(astInterface.getLineNo(), MSG_PREFIXO_INTERFACE, nomeInterface, prefixo);
         }
     }
 
