@@ -380,11 +380,11 @@
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="Variáveis Definidas Pelo Usuário" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">localhost</stringProp>
-          <stringProp name="HTTPSampler.port">8080</stringProp>
+          <stringProp name="HTTPSampler.domain">g1.globo.com</stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
           <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">libros/api/bibliotecas</stringProp>
+          <stringProp name="HTTPSampler.path"></stringProp>
           <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
           <stringProp name="HTTPSampler.connect_timeout"></stringProp>
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
@@ -400,12 +400,12 @@
     <hashTree>
       <ProxyControl guiclass="ProxyControlGui" testclass="ProxyControl" testname="Servidor HTTP Proxy" enabled="true">
         <stringProp name="ProxyControlGui.port">8888</stringProp>
-        <collectionProp name="ProxyControlGui.exclude_list">
-          <stringProp name="-2063843150">(?i).*\.(bmp|css|js|gif|ico|jpe?g|png|swf|woff|woff2)</stringProp>
-        </collectionProp>
+        <collectionProp name="ProxyControlGui.exclude_list"/>
         <collectionProp name="ProxyControlGui.include_list">
-          <stringProp name="0"></stringProp>
-          <stringProp name="-135077191">.*\.html</stringProp>
+          <stringProp name="861827575">http://www.g1.com.br/</stringProp>
+          <stringProp name="-60857073">.*\*.html</stringProp>
+          <stringProp name="-1681386637">http://localhost:8080/libros/pages/app.xhtml</stringProp>
+          <stringProp name="-616663938">http://www.g1.com.br/index.html</stringProp>
         </collectionProp>
         <boolProp name="ProxyControlGui.capture_http_headers">true</boolProp>
         <intProp name="ProxyControlGui.grouping_mode">0</intProp>
