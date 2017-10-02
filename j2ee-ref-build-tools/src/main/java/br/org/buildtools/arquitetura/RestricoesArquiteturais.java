@@ -1,24 +1,15 @@
 package br.org.buildtools.arquitetura;
 
 import static br.org.buildtools.arquitetura.fabrica.FabricaRestricaoPacote.criarRestricoesPacoteApi;
-import static br.org.buildtools.arquitetura.fabrica.FabricaRestricaoPacote.criarRestricoesPacoteMensageria;
-import static br.org.buildtools.arquitetura.fabrica.FabricaRestricaoPacote.criarRestricoesPacoteModelBusiness;
-import static br.org.buildtools.arquitetura.fabrica.FabricaRestricaoPacote.criarRestricoesPacoteModelBusinessFacade;
-import static br.org.buildtools.arquitetura.fabrica.FabricaRestricaoPacote.criarRestricoesPacoteModelPersistenceDao;
-import static br.org.buildtools.arquitetura.fabrica.FabricaRestricaoPacote.criarRestricoesPacoteModelPersistenceEntity;
-import static br.org.buildtools.arquitetura.fabrica.FabricaRestricaoPacote.criarRestricoesPacoteViewController;
-import static br.org.buildtools.arquitetura.fabrica.FabricaTipoArquitetural.criarAbstractDao;
+import static br.org.buildtools.arquitetura.fabrica.FabricaRestricaoPacote.criarRestricoesPacoteExcecoesApiMapper;
+import static br.org.buildtools.arquitetura.fabrica.FabricaRestricaoPacote.criarRestricoesPacoteServico;
 import static br.org.buildtools.arquitetura.fabrica.FabricaTipoArquitetural.criarApi;
-import static br.org.buildtools.arquitetura.fabrica.FabricaTipoArquitetural.criarBusiness;
-import static br.org.buildtools.arquitetura.fabrica.FabricaTipoArquitetural.criarBusinessFacade;
 import static br.org.buildtools.arquitetura.fabrica.FabricaTipoArquitetural.criarDao;
 import static br.org.buildtools.arquitetura.fabrica.FabricaTipoArquitetural.criarDto;
 import static br.org.buildtools.arquitetura.fabrica.FabricaTipoArquitetural.criarEntidade;
 import static br.org.buildtools.arquitetura.fabrica.FabricaTipoArquitetural.criarMapper;
-import static br.org.buildtools.arquitetura.fabrica.FabricaTipoArquitetural.criarNotificadorJms;
-import static br.org.buildtools.arquitetura.fabrica.FabricaTipoArquitetural.criarReceptorJms;
+import static br.org.buildtools.arquitetura.fabrica.FabricaTipoArquitetural.criarServico;
 import static br.org.buildtools.arquitetura.fabrica.FabricaTipoArquitetural.criarUtils;
-import static br.org.buildtools.arquitetura.fabrica.FabricaTipoArquitetural.criarViewController;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -137,28 +128,17 @@ public class RestricoesArquiteturais {
         tiposArquiteturais.add(criarMapper());
         tiposArquiteturais.add(criarDto());
         tiposArquiteturais.add(criarApi());
-        tiposArquiteturais.add(criarViewController());
-        tiposArquiteturais.add(criarBusinessFacade());
-        tiposArquiteturais.add(criarBusiness());
-        tiposArquiteturais.add(criarAbstractDao());
+        tiposArquiteturais.add(criarServico());
         tiposArquiteturais.add(criarDao());
-        tiposArquiteturais.add(criarNotificadorJms());
-        tiposArquiteturais.add(criarReceptorJms());
         tiposArquiteturais.add(criarEntidade());
         tiposArquiteturais.add(criarUtils());
     }
 
     private void instanciarRestricoesPacotesArquiteturais() {
         restricoesPacotesArquiteturais.put(PacoteArquitetural.Api, criarRestricoesPacoteApi());
-        restricoesPacotesArquiteturais.put(PacoteArquitetural.ViewController, criarRestricoesPacoteViewController());
-        restricoesPacotesArquiteturais.put(PacoteArquitetural.ModelBusinessFacade,
-            criarRestricoesPacoteModelBusinessFacade());
-        restricoesPacotesArquiteturais.put(PacoteArquitetural.ModelBusiness, criarRestricoesPacoteModelBusiness());
-        restricoesPacotesArquiteturais.put(PacoteArquitetural.ModelPersistenceDao,
-            criarRestricoesPacoteModelPersistenceDao());
-        restricoesPacotesArquiteturais.put(PacoteArquitetural.ModelPersistenceEntity,
-            criarRestricoesPacoteModelPersistenceEntity());
-        restricoesPacotesArquiteturais.put(PacoteArquitetural.Mensageria, criarRestricoesPacoteMensageria());
+        restricoesPacotesArquiteturais.put(PacoteArquitetural.Servico, criarRestricoesPacoteExcecoesApiMapper());
+        restricoesPacotesArquiteturais.put(PacoteArquitetural.Entidades,
+            criarRestricoesPacoteServico());
     }
 
 }
