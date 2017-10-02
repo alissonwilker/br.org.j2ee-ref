@@ -257,7 +257,7 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
 
     private void verificarConformidadePacoteBase(DetailAST astPacote, String nomePacote) {
         if (!nomePacote.startsWith(PacoteArquitetural.Base.getNomePacote())) {
-            log(astPacote.getLineNo(), MSG_PACOTE_BASE, nomePacote, PacoteArquitetural.Base);
+            log(astPacote.getLineNo(), MSG_PACOTE_BASE, nomePacote, PacoteArquitetural.Base.getNomePacote());
         }
     }
 
