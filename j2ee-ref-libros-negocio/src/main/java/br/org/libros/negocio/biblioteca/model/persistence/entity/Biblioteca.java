@@ -39,9 +39,9 @@ public class Biblioteca implements IEntidade {
     @Max(Integer.MAX_VALUE)
     private int id;
 
-    @Column(name = "NOME", length = 20, unique = true, nullable = false)
+    @Column(name = "NOME", length = 36, unique = true, nullable = false)
     @NotNull
-    @Size(max = 20)
+    @Size(max = 36)
     private String nome;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -71,7 +71,7 @@ public class Biblioteca implements IEntidade {
         return nome;
     }
 
-    public void setNome(@NotNull @Size(max = 20) String nome) {
+    public void setNome(@NotNull @Size(max = 36) String nome) {
         this.nome = nome;
     }
 
