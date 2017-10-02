@@ -41,6 +41,10 @@
 			<property name="severity" value="error"/>
 			<property name="prefixo" value="I"/>
 		</module>
+		<module name="PrefixoClasseAbstrata">
+			<property name="severity" value="error"/>
+			<property name="prefixo" value="Abstract"/>
+		</module>
 
 		<!-- Default Google Checks -->
 		<module name="OuterTypeFilename" />
