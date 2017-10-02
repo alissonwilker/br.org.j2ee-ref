@@ -93,13 +93,15 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
     }
 
     private void verificarConformidadeClasseOuInterface(DetailAST astClasseOuInterface) {
-        verificarConfomidadeTipo(astClasseOuInterface);
+        boolean tipoEhValido = verificarConfomidadeTipo(astClasseOuInterface);
 
-        verificarConformidadeAnotacoes(astClasseOuInterface);
+        if (tipoEhValido) {
+            verificarConformidadeAnotacoes(astClasseOuInterface);
 
-        verificarConformidadeHeranca(astClasseOuInterface);
+            verificarConformidadeHeranca(astClasseOuInterface);
 
-        verificarConformidadeInterfacesImplementadas(astClasseOuInterface);
+            verificarConformidadeInterfacesImplementadas(astClasseOuInterface);
+        }
     }
 
     private void verificarConformidadeInterfacesImplementadas(DetailAST astClasseOuInterface) {
@@ -205,20 +207,26 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
         }
     }
 
-    private void verificarConfomidadeTipo(DetailAST astClasseOuInterface) {
+    private boolean verificarConfomidadeTipo(DetailAST astClasseOuInterface) {
         String nomeClasse = recuperarNomeDaClasseOuInterface(astClasseOuInterface);
 
         SufixoArquitetural sufixoArquitetural = buscarSufixoArquitetural(nomeClasse);
 
-        if (sufixoArquitetural != null) {
+        if (sufixoArquitetural != null && pacoteArquitetural != null) {
             tipo = new TipoArquitetural(sufixoArquitetural, pacoteArquitetural);
-        } else {
+        } else if (pacoteArquitetural != null) {
             tipo = new TipoArquitetural(pacoteArquitetural);
+        } else {
+            log(astClasseOuInterface.getLineNo(), MSG_TIPO_INVALIDO);
+            return false;
         }
 
         if (!restricoesArquiteturais.existeTipoArquitetural(tipo)) {
             log(astClasseOuInterface.getLineNo(), MSG_TIPO_INVALIDO);
+            return false;
         }
+        
+        return true;
     }
 
     private void verificarConformidadeImports(DetailAST astImport) {
