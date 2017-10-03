@@ -1,6 +1,8 @@
 package br.org.buildtools.checkstyle;
 
+import static com.puppycrawl.tools.checkstyle.api.TokenTypes.ABSTRACT;
 import static com.puppycrawl.tools.checkstyle.api.TokenTypes.IDENT;
+import static com.puppycrawl.tools.checkstyle.api.TokenTypes.MODIFIERS;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -423,5 +425,19 @@ public abstract class CustomCheck extends AbstractCheck {
 
         return nomeClasseOuInterface;
     }
+    
+    /**
+     * Verifica se uma classe é abstrata.
+     * @param astClasse um token do tipo CLASS_DEF.
+     * @return True, se é classe abstrata. False, caso contrário.
+     */
+    protected boolean verificarSeEhClasseAbstrata(DetailAST astClasse) {
+        DetailAST astModifiersAbstract = null;
+        DetailAST astModifiers = findFirstAstOfType(astClasse, MODIFIERS);
+        if (astModifiers != null) {
+            astModifiersAbstract = findFirstAstOfType(astModifiers, ABSTRACT);
+        }
 
+        return astModifiersAbstract != null ? true : false;
+    }
 }

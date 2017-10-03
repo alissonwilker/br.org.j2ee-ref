@@ -7,7 +7,6 @@ import static br.org.buildtools.arquitetura.fabrica.FabricaRestricaoPacote.criar
 import static br.org.buildtools.arquitetura.fabrica.FabricaRestricaoPacote.criarRestricoesPacoteModelPersistenceDao;
 import static br.org.buildtools.arquitetura.fabrica.FabricaRestricaoPacote.criarRestricoesPacoteModelPersistenceEntity;
 import static br.org.buildtools.arquitetura.fabrica.FabricaRestricaoPacote.criarRestricoesPacoteViewController;
-import static br.org.buildtools.arquitetura.fabrica.FabricaTipoArquitetural.criarAbstractDao;
 import static br.org.buildtools.arquitetura.fabrica.FabricaTipoArquitetural.criarApi;
 import static br.org.buildtools.arquitetura.fabrica.FabricaTipoArquitetural.criarBusiness;
 import static br.org.buildtools.arquitetura.fabrica.FabricaTipoArquitetural.criarBusinessFacade;
@@ -140,7 +139,6 @@ public class RestricoesArquiteturais {
         tiposArquiteturais.add(criarViewController());
         tiposArquiteturais.add(criarBusinessFacade());
         tiposArquiteturais.add(criarBusiness());
-        tiposArquiteturais.add(criarAbstractDao());
         tiposArquiteturais.add(criarDao());
         tiposArquiteturais.add(criarNotificadorJms());
         tiposArquiteturais.add(criarReceptorJms());

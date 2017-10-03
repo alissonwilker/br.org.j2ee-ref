@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import br.org.arquitetura.mensageria.AbstractReceptorJms;
 import br.org.arquitetura.model.business.facade.IBusinessFacade;
-import br.org.libros.negocio.comum.utils.LogSanitizer;
+import br.org.arquitetura.utils.LogSanitizer;
 import br.org.libros.negocio.livrobiblioteca.dto.LivroBibliotecaDto;
 
 /**

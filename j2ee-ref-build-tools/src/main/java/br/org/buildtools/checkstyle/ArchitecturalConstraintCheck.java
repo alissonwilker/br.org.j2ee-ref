@@ -174,7 +174,10 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
             }
         }
 
-        verificarSeFaltamAnotacoesNoTipo(astClasseOuInterface);
+        boolean ehClasseAbstrata = verificarSeEhClasseAbstrata(astClasseOuInterface);
+        if (!ehClasseAbstrata) {
+            verificarSeFaltamAnotacoesNoTipo(astClasseOuInterface);
+        }
     }
 
     private void verificarSeFaltamAnotacoesNoTipo(DetailAST astClasseOuInterface) {
@@ -225,7 +228,7 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
             log(astClasseOuInterface.getLineNo(), MSG_TIPO_INVALIDO);
             return false;
         }
-        
+
         return true;
     }
 

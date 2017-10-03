@@ -76,19 +76,12 @@ public class FabricaTipoArquitetural {
 
     public static TipoArquitetural criarDao() {
         TipoArquitetural dao = new TipoArquitetural(SufixoArquitetural.Dao, PacoteArquitetural.ModelPersistenceDao);
-        dao.adicionarHeranca(HerancaArquitetural.LivrariaAbstractDao);
-        dao.adicionarHeranca(HerancaArquitetural.LibrosAbstractDao);
+        dao.adicionarHeranca(HerancaArquitetural.AbstractLivrariaDao);
+        dao.adicionarHeranca(HerancaArquitetural.AbstractLibrosDao);
+        dao.adicionarHeranca(HerancaArquitetural.AbstractDao);
 
         dao.adicionarAnotacao(AnotacaoArquitetural.Named);
         dao.adicionarAnotacao(AnotacaoArquitetural.RequestScoped);
-
-        return dao;
-    }
-
-    public static TipoArquitetural criarAbstractDao() {
-        TipoArquitetural dao = new TipoArquitetural(SufixoArquitetural.AbstractDao,
-            PacoteArquitetural.ModelPersistenceDao);
-        dao.adicionarHeranca(HerancaArquitetural.AbstractDao);
 
         return dao;
     }

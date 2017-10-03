@@ -1,8 +1,6 @@
 package br.org.buildtools.checkstyle;
 
-import static com.puppycrawl.tools.checkstyle.api.TokenTypes.ABSTRACT;
 import static com.puppycrawl.tools.checkstyle.api.TokenTypes.CLASS_DEF;
-import static com.puppycrawl.tools.checkstyle.api.TokenTypes.MODIFIERS;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 
@@ -45,14 +43,4 @@ public class PrefixoClasseAbstrataCheck extends CustomCheck {
         }
     }
     
-    private boolean verificarSeEhClasseAbstrata(DetailAST astClasse) {
-        DetailAST astModifiersAbstract = null;
-        DetailAST astModifiers = findFirstAstOfType(astClasse, MODIFIERS);
-        if (astModifiers != null) {
-            astModifiersAbstract = findFirstAstOfType(astModifiers, ABSTRACT);
-        }
-
-        return astModifiersAbstract != null ? true : false;
-    }
-
 }
