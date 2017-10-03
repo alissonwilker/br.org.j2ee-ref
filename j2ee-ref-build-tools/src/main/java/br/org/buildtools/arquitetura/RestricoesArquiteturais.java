@@ -1,17 +1,8 @@
 package br.org.buildtools.arquitetura;
 
 import static br.org.buildtools.arquitetura.fabrica.FabricaRestricaoPacote.criarRestricoesPacoteApi;
-<<<<<<< HEAD
 import static br.org.buildtools.arquitetura.fabrica.FabricaRestricaoPacote.criarRestricoesPacoteExcecoesApiMapper;
 import static br.org.buildtools.arquitetura.fabrica.FabricaRestricaoPacote.criarRestricoesPacoteServico;
-=======
-import static br.org.buildtools.arquitetura.fabrica.FabricaRestricaoPacote.criarRestricoesPacoteMensageria;
-import static br.org.buildtools.arquitetura.fabrica.FabricaRestricaoPacote.criarRestricoesPacoteModelBusiness;
-import static br.org.buildtools.arquitetura.fabrica.FabricaRestricaoPacote.criarRestricoesPacoteModelBusinessFacade;
-import static br.org.buildtools.arquitetura.fabrica.FabricaRestricaoPacote.criarRestricoesPacoteModelPersistenceDao;
-import static br.org.buildtools.arquitetura.fabrica.FabricaRestricaoPacote.criarRestricoesPacoteModelPersistenceEntity;
-import static br.org.buildtools.arquitetura.fabrica.FabricaRestricaoPacote.criarRestricoesPacoteViewController;
->>>>>>> refs/remotes/origin/master
 import static br.org.buildtools.arquitetura.fabrica.FabricaTipoArquitetural.criarApi;
 import static br.org.buildtools.arquitetura.fabrica.FabricaTipoArquitetural.criarDao;
 import static br.org.buildtools.arquitetura.fabrica.FabricaTipoArquitetural.criarDto;
@@ -137,13 +128,7 @@ public class RestricoesArquiteturais {
         tiposArquiteturais.add(criarMapper());
         tiposArquiteturais.add(criarDto());
         tiposArquiteturais.add(criarApi());
-<<<<<<< HEAD
         tiposArquiteturais.add(criarServico());
-=======
-        tiposArquiteturais.add(criarViewController());
-        tiposArquiteturais.add(criarBusinessFacade());
-        tiposArquiteturais.add(criarBusiness());
->>>>>>> refs/remotes/origin/master
         tiposArquiteturais.add(criarDao());
         tiposArquiteturais.add(criarEntidade());
         tiposArquiteturais.add(criarUtils());
