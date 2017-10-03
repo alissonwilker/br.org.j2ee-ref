@@ -5,16 +5,16 @@ package br.org.arquitetura.excecao;
  *
  * @see java.lang.Exception
  */
-public abstract class Excecao extends Exception {
+public abstract class AbstractExcecao extends Exception {
 
     private static final long serialVersionUID = 1L;
 
     private Throwable causaRaiz;
 
-    public Excecao() {
+    public AbstractExcecao() {
     }
 
-    public Excecao(Throwable eeex) {
+    public AbstractExcecao(Throwable eeex) {
         this.causaRaiz = eeex;
     }
 

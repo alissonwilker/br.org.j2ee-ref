@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import br.org.arquitetura.excecao.EntidadeJaExisteExcecao;
 import br.org.arquitetura.excecao.EntidadeNaoEncontradaExcecao;
-import br.org.libros.negocio.comum.utils.LogSanitizer;
+import br.org.arquitetura.utils.LogSanitizer;
 import br.org.libros.negocio.usuario.dto.UsuarioDto;
 import br.org.libros.negocio.usuario.model.business.facade.UsuarioBusinessFacade;
 

@@ -174,7 +174,10 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
             }
         }
 
-        verificarSeFaltamAnotacoesNoTipo(astClasseOuInterface);
+        boolean ehClasseAbstrata = verificarSeEhClasseAbstrata(astClasseOuInterface);
+        if (!ehClasseAbstrata) {
+            verificarSeFaltamAnotacoesNoTipo(astClasseOuInterface);
+        }
     }
 
     private void verificarSeFaltamAnotacoesNoTipo(DetailAST astClasseOuInterface) {

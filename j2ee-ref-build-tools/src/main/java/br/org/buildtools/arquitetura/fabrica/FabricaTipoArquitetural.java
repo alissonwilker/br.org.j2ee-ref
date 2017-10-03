@@ -105,6 +105,7 @@ public class FabricaTipoArquitetural {
 //    }
 
     public static TipoArquitetural criarDao() {
+<<<<<<< HEAD
         TipoArquitetural dao = new TipoArquitetural(SufixoArquitetural.Dao, PacoteArquitetural.Persistencia);
         dao.adicionarHeranca(HerancaArquitetural.PjeComumBaseDao);
 
@@ -118,6 +119,15 @@ public class FabricaTipoArquitetural {
 //
 //        return dao;
 //    }
+=======
+        TipoArquitetural dao = new TipoArquitetural(SufixoArquitetural.Dao, PacoteArquitetural.ModelPersistenceDao);
+        dao.adicionarHeranca(HerancaArquitetural.AbstractLivrariaDao);
+        dao.adicionarHeranca(HerancaArquitetural.AbstractLibrosDao);
+        dao.adicionarHeranca(HerancaArquitetural.AbstractDao);
+
+        dao.adicionarAnotacao(AnotacaoArquitetural.Named);
+        dao.adicionarAnotacao(AnotacaoArquitetural.RequestScoped);
+>>>>>>> refs/remotes/origin/master
 
     public static TipoArquitetural criarServico() {
         TipoArquitetural servico = new TipoArquitetural(SufixoArquitetural.Servico, PacoteArquitetural.Servico);

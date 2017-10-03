@@ -9,6 +9,18 @@
 		<Bug pattern="JAXRS_ENDPOINT" />
 	</Match>
 	<Match>
+		<Class
+			name="br.org.libros.negocio.usuario.utils.AppStartupConfigurator" />
+		<Bug pattern="CRLF_INJECTION_LOGS" />
+	</Match>
+	<Match>
+		<Class
+			name="br.org.libros.negocio.biblioteca.mensageria.BibliotecaReceptorJms" />
+		<Bug pattern="CRLF_INJECTION_LOGS" />
+	</Match>
+	<Match>
+		<Class
+			name="br.org.libros.negocio.livrobiblioteca.model.business.LivroBibliotecaBusiness$1" />
 		<Bug pattern="SIC_INNER_SHOULD_BE_STATIC_ANON" />
 	</Match>
 	<Match>

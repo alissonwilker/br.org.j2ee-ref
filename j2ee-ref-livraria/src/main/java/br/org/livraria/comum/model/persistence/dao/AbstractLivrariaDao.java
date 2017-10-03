@@ -1,4 +1,4 @@
-package br.org.libros.negocio.comum.model.persistence.dao;
+package br.org.livraria.comum.model.persistence.dao;
 
 import java.io.Serializable;
 
@@ -11,14 +11,14 @@ import br.org.arquitetura.model.persistence.dao.AbstractDao;
 
 /**
  * Classe abstrata que implementa comportamento padrão dos DAO's do módulo
- * Biblioteca.
+ * Livro.
  * 
  * @see br.org.arquitetura.model.persistence.dao.AbstractDao
  */
-public abstract class LibrosAbstractDao<E, P extends Serializable> extends AbstractDao<E, P> {
+public abstract class AbstractLivrariaDao<E, P extends Serializable> extends AbstractDao<E, P> {
     private static final long serialVersionUID = 1L;
 
-    @PersistenceContext(unitName = "LibrosPersistenceUnit", type = PersistenceContextType.TRANSACTION)
+    @PersistenceContext(unitName = "LivrariaPersistenceUnit", type = PersistenceContextType.TRANSACTION)
     protected EntityManager entityManager;
 
     @PostConstruct

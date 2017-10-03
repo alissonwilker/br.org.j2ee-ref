@@ -4,17 +4,17 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
 import br.org.arquitetura.excecao.EntidadeNaoEncontradaExcecao;
-import br.org.libros.negocio.comum.model.persistence.dao.LibrosAbstractDao;
+import br.org.libros.negocio.comum.model.persistence.dao.AbstractLibrosDao;
 import br.org.libros.negocio.livrobiblioteca.model.persistence.entity.LivroBiblioteca;
 
 /**
  * DAO de LivroBiblioteca.
  * 
- * @see br.org.libros.negocio.comum.model.persistence.dao.LibrosAbstractDao
+ * @see br.org.libros.negocio.comum.model.persistence.dao.AbstractLibrosDao
  */
 @Named
 @RequestScoped
-public class LivroBibliotecaDao extends LibrosAbstractDao<LivroBiblioteca, Integer> {
+public class LivroBibliotecaDao extends AbstractLibrosDao<LivroBiblioteca, Integer> {
     private static final long serialVersionUID = 1L;
 
     @Override
