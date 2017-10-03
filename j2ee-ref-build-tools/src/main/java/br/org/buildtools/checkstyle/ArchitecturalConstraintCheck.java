@@ -17,6 +17,7 @@ import static com.puppycrawl.tools.checkstyle.api.TokenTypes.PACKAGE_DEF;
 import static com.puppycrawl.tools.checkstyle.api.TokenTypes.STATIC_IMPORT;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
@@ -39,6 +40,7 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
     private static final String MSG_ANOTACAO_INVALIDA = MSG_PREFIX + "anotacaoInvalida";
     private static final String MSG_ANOTACOES_AUSENTES = MSG_PREFIX + "anotacoesAusentes";
     private static final String MSG_HERANCA_INVALIDA = MSG_PREFIX + "herancaInvalida";
+    private static final String MSG_HERANCAS_AUSENTES = MSG_PREFIX + "herancasAusentes";
     private static final String MSG_INTERFACE_INVALIDA = MSG_PREFIX + "interfaceInvalida";
     private static final String MSG_INTERFACES_AUSENTES = MSG_PREFIX + "interfacesAusentes";
 
@@ -115,10 +117,10 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
             }
         }
 
-        verificarSeFaltamInterfacesNoTipo(astClasseOuInterface);
+        verificarInterfacesAusentesNoTipo(astClasseOuInterface);
     }
 
-    private void verificarSeFaltamInterfacesNoTipo(DetailAST astClasseOuInterface) {
+    private void verificarInterfacesAusentesNoTipo(DetailAST astClasseOuInterface) {
         Collection<InterfaceArquitetural> interfacesAusentes = restricoesArquiteturais
             .recuperarInterfacesAusentes(tipo);
         if (interfacesAusentes != null && !interfacesAusentes.isEmpty()) {
@@ -129,7 +131,7 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
                     listaNomesInterfacesAusentes = new StringBuilder();
                     listaNomesInterfacesAusentes.append(interfaceArquitetural.name());
                 } else {
-                    listaNomesInterfacesAusentes.append(",").append(interfaceArquitetural.name());
+                    listaNomesInterfacesAusentes.append(", ").append(interfaceArquitetural.name());
                 }
             }
 
@@ -155,33 +157,64 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
             String nomePai = findFirstAstOfType(astExtends, IDENT).getText();
 
             HerancaArquitetural herancaArquitetural = buscarHerancaArquitetural(nomePai);
-            if (restricoesArquiteturais.ehHerancaValida(tipo, herancaArquitetural)) {
-                tipo.adicionarHeranca(herancaArquitetural);
-            } else {
-                log(astClasseOuInterface.getLineNo(), MSG_HERANCA_INVALIDA, nomePai);
+            if (herancaArquitetural != null) {
+                if (restricoesArquiteturais.ehHerancaArquiteturalValida(tipo, herancaArquitetural)) {
+                    tipo.adicionarHeranca(herancaArquitetural);
+                } else {
+                    log(astClasseOuInterface.getLineNo(), MSG_HERANCA_INVALIDA, nomePai);
+                }
+                return;
             }
+        }
+        
+        if (tipo.getHerancas() == null || tipo.getHerancas().size() == 0) {
+            verificarHerancasAusentesNoTipo(astClasseOuInterface);
+        }
+    }
+
+    private void verificarHerancasAusentesNoTipo(DetailAST astClasseOuInterface) {
+        Collection<HerancaArquitetural> herancasAusentes = restricoesArquiteturais.recuperarHerancas(tipo);
+        
+        if (herancasAusentes != null && !herancasAusentes.isEmpty()) {
+
+            StringBuilder listaNomesHerancasAusentes = null;
+            for (HerancaArquitetural herancaArquitetural : herancasAusentes) {
+                if (listaNomesHerancasAusentes == null) {
+                    listaNomesHerancasAusentes = new StringBuilder();
+                    listaNomesHerancasAusentes.append(herancaArquitetural.name());
+                } else {
+                    listaNomesHerancasAusentes.append(", ").append(herancaArquitetural.name());
+                }
+            }
+
+            log(astClasseOuInterface.getLineNo(), MSG_HERANCAS_AUSENTES, listaNomesHerancasAusentes);
         }
     }
 
     private void verificarConformidadeAnotacoes(DetailAST astClasseOuInterface) {
+        Collection<AnotacaoArquitetural> anotacoes = new HashSet<AnotacaoArquitetural>();
+        
         DetailAST astModifiers = findFirstAstOfType(astClasseOuInterface, MODIFIERS);
         if (astModifiers != null) {
             List<DetailAST> astModifiersIdents = findAllAstsOfType(astModifiers, IDENT);
             for (DetailAST astIdent : astModifiersIdents) {
                 if (astIdent.getParent().getType() == ANNOTATION) {
-                    verificarConformidadeAnotacao(astIdent);
+                    AnotacaoArquitetural anotacao = verificarConformidadeAnotacao(astIdent);
+                    if (anotacao != null) {
+                        anotacoes.add(anotacao);
+                    }
                 }
             }
         }
 
         boolean ehClasseAbstrata = verificarSeEhClasseAbstrata(astClasseOuInterface);
         if (!ehClasseAbstrata) {
-            verificarSeFaltamAnotacoesNoTipo(astClasseOuInterface);
+            verificarSeFaltamAnotacoesNoTipo(astClasseOuInterface, anotacoes);
         }
     }
 
-    private void verificarSeFaltamAnotacoesNoTipo(DetailAST astClasseOuInterface) {
-        Collection<AnotacaoArquitetural> anotacoesAusentes = restricoesArquiteturais.recuperarAnotacoesAusentes(tipo);
+    private void verificarSeFaltamAnotacoesNoTipo(DetailAST astClasseOuInterface, Collection<AnotacaoArquitetural> anotacoes) {
+        Collection<AnotacaoArquitetural> anotacoesAusentes = restricoesArquiteturais.recuperarAnotacoesAusentes(tipo, anotacoes);
         if (anotacoesAusentes != null && !anotacoesAusentes.isEmpty()) {
 
             StringBuilder listaNomesAnotacoesAusentes = null;
@@ -198,16 +231,18 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
         }
     }
 
-    private void verificarConformidadeAnotacao(DetailAST astAnnotationIdent) {
+    private AnotacaoArquitetural verificarConformidadeAnotacao(DetailAST astAnnotationIdent) {
         String nomeAnotacao = astAnnotationIdent.getText();
         AnotacaoArquitetural anotacaoArquitetural = buscarAnotacaoArquitetural(nomeAnotacao);
         if (anotacaoArquitetural != null) {
             if (restricoesArquiteturais.ehAnotacaoArquiteturalValida(tipo, anotacaoArquitetural)) {
-                tipo.adicionarAnotacao(anotacaoArquitetural);
+                return anotacaoArquitetural;
             } else {
                 log(astAnnotationIdent.getLineNo(), MSG_ANOTACAO_INVALIDA, anotacaoArquitetural.name());
             }
         }
+        
+        return null;
     }
 
     private boolean verificarConfomidadeTipo(DetailAST astClasseOuInterface) {
