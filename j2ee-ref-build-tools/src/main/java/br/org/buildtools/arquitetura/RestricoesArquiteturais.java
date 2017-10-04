@@ -11,7 +11,12 @@ import static br.org.buildtools.arquitetura.fabrica.FabricaTipoArquitetural.cria
 import static br.org.buildtools.arquitetura.fabrica.FabricaTipoArquitetural.criarServico;
 import static br.org.buildtools.arquitetura.fabrica.FabricaTipoArquitetural.criarUtil;
 import static br.org.buildtools.arquitetura.fabrica.FabricaTipoArquitetural.criarInfra;
-
+import static br.org.buildtools.arquitetura.fabrica.FabricaTipoArquitetural.criarEntidadesLegado;
+import static br.org.buildtools.arquitetura.fabrica.FabricaTipoArquitetural.criarPersistenciaLegado;
+import static br.org.buildtools.arquitetura.fabrica.FabricaTipoArquitetural.criarView;
+import static br.org.buildtools.arquitetura.fabrica.FabricaTipoArquitetural.criarFiltroApi;
+import static br.org.buildtools.arquitetura.fabrica.FabricaTipoArquitetural.criarAnnotation;
+import static br.org.buildtools.arquitetura.fabrica.FabricaTipoArquitetural.criarContext;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -55,7 +60,7 @@ public class RestricoesArquiteturais {
         if (tipoArquitetural == null) {
             return false;
         }
-
+        
         return tipoArquitetural.ehAnotacaoArquiteturalValida(anotacao);
     }
     
@@ -68,24 +73,24 @@ public class RestricoesArquiteturais {
         
         return tipoArquitetural.possuiInterface(interfaceArquitetural);
     }
-
+    
     public boolean ehHerancaArquiteturalValida(TipoArquitetural tipo, HerancaArquitetural herancaArquitetural) {
         TipoArquitetural tipoArquitetural = buscarTipoArquitetural(tipo);
         
         if (tipoArquitetural == null) {
             return false;
         }
-
+        
         return tipoArquitetural.possuiHeranca(herancaArquitetural);
     }
-
+    
     public Collection<AnotacaoArquitetural> recuperarAnotacoesObrigatoriasAusentes(TipoArquitetural tipo,
-        Collection<AnotacaoArquitetural> anotacoes) {
+            Collection<AnotacaoArquitetural> anotacoes) {
         TipoArquitetural tipoArquitetural = buscarTipoArquitetural(tipo);
-
+        
         Collection<AnotacaoArquitetural> anotacoesObrigatorias = tipoArquitetural.getAnotacoesObrigatorias();
         Collection<AnotacaoArquitetural> anotacoesAusentes = new HashSet<AnotacaoArquitetural>(anotacoesObrigatorias);
-
+        
         for (AnotacaoArquitetural anotacaoObrigatoria : anotacoesObrigatorias) {
             if (anotacoes.contains(anotacaoObrigatoria)) {
                 anotacoesAusentes.remove(anotacaoObrigatoria);
@@ -95,40 +100,40 @@ public class RestricoesArquiteturais {
                 }
             }
         }
-
+        
         return anotacoesAusentes;
     }
     
     public Collection<InterfaceArquitetural> recuperarInterfacesAusentes(TipoArquitetural tipo) {
         TipoArquitetural tipoArquitetural = buscarTipoArquitetural(tipo);
-
+        
         Collection<InterfaceArquitetural> interfacesArquiteturaisAusentes = new HashSet<InterfaceArquitetural>();
         interfacesArquiteturaisAusentes.addAll(tipoArquitetural.getInterfaces());
         interfacesArquiteturaisAusentes.removeAll(tipo.getInterfaces());
         
         return interfacesArquiteturaisAusentes;
     }
-
+    
     public Collection<HerancaArquitetural> recuperarHerancas(TipoArquitetural tipo) {
         TipoArquitetural tipoArquitetural = buscarTipoArquitetural(tipo);
-
+        
         return tipoArquitetural.getHerancas();
     }
-
+    
     private boolean possuiAnotacaoAlternativa(Collection<AnotacaoArquitetural> anotacoes,
-        TipoArquitetural tipoArquitetural, AnotacaoArquitetural anotacaoObrigatoria) {
-
+            TipoArquitetural tipoArquitetural, AnotacaoArquitetural anotacaoObrigatoria) {
+        
         Collection<AnotacaoArquitetural> anotacoesAlternativas = tipoArquitetural
-            .getAnotacoesAlternativas(anotacaoObrigatoria);
+                .getAnotacoesAlternativas(anotacaoObrigatoria);
         for (AnotacaoArquitetural anotacaoAlternativa : anotacoesAlternativas) {
             if (anotacoes.contains(anotacaoAlternativa)) {
                 return true;
             }
         }
-
+        
         return false;
     }
-
+    
     private Collection<PacoteArquitetural> getPacotesRestritos(PacoteArquitetural pacote) {
         return restricoesPacotesArquiteturais.get(pacote);
     }
@@ -139,8 +144,11 @@ public class RestricoesArquiteturais {
         }
         
         for (TipoArquitetural tipoArquitetural : tiposArquiteturais) {
-            if (tipoArquitetural.getSufixo().equals(tipo.getSufixo())
-                    && tipoArquitetural.getPacote().equals(tipo.getPacote())) {
+            if (tipoArquitetural.getSufixo().equals(tipo.getSufixo()) && tipoArquitetural.getPacote().equals(tipo.getPacote())) {
+                return tipoArquitetural;
+            }
+
+            if (tipoArquitetural.isIgnorarSufixo() && tipoArquitetural.getPacote().equals(tipo.getPacote())) {
                 return tipoArquitetural;
             }
         }
@@ -158,6 +166,12 @@ public class RestricoesArquiteturais {
         tiposArquiteturais.add(criarEntidadePk());
         tiposArquiteturais.add(criarUtil());
         tiposArquiteturais.add(criarInfra());
+        tiposArquiteturais.add(criarView());
+        tiposArquiteturais.add(criarEntidadesLegado());
+        tiposArquiteturais.add(criarPersistenciaLegado());
+        tiposArquiteturais.add(criarFiltroApi());
+        tiposArquiteturais.add(criarAnnotation());
+        tiposArquiteturais.add(criarContext());
     }
     
     private void instanciarRestricoesPacotesArquiteturais() {
