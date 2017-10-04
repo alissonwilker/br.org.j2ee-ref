@@ -123,7 +123,7 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
     private void verificarInterfacesAusentesNoTipo(DetailAST astClasseOuInterface) {
         Collection<InterfaceArquitetural> interfacesAusentes = restricoesArquiteturais
             .recuperarInterfacesAusentes(tipo);
-        if (interfacesAusentes != null && !interfacesAusentes.isEmpty()) {
+        if (!interfacesAusentes.isEmpty()) {
 
             StringBuilder listaNomesInterfacesAusentes = null;
             for (InterfaceArquitetural interfaceArquitetural : interfacesAusentes) {
@@ -167,7 +167,7 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
             }
         }
         
-        if (tipo.getHerancas() == null || tipo.getHerancas().size() == 0) {
+        if (tipo.getHerancas().isEmpty()) {
             verificarHerancasAusentesNoTipo(astClasseOuInterface);
         }
     }
@@ -175,7 +175,7 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
     private void verificarHerancasAusentesNoTipo(DetailAST astClasseOuInterface) {
         Collection<HerancaArquitetural> herancasAusentes = restricoesArquiteturais.recuperarHerancas(tipo);
         
-        if (herancasAusentes != null && !herancasAusentes.isEmpty()) {
+        if (!herancasAusentes.isEmpty()) {
 
             StringBuilder listaNomesHerancasAusentes = null;
             for (HerancaArquitetural herancaArquitetural : herancasAusentes) {
@@ -214,8 +214,8 @@ public class ArchitecturalConstraintCheck extends CustomCheck {
     }
 
     private void verificarSeFaltamAnotacoesNoTipo(DetailAST astClasseOuInterface, Collection<AnotacaoArquitetural> anotacoes) {
-        Collection<AnotacaoArquitetural> anotacoesAusentes = restricoesArquiteturais.recuperarAnotacoesAusentes(tipo, anotacoes);
-        if (anotacoesAusentes != null && !anotacoesAusentes.isEmpty()) {
+        Collection<AnotacaoArquitetural> anotacoesAusentes = restricoesArquiteturais.recuperarAnotacoesObrigatoriasAusentes(tipo, anotacoes);
+        if (!anotacoesAusentes.isEmpty()) {
 
             StringBuilder listaNomesAnotacoesAusentes = null;
             for (AnotacaoArquitetural anotacaoArquitetural : anotacoesAusentes) {
