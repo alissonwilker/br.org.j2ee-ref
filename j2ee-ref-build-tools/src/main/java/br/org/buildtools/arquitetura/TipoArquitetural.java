@@ -13,6 +13,7 @@ import br.org.buildtools.arquitetura.enums.PacoteArquitetural;
 import br.org.buildtools.arquitetura.enums.SufixoArquitetural;
 
 public class TipoArquitetural {
+    private boolean ignorarSufixo;
     private SufixoArquitetural sufixo;
     private PacoteArquitetural pacote;
     private Map<AnotacaoArquitetural, TipoRestricao> anotacoes = new HashMap<AnotacaoArquitetural, TipoRestricao>();
@@ -100,6 +101,14 @@ public class TipoArquitetural {
         }
 
         return false;
+    }
+
+    public boolean isIgnorarSufixo() {
+        return ignorarSufixo;
+    }
+    
+    public void setIgnorarSufixo(boolean ignorarSufixo) {
+        this.ignorarSufixo = ignorarSufixo;
     }
 
     public SufixoArquitetural getSufixo() {
