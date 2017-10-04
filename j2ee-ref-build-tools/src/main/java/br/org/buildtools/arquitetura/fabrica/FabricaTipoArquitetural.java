@@ -1,6 +1,7 @@
 package br.org.buildtools.arquitetura.fabrica;
 
 import br.org.buildtools.arquitetura.TipoArquitetural;
+import br.org.buildtools.arquitetura.TipoRestricao;
 import br.org.buildtools.arquitetura.enums.AnotacaoArquitetural;
 import br.org.buildtools.arquitetura.enums.HerancaArquitetural;
 import br.org.buildtools.arquitetura.enums.InterfaceArquitetural;
@@ -11,30 +12,48 @@ public class FabricaTipoArquitetural {
     public static TipoArquitetural criarMapper() {
         TipoArquitetural mapper = new TipoArquitetural(SufixoArquitetural.Mapper, PacoteArquitetural.DtoMapper);
 
-        mapper.adicionarAnotacao(AnotacaoArquitetural.Mapper);
+        mapper.adicionarAnotacao(AnotacaoArquitetural.Mapper, TipoRestricao.OBRIGATORIO);
 
         return mapper;
     }
 
+    public static TipoArquitetural criarEntidadePk() {
+        TipoArquitetural entidadePk = new TipoArquitetural(SufixoArquitetural.PK, PacoteArquitetural.Entidades);
+        
+        entidadePk.adicionarAnotacao(AnotacaoArquitetural.Embeddable, TipoRestricao.OBRIGATORIO);
+        
+        entidadePk.adicionarHeranca(HerancaArquitetural.BaseEntidade);
+
+        return entidadePk;
+    }
+    
     public static TipoArquitetural criarEntidade() {
         TipoArquitetural entidade = new TipoArquitetural(PacoteArquitetural.Entidades);
 
-        entidade.adicionarAnotacao(AnotacaoArquitetural.Entity);
-        entidade.adicionarAnotacao(AnotacaoArquitetural.Table);
+        entidade.adicionarAnotacao(AnotacaoArquitetural.Entity, TipoRestricao.OBRIGATORIO);
+        entidade.adicionarAnotacao(AnotacaoArquitetural.Table, TipoRestricao.OBRIGATORIO);
         
         entidade.adicionarHeranca(HerancaArquitetural.BaseEntidade);
 
         return entidade;
     }
 
-    public static TipoArquitetural criarUtils() {
-        TipoArquitetural util = new TipoArquitetural(SufixoArquitetural.Util, PacoteArquitetural.Util);
+    public static TipoArquitetural criarUtil() {
+        TipoArquitetural util = new TipoArquitetural(PacoteArquitetural.Util);
 
         return util;
     }
 
+    public static TipoArquitetural criarInfra() {
+        TipoArquitetural infra = new TipoArquitetural(PacoteArquitetural.Infra);
+
+        return infra;
+    }
+
     public static TipoArquitetural criarDto() {
         TipoArquitetural dto = new TipoArquitetural(SufixoArquitetural.Dto, PacoteArquitetural.Dto);
+        
+        dto.adicionarHeranca(HerancaArquitetural.BaseDto);
 
         return dto;
     }
@@ -58,7 +77,7 @@ public class FabricaTipoArquitetural {
         
         exceptionMapper.adicionarHeranca(HerancaArquitetural.AbstractExceptionMapper);
         
-        exceptionMapper.adicionarAnotacao(AnotacaoArquitetural.Provider);
+        exceptionMapper.adicionarAnotacao(AnotacaoArquitetural.Provider, TipoRestricao.OBRIGATORIO);
 
         return exceptionMapper;
     }
@@ -72,58 +91,30 @@ public class FabricaTipoArquitetural {
         return excecao;
     }
 
-//    public static TipoArquitetural criarNotificadorJms() {
-//        TipoArquitetural notificadorJms = new TipoArquitetural(SufixoArquitetural.NotificadorJms,
-//            PacoteArquitetural.Mensageria);
-//        notificadorJms.adicionarHeranca(HerancaArquitetural.AbstractNotificadorJms);
-//
-//        notificadorJms.adicionarAnotacao(AnotacaoArquitetural.Stateless);
-//
-//        return notificadorJms;
-//    }
-//
-//    public static TipoArquitetural criarReceptorJms() {
-//        TipoArquitetural receptorJms = new TipoArquitetural(SufixoArquitetural.ReceptorJms,
-//            PacoteArquitetural.Mensageria);
-//        receptorJms.adicionarHeranca(HerancaArquitetural.AbstractReceptorJms);
-//
-//        receptorJms.adicionarAnotacao(AnotacaoArquitetural.MessageDriven);
-//
-//        return receptorJms;
-//    }
-
-//    public static TipoArquitetural criarBusinessFacade() {
-//        TipoArquitetural businessFacade = new TipoArquitetural(SufixoArquitetural.BusinessFacade,
-//            PacoteArquitetural.ModelBusinessFacade);
-//        businessFacade.adicionarHeranca(HerancaArquitetural.AbstractBusinessFacade);
-//
-//        businessFacade.adicionarAnotacao(AnotacaoArquitetural.Named);
-//        businessFacade.adicionarAnotacao(AnotacaoArquitetural.RequestScoped);
-//        businessFacade.adicionarAnotacao(AnotacaoArquitetural.Transactional);
-//
-//        return businessFacade;
-//    }
 
     public static TipoArquitetural criarDao() {
         TipoArquitetural dao = new TipoArquitetural(SufixoArquitetural.Dao, PacoteArquitetural.Persistencia);
-        dao.adicionarHeranca(HerancaArquitetural.PjeComumBaseDao);
+        dao.adicionarHeranca(HerancaArquitetural.PJeSegurancaDao);
+        dao.adicionarHeranca(HerancaArquitetural.AbstractPjeBaseDao);
 
         return dao;
     }
 
-//    public static TipoArquitetural criarAbstractDao() {
-//        TipoArquitetural dao = new TipoArquitetural(SufixoArquitetural.AbstractDao,
-//            PacoteArquitetural.Persistencia);
-//        dao.adicionarHeranca(HerancaArquitetural.AbstractDao);
-//
-//        return dao;
-//    }
+    public static TipoArquitetural criarDaoLegado() {
+        TipoArquitetural daoLegado = new TipoArquitetural(SufixoArquitetural.Dao, PacoteArquitetural.PersistenciaLegado);
+        daoLegado.adicionarHeranca(HerancaArquitetural.MultiplasInstanciasDao);
+        daoLegado.adicionarHeranca(HerancaArquitetural.AbstractPjeBaseDao);
+
+        return daoLegado;
+    }
 
     public static TipoArquitetural criarServico() {
         TipoArquitetural servico = new TipoArquitetural(SufixoArquitetural.Servico, PacoteArquitetural.Servico);
         servico.adicionarHeranca(HerancaArquitetural.PjeBaseServico);
+        servico.adicionarHeranca(HerancaArquitetural.AbstractPjeBaseServicoCrud);
 
-        servico.adicionarAnotacao(AnotacaoArquitetural.Stateless);
+        servico.adicionarAnotacao(AnotacaoArquitetural.Stateless, TipoRestricao.OBRIGATORIO);
+        servico.adicionarAnotacoesAlternativas(AnotacaoArquitetural.Stateless, AnotacaoArquitetural.Singleton);
 
         return servico;
     }
@@ -132,8 +123,8 @@ public class FabricaTipoArquitetural {
         TipoArquitetural api = new TipoArquitetural(SufixoArquitetural.Api, PacoteArquitetural.Api);
         api.adicionarHeranca(HerancaArquitetural.BaseApi);
 
-        api.adicionarAnotacao(AnotacaoArquitetural.Path);
-        api.adicionarAnotacao(AnotacaoArquitetural.Api);
+        api.adicionarAnotacao(AnotacaoArquitetural.Api, TipoRestricao.OBRIGATORIO);
+        api.adicionarAnotacao(AnotacaoArquitetural.Path, TipoRestricao.PERMITIDO);
 
         return api;
     }

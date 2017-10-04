@@ -11,18 +11,8 @@ public class FabricaRestricaoPacote {
         Collection<PacoteArquitetural> pacotesRestritos = new HashSet<PacoteArquitetural>();
 
         pacotesRestritos.add(PacoteArquitetural.EntidadesUtilConversores);
-        pacotesRestritos.add(PacoteArquitetural.Excecoes);
         pacotesRestritos.add(PacoteArquitetural.ExcecoesApiMapper);
         pacotesRestritos.add(PacoteArquitetural.Persistencia);
-
-        return pacotesRestritos;
-    }
-
-    public static Collection<PacoteArquitetural> criarRestricoesPacoteExcecoesApiMapper() {
-        Collection<PacoteArquitetural> pacotesRestritos = new HashSet<PacoteArquitetural>();
-
-        pacotesRestritos.add(PacoteArquitetural.Excecoes);
-        pacotesRestritos.add(PacoteArquitetural.Dto);
 
         return pacotesRestritos;
     }
