@@ -28,6 +28,8 @@ public class FabricaTipoArquitetural {
     
     public static TipoArquitetural criarEntidade() {
         TipoArquitetural entidade = new TipoArquitetural(PacoteArquitetural.Entidades);
+        
+        entidade.setIgnorarSufixo(true);
 
         entidade.adicionarAnotacaoObrigatoria(AnotacaoArquitetural.Entity);
         entidade.adicionarAnotacaoObrigatoria(AnotacaoArquitetural.Table);
@@ -45,8 +47,67 @@ public class FabricaTipoArquitetural {
 
     public static TipoArquitetural criarInfra() {
         TipoArquitetural infra = new TipoArquitetural(PacoteArquitetural.Infra);
+        
+        //TODO validar com Renato o padrao
+        infra.adicionarAnotacaoPermitida(AnotacaoArquitetural.Provider);
 
         return infra;
+    }
+
+    public static TipoArquitetural criarFiltroApi() {
+        TipoArquitetural infra = new TipoArquitetural(SufixoArquitetural.Filter, PacoteArquitetural.FiltroApi);
+
+        //TODO validar com Renato o padrao
+        infra.adicionarAnotacaoPermitida(AnotacaoArquitetural.Provider);
+
+        return infra;
+    }
+    
+    public static TipoArquitetural criarContext() {
+        TipoArquitetural context = new TipoArquitetural(SufixoArquitetural.Context, PacoteArquitetural.Context);
+        
+        //TODO validar com Renato o padrao
+       context.adicionarInterface(InterfaceArquitetural.SecurityContext);
+        
+        return context;
+    }
+        
+    public static TipoArquitetural criarAnnotation() {
+        TipoArquitetural infra = new TipoArquitetural(PacoteArquitetural.Annotation);
+
+        //TODO validar com Renato o padrao
+        infra.adicionarAnotacaoPermitida(AnotacaoArquitetural.Retention);
+
+        return infra;
+    }
+    
+    public static TipoArquitetural criarView() {
+        TipoArquitetural infra = new TipoArquitetural(SufixoArquitetural.Controller, PacoteArquitetural.View);
+
+        //TODO validar com Renato o padrao
+        infra.adicionarAnotacaoObrigatoria(AnotacaoArquitetural.Named);
+        infra.adicionarAnotacaoPermitida(AnotacaoArquitetural.RequestScoped);
+        
+        return infra;
+    }
+
+    public static TipoArquitetural criarEntidadesLegado() {
+        TipoArquitetural entidadeLegado = new TipoArquitetural(PacoteArquitetural.EntidadesLegado);
+
+        entidadeLegado.adicionarAnotacaoObrigatoria(AnotacaoArquitetural.Entity);
+        entidadeLegado.adicionarAnotacaoObrigatoria(AnotacaoArquitetural.Table);
+        
+        entidadeLegado.adicionarHeranca(HerancaArquitetural.BaseEntidade);
+        entidadeLegado.adicionarHeranca(HerancaArquitetural.UsuarioLogin);
+        return entidadeLegado;
+    }
+
+    public static TipoArquitetural criarPersistenciaLegado() {
+        TipoArquitetural dao = new TipoArquitetural(SufixoArquitetural.Dao, PacoteArquitetural.PersistenciaLegado);
+        dao.adicionarHeranca(HerancaArquitetural.MultiplasInstanciasDao);
+        dao.adicionarHeranca(HerancaArquitetural.AbstractPjeBaseDao);
+        
+        return dao;
     }
 
     public static TipoArquitetural criarDto() {
@@ -123,7 +184,7 @@ public class FabricaTipoArquitetural {
         api.adicionarHeranca(HerancaArquitetural.BaseApi);
 
         api.adicionarAnotacaoObrigatoria(AnotacaoArquitetural.Api);
-        api.adicionarAnotacaoObrigatoria(AnotacaoArquitetural.Path);
+        api.adicionarAnotacaoPermitida(AnotacaoArquitetural.Path);
 
         return api;
     }

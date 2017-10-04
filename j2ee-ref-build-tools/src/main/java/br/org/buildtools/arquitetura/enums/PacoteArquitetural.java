@@ -7,8 +7,8 @@ public enum PacoteArquitetural {
                 "entidades"), ModelPersistenceEntityListener(
                     "model.persistence.entity.listener"), ModelPersistenceEntityValidator(
                         "model.persistence.entity.validator"), ModelPersistenceEntityValidatorAnnotation(
-                            "model.persistence.entity.validator.annotation"), Util("util"), ViewController(
-                                "view.controller"), ViewConverter("view.converter"), ViewValidator("view.validator"), Enums("enums"), Excecoes("excecoes"), ExcecoesApiMapper("excecoes.api.mapper"), EntidadesUtilConversores("entidades.util.conversores"), PersistenciaLegado("persistencia.legado");
+                            "model.persistence.entity.validator.annotation"), Util("util"), View(
+                                "view"), ViewConverter("view.converter"), ViewValidator("view.validator"), Enums("enums"), Excecoes("excecoes"), ExcecoesApiMapper("excecoes.api.mapper"), EntidadesUtilConversores("entidades.util.conversores"), PersistenciaLegado("persistencia.legado"), EntidadesLegado("entidades.legado"), FiltroApi("filtro.api"), Annotation("annotation"), Context("context");
 
     private String nomePacote;
 

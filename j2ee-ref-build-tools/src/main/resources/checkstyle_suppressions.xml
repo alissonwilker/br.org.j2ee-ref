@@ -7,5 +7,7 @@
 <suppressions>
 	<suppress files="[\\/]generated-sources[\\/]" checks="[a-zA-Z0-9]*" />
 	<suppress files="[\\/]arquitetura[\\/]" checks="ArchitecturalConstraint" />
+	<suppress files="FiltroSessao" checks="ArchitecturalConstraint" />
+	<suppress files="CorsFilter" checks="ArchitecturalConstraint" />
 </suppressions>
  
