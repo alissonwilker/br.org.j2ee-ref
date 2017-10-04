@@ -1,7 +1,6 @@
 package br.org.buildtools.arquitetura.fabrica;
 
 import br.org.buildtools.arquitetura.TipoArquitetural;
-import br.org.buildtools.arquitetura.TipoRestricao;
 import br.org.buildtools.arquitetura.enums.AnotacaoArquitetural;
 import br.org.buildtools.arquitetura.enums.HerancaArquitetural;
 import br.org.buildtools.arquitetura.enums.InterfaceArquitetural;
@@ -12,7 +11,7 @@ public class FabricaTipoArquitetural {
     public static TipoArquitetural criarMapper() {
         TipoArquitetural mapper = new TipoArquitetural(SufixoArquitetural.Mapper, PacoteArquitetural.DtoMapper);
 
-        mapper.adicionarAnotacao(AnotacaoArquitetural.Mapper, TipoRestricao.OBRIGATORIO);
+        mapper.adicionarAnotacaoObrigatoria(AnotacaoArquitetural.Mapper);
 
         return mapper;
     }
@@ -20,7 +19,7 @@ public class FabricaTipoArquitetural {
     public static TipoArquitetural criarEntidadePk() {
         TipoArquitetural entidadePk = new TipoArquitetural(SufixoArquitetural.PK, PacoteArquitetural.Entidades);
         
-        entidadePk.adicionarAnotacao(AnotacaoArquitetural.Embeddable, TipoRestricao.OBRIGATORIO);
+        entidadePk.adicionarAnotacaoObrigatoria(AnotacaoArquitetural.Embeddable);
         
         entidadePk.adicionarHeranca(HerancaArquitetural.BaseEntidade);
 
@@ -30,8 +29,8 @@ public class FabricaTipoArquitetural {
     public static TipoArquitetural criarEntidade() {
         TipoArquitetural entidade = new TipoArquitetural(PacoteArquitetural.Entidades);
 
-        entidade.adicionarAnotacao(AnotacaoArquitetural.Entity, TipoRestricao.OBRIGATORIO);
-        entidade.adicionarAnotacao(AnotacaoArquitetural.Table, TipoRestricao.OBRIGATORIO);
+        entidade.adicionarAnotacaoObrigatoria(AnotacaoArquitetural.Entity);
+        entidade.adicionarAnotacaoObrigatoria(AnotacaoArquitetural.Table);
         
         entidade.adicionarHeranca(HerancaArquitetural.BaseEntidade);
 
@@ -77,7 +76,7 @@ public class FabricaTipoArquitetural {
         
         exceptionMapper.adicionarHeranca(HerancaArquitetural.AbstractExceptionMapper);
         
-        exceptionMapper.adicionarAnotacao(AnotacaoArquitetural.Provider, TipoRestricao.OBRIGATORIO);
+        exceptionMapper.adicionarAnotacaoObrigatoria(AnotacaoArquitetural.Provider);
 
         return exceptionMapper;
     }
@@ -113,7 +112,7 @@ public class FabricaTipoArquitetural {
         servico.adicionarHeranca(HerancaArquitetural.PjeBaseServico);
         servico.adicionarHeranca(HerancaArquitetural.AbstractPjeBaseServicoCrud);
 
-        servico.adicionarAnotacao(AnotacaoArquitetural.Stateless, TipoRestricao.OBRIGATORIO);
+        servico.adicionarAnotacaoObrigatoria(AnotacaoArquitetural.Stateless);
         servico.adicionarAnotacoesAlternativas(AnotacaoArquitetural.Stateless, AnotacaoArquitetural.Singleton);
 
         return servico;
@@ -123,8 +122,8 @@ public class FabricaTipoArquitetural {
         TipoArquitetural api = new TipoArquitetural(SufixoArquitetural.Api, PacoteArquitetural.Api);
         api.adicionarHeranca(HerancaArquitetural.BaseApi);
 
-        api.adicionarAnotacao(AnotacaoArquitetural.Api, TipoRestricao.OBRIGATORIO);
-        api.adicionarAnotacao(AnotacaoArquitetural.Path, TipoRestricao.PERMITIDO);
+        api.adicionarAnotacaoObrigatoria(AnotacaoArquitetural.Api);
+        api.adicionarAnotacaoObrigatoria(AnotacaoArquitetural.Path);
 
         return api;
     }

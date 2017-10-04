@@ -12,6 +12,7 @@ import static br.org.buildtools.arquitetura.fabrica.FabricaTipoArquitetural.cria
 import static br.org.buildtools.arquitetura.fabrica.FabricaTipoArquitetural.criarUtil;
 import static br.org.buildtools.arquitetura.fabrica.FabricaTipoArquitetural.criarInfra;
 
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -54,7 +55,7 @@ public class RestricoesArquiteturais {
         if (tipoArquitetural == null) {
             return false;
         }
-        
+
         return tipoArquitetural.ehAnotacaoArquiteturalValida(anotacao);
     }
     
@@ -67,69 +68,67 @@ public class RestricoesArquiteturais {
         
         return tipoArquitetural.possuiInterface(interfaceArquitetural);
     }
-    
+
     public boolean ehHerancaArquiteturalValida(TipoArquitetural tipo, HerancaArquitetural herancaArquitetural) {
         TipoArquitetural tipoArquitetural = buscarTipoArquitetural(tipo);
         
         if (tipoArquitetural == null) {
             return false;
         }
-        
+
         return tipoArquitetural.possuiHeranca(herancaArquitetural);
     }
-    
-    public Collection<AnotacaoArquitetural> recuperarAnotacoesAusentes(TipoArquitetural tipo,
-            Collection<AnotacaoArquitetural> anotacoes) {
+
+    public Collection<AnotacaoArquitetural> recuperarAnotacoesObrigatoriasAusentes(TipoArquitetural tipo,
+        Collection<AnotacaoArquitetural> anotacoes) {
         TipoArquitetural tipoArquitetural = buscarTipoArquitetural(tipo);
-        
-        if (tipoArquitetural == null) {
-            return null;
-        }
-        
-        Collection<AnotacaoArquitetural> anotacoesArquiteturaisObrigatorias = new HashSet<AnotacaoArquitetural>();
-        anotacoesArquiteturaisObrigatorias.addAll(tipoArquitetural.getAnotacoes(TipoRestricao.OBRIGATORIO));
-        anotacoesArquiteturaisObrigatorias.removeAll(anotacoes);
-        
-        Collection<AnotacaoArquitetural> anotacoesArquiteturaisAusentes = new HashSet<AnotacaoArquitetural>(
-                anotacoesArquiteturaisObrigatorias);
-        
-        for (AnotacaoArquitetural anotacaoArquiteturalObrigatoria : anotacoesArquiteturaisObrigatorias) {
-            Collection<AnotacaoArquitetural> anotacoesAlternativas = tipoArquitetural
-                    .getAnotacoesAlternativas(anotacaoArquiteturalObrigatoria);
-            for (AnotacaoArquitetural anotacaoArquiteturalAlternativa : anotacoesAlternativas) {
-                if (anotacoes.contains(anotacaoArquiteturalAlternativa)) {
-                    anotacoesArquiteturaisAusentes.remove(anotacaoArquiteturalObrigatoria);
+
+        Collection<AnotacaoArquitetural> anotacoesObrigatorias = tipoArquitetural.getAnotacoesObrigatorias();
+        Collection<AnotacaoArquitetural> anotacoesAusentes = new HashSet<AnotacaoArquitetural>(anotacoesObrigatorias);
+
+        for (AnotacaoArquitetural anotacaoObrigatoria : anotacoesObrigatorias) {
+            if (anotacoes.contains(anotacaoObrigatoria)) {
+                anotacoesAusentes.remove(anotacaoObrigatoria);
+            } else {
+                if (possuiAnotacaoAlternativa(anotacoes, tipoArquitetural, anotacaoObrigatoria)) {
+                    anotacoesAusentes.remove(anotacaoObrigatoria);
                 }
             }
         }
-        
-        return anotacoesArquiteturaisAusentes;
+
+        return anotacoesAusentes;
     }
     
     public Collection<InterfaceArquitetural> recuperarInterfacesAusentes(TipoArquitetural tipo) {
         TipoArquitetural tipoArquitetural = buscarTipoArquitetural(tipo);
-        
-        if (tipoArquitetural == null) {
-            return null;
-        }
-        
+
         Collection<InterfaceArquitetural> interfacesArquiteturaisAusentes = new HashSet<InterfaceArquitetural>();
         interfacesArquiteturaisAusentes.addAll(tipoArquitetural.getInterfaces());
         interfacesArquiteturaisAusentes.removeAll(tipo.getInterfaces());
         
         return interfacesArquiteturaisAusentes;
     }
-    
+
     public Collection<HerancaArquitetural> recuperarHerancas(TipoArquitetural tipo) {
         TipoArquitetural tipoArquitetural = buscarTipoArquitetural(tipo);
-        
-        if (tipoArquitetural == null) {
-            return null;
-        }
-        
+
         return tipoArquitetural.getHerancas();
     }
-    
+
+    private boolean possuiAnotacaoAlternativa(Collection<AnotacaoArquitetural> anotacoes,
+        TipoArquitetural tipoArquitetural, AnotacaoArquitetural anotacaoObrigatoria) {
+
+        Collection<AnotacaoArquitetural> anotacoesAlternativas = tipoArquitetural
+            .getAnotacoesAlternativas(anotacaoObrigatoria);
+        for (AnotacaoArquitetural anotacaoAlternativa : anotacoesAlternativas) {
+            if (anotacoes.contains(anotacaoAlternativa)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private Collection<PacoteArquitetural> getPacotesRestritos(PacoteArquitetural pacote) {
         return restricoesPacotesArquiteturais.get(pacote);
     }
