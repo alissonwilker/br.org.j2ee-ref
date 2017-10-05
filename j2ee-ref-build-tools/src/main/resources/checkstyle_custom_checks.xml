@@ -34,7 +34,26 @@
 
 	<module name="TreeWalker">
 		<!-- Checks personalizados -->
-		<module name="ArchitecturalConstraint"/>
+		<module name="ArchitecturalConstraint">
+			<property name="sufixos" value="Dto, Controller, Api, BusinessFacade, Business, Dao, NotificadorJms, ReceptorJms, Mapper, AbstractDao"/>
+			<property name="interfaces" value="IEntidade, IDto"/>
+			<property name="herancas" value="IGenericMapper, AbstractController, AbstractApi, AbstractBusinessFacade, AbstractBusiness, AbstractDao, AbstractNotificadorJms, AbstractLibrosDao, AbstractLivrariaDao, AbstractReceptorJms"/>
+			<property name="anotacoes" value="ManagedBean, ViewScoped, Path, Api, Named, RequestScoped, Transactional, Stateless, Mapper, Entity, Table, MessageDriven"/>
+
+			<property name="pacotes" value="br.org, api, api.excecao.mapper, dto, dto.mapper, excecao, mensageria, model.business, model.business.facade, model.persistence.dao, model.persistence.entity, model.persistence.entity.listener, model.persistence.entity.validator, model.persistence.entity.validator.annotation, utils, view.controller, view.converter, view.validator"/>
+
+			<property name="restricaoPacote" value="api, view.controller, model.business, model.persistence.dao, model.persistence.entity, mensageria"/>
+			
+			<property name="tipo" value="Mapper2, dto.mapper, Mapper"/>
+			<property name="tipo" value="Mapper3, dto.mapper"/>
+			<property name="herancasTipo" value="Mapper, IGenericMapper"/>
+			<property name="anotacoesObrigatoriasTipo" value="Mapper, Mapper"/>
+
+			<property name="tipo" value="Entidade, model.persistence.entity"/>
+			<property name="anotacoesObrigatoriasTipo" value="Entidade, Entity, Table"/>
+<!-- 			<property name="interfacesTipo" value="Entidade, IEntidade"/> -->
+					
+		</module>
 		<module name="PrefixoInterface">
 			<property name="prefixo" value="I"/>
 		</module>
