@@ -34,12 +34,15 @@
 
 	<module name="TreeWalker">
 		<!-- Checks personalizados -->
-		<module name="ArchitecturalConstraint"/>
+<!-- 		<module name="ArchitecturalConstraint"/> -->
+		<module name="PacoteBase"/>
+		<module name="PacoteArquitetural"/>
+		<module name="PacoteRestrito"/>
+		<module name="TipoArquitetural"/>
 		<module name="PrefixoInterface">
 			<property name="prefixo" value="I"/>
 		</module>
 		<module name="PrefixoClasseAbstrata">
-			<property name="severity" value="error"/>
 			<property name="prefixo" value="Abstract"/>
 		</module>
 

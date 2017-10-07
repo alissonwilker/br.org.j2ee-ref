@@ -3,6 +3,7 @@ package br.org.buildtools.checkstyle;
 import static com.puppycrawl.tools.checkstyle.api.TokenTypes.ABSTRACT;
 import static com.puppycrawl.tools.checkstyle.api.TokenTypes.IDENT;
 import static com.puppycrawl.tools.checkstyle.api.TokenTypes.MODIFIERS;
+import static com.puppycrawl.tools.checkstyle.api.TokenTypes.PACKAGE_DEF;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +28,11 @@ public abstract class CustomCheck extends AbstractCheck {
      *         statement or an import statement.
      */
     protected String fullyQualifiedPackage(DetailAST packageDefOrImportAST) {
-        if (packageDefOrImportAST == null || packageDefOrImportAST.getType() != TokenTypes.PACKAGE_DEF
-                        && packageDefOrImportAST.getType() != TokenTypes.IMPORT && packageDefOrImportAST.getType() != TokenTypes.STATIC_IMPORT) {
-            throw new IllegalArgumentException("Parameter packageDefOrImportAST must be a PACKAGE_DEF or IMPORT or STATIC_IMPORT AST");
+        if (packageDefOrImportAST == null || packageDefOrImportAST.getType() != PACKAGE_DEF
+            && packageDefOrImportAST.getType() != TokenTypes.IMPORT
+            && packageDefOrImportAST.getType() != TokenTypes.STATIC_IMPORT) {
+            throw new IllegalArgumentException(
+                "Parameter packageDefOrImportAST must be a PACKAGE_DEF or IMPORT or STATIC_IMPORT AST");
         }
         DetailAST dot = findFirstAstOfType(packageDefOrImportAST, TokenTypes.DOT);
         if (dot == null) {
@@ -107,7 +110,7 @@ public abstract class CustomCheck extends AbstractCheck {
             firstAst = aAST;
         } else {
             for (DetailAST chld = aAST.getFirstChild(); chld != null
-                            && firstAst == null; chld = chld.getNextSibling()) {
+                && firstAst == null; chld = chld.getNextSibling()) {
                 firstAst = findFirstAstOfType(chld, type);
             }
         }
@@ -227,7 +230,7 @@ public abstract class CustomCheck extends AbstractCheck {
         DetailAST varDefToken = null;
         DetailAST parDefToken = null;
         boolean hasThisPrefix = identToken.getPreviousSibling() != null
-                        && identToken.getPreviousSibling().getType() == TokenTypes.LITERAL_THIS;
+            && identToken.getPreviousSibling().getType() == TokenTypes.LITERAL_THIS;
         int closestLine = 0;
         varDefToken = findVariableDefForIdent(identToken, closestLine, hasThisPrefix);
 
@@ -272,10 +275,10 @@ public abstract class CustomCheck extends AbstractCheck {
                 classDefToken = current;
             }
             if (getVarNameInVariableOrParameterDef(current).equals(identToken.getText())
-                            && current.getLineNo() <= identToken.getLineNo()) {
+                && current.getLineNo() <= identToken.getLineNo()) {
                 if (!isThisCall && current.getLineNo() > closestLine) {
                     if (getScopeOfDef(current).getLineNo() == getScopeOfDef(identToken).getLineNo()
-                                    || getScopeOfDef(current).getLineNo() == root.getLineNo()) {
+                        || getScopeOfDef(current).getLineNo() == root.getLineNo()) {
                         defToken = current;
                         closestLine = current.getLineNo();
                     }
@@ -308,8 +311,8 @@ public abstract class CustomCheck extends AbstractCheck {
         List<DetailAST> parameterDefs = findAllAstsOfType(root, TokenTypes.PARAMETER_DEF);
         for (DetailAST current : parameterDefs) {
             if (getVarNameInVariableOrParameterDef(current).equals(identToken.getText())
-                            && current.getLineNo() <= identToken.getLineNo() && current.getLineNo() > closestLine
-                            && getScopeOfDef(current).getLineNo() == getScopeOfDef(identToken).getLineNo()) {
+                && current.getLineNo() <= identToken.getLineNo() && current.getLineNo() > closestLine
+                && getScopeOfDef(current).getLineNo() == getScopeOfDef(identToken).getLineNo()) {
                 defToken = current;
                 closestLine = current.getLineNo();
             }
@@ -331,7 +334,7 @@ public abstract class CustomCheck extends AbstractCheck {
     protected DetailAST getScopeOfDef(DetailAST defToken) {
         DetailAST parent = defToken;
         while (parent.getType() != TokenTypes.CLASS_DEF && parent.getType() != TokenTypes.CTOR_DEF
-                        && parent.getType() != TokenTypes.METHOD_DEF) {
+            && parent.getType() != TokenTypes.METHOD_DEF) {
             parent = parent.getParent();
         }
         return parent;
@@ -425,10 +428,31 @@ public abstract class CustomCheck extends AbstractCheck {
 
         return nomeClasseOuInterface;
     }
-    
+
+    /**
+     * Recupera o nome do pacote do tipo a partir de um AST qualquer.
+     * 
+     * @param ast
+     *            um AST a partir do qual descobrir o nome do pacote.
+     * @return o nome completo do pacote do tipo associado ao AST.
+     */
+    protected String recuperarNomeDoPacoteDoTipo(DetailAST ast) {
+        if (ast != null && ast.getType() != PACKAGE_DEF) {
+            if (ast.getParent() != null) {
+                return recuperarNomeDoPacoteDoTipo(ast.getParent());
+            } else if (ast.getPreviousSibling() != null) {
+                return recuperarNomeDoPacoteDoTipo(ast.getPreviousSibling());
+            }
+        }
+
+        return fullyQualifiedPackage(ast);
+    }
+
     /**
      * Verifica se uma classe é abstrata.
-     * @param astClasse um token do tipo CLASS_DEF.
+     * 
+     * @param astClasse
+     *            um token do tipo CLASS_DEF.
      * @return True, se é classe abstrata. False, caso contrário.
      */
     protected boolean verificarSeEhClasseAbstrata(DetailAST astClasse) {
