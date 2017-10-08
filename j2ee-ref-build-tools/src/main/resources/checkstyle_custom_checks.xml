@@ -36,6 +36,7 @@
 		<!-- Checks personalizados -->
 		<module name="PacoteBase" >
 			<property name="severity" value="error"/>
+			<property name="pacoteBase" value="br.jus.csjt.pje" />
 		</module>
 		<module name="PacoteArquitetural" >
 			<property name="severity" value="error"/>

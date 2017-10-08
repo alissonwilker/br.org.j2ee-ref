@@ -4,11 +4,15 @@ import static com.puppycrawl.tools.checkstyle.api.TokenTypes.PACKAGE_DEF;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 
-import br.org.buildtools.arquitetura.enums.PacoteArquitetural;
-
 public class PacoteBaseCheck extends CustomCheck {
 
     private static final String MSG_PACOTE_BASE = MSG_PREFIX + "pacoteBase";
+
+    private String pacoteBase = null;
+
+    public void setPacoteBase(String pacoteBase) {
+        this.pacoteBase = pacoteBase;
+    }
 
     @Override
     public int[] getAcceptableTokens() {
@@ -37,8 +41,8 @@ public class PacoteBaseCheck extends CustomCheck {
     }
 
     private void verificarConformidadePacoteBase(DetailAST astPacote, String nomePacote) {
-        if (!nomePacote.startsWith(PacoteArquitetural.Base.getNomePacote())) {
-            log(astPacote.getLineNo(), MSG_PACOTE_BASE, nomePacote, PacoteArquitetural.Base.getNomePacote());
+        if (!nomePacote.startsWith(pacoteBase)) {
+            log(astPacote.getLineNo(), MSG_PACOTE_BASE, nomePacote, pacoteBase);
         }
     }
 
