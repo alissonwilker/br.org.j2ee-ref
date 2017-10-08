@@ -13,7 +13,7 @@
 <module name="Checker">
 
 	<module name="BeforeExecutionExclusionFileFilter">
-	  <property name="fileNamePattern" value="package\-info\.java$"/>
+		<property name="fileNamePattern" value="package\-info\.java$" />
 	</module>
 
 	<property name="charset" value="UTF-8" />
@@ -28,13 +28,40 @@
 	</module>
 
 	<!-- FileSetChecks e Properties personalizados -->
-    <property name="localeCountry" value="BR"/>
-    <property name="localeLanguage" value="pt"/>
-    <module name="JavadocPackage"/>
+	<property name="localeCountry" value="BR" />
+	<property name="localeLanguage" value="pt" />
+	<module name="JavadocPackage" />
 
 	<module name="TreeWalker">
 		<!-- Checks personalizados -->
-		<module name="ArchitecturalConstraint">
+		<module name="PacoteBase" >
+			<property name="severity" value="error"/>
+		</module>
+		<module name="PacoteArquitetural" >
+			<property name="severity" value="error"/>
+		</module>
+		<module name="PacoteRestrito" >
+			<property name="severity" value="error"/>
+		</module>
+		<module name="TipoArquitetural" >
+			<property name="severity" value="error"/>
+		</module>
+		<module name="AnotacaoArquitetural" >
+			<property name="severity" value="error"/>
+		</module>
+		<module name="AnotacoesArquiteturaisAusentes" >
+			<property name="severity" value="error"/>
+		</module>
+		<module name="HerancaArquitetural">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="HerancasArquiteturaisAusentes">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="InterfaceArquitetural">
+			<property name="severity" value="error"/>
+		</module>
+		<module name="InterfacesArquiteturaisAusentes">
 			<property name="severity" value="error"/>
 		</module>
 		<module name="PrefixoInterface">
@@ -66,7 +93,7 @@
 				value="^package.*|^import.*|a href|href|http://|https://|ftp://" />
 		</module>
 		<module name="AvoidStarImport" />
-		<module name="OneTopLevelClass"/>
+		<module name="OneTopLevelClass" />
 		<module name="NoLineWrap" />
 		<module name="EmptyBlock">
 			<property name="option" value="TEXT" />

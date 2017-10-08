@@ -6,7 +6,6 @@ import com.puppycrawl.tools.checkstyle.api.DetailAST;
 
 public class PrefixoInterfaceCheck extends CustomCheck {
 
-    private static final String MSG_PREFIX = "restricaoArquitetural.";
     private static final String MSG_PREFIXO_INTERFACE = MSG_PREFIX + "prefixoInterface";
 
     private String prefixo = null;
