@@ -13,7 +13,7 @@
 <module name="Checker">
 
 	<module name="BeforeExecutionExclusionFileFilter">
-	  <property name="fileNamePattern" value="package\-info\.java$"/>
+		<property name="fileNamePattern" value="package\-info\.java$" />
 	</module>
 
 	<property name="charset" value="UTF-8" />
@@ -28,22 +28,24 @@
 	</module>
 
 	<!-- FileSetChecks e Properties personalizados -->
-    <property name="localeCountry" value="BR"/>
-    <property name="localeLanguage" value="pt"/>
-    <module name="JavadocPackage"/>
+	<property name="localeCountry" value="BR" />
+	<property name="localeLanguage" value="pt" />
+	<module name="JavadocPackage" />
 
 	<module name="TreeWalker">
 		<!-- Checks personalizados -->
-<!-- 		<module name="ArchitecturalConstraint"/> -->
-		<module name="PacoteBase"/>
-		<module name="PacoteArquitetural"/>
-		<module name="PacoteRestrito"/>
-		<module name="TipoArquitetural"/>
+		<!-- <module name="ArchitecturalConstraint"/> -->
+		<module name="PacoteBase" />
+		<module name="PacoteArquitetural" />
+		<module name="PacoteRestrito" />
+		<module name="TipoArquitetural" />
+		<module name="AnotacaoArquitetural" />
+		<module name="AnotacoesArquiteturaisAusentes" />
 		<module name="PrefixoInterface">
-			<property name="prefixo" value="I"/>
+			<property name="prefixo" value="I" />
 		</module>
 		<module name="PrefixoClasseAbstrata">
-			<property name="prefixo" value="Abstract"/>
+			<property name="prefixo" value="Abstract" />
 		</module>
 
 		<!-- Default Google Checks -->
@@ -66,7 +68,7 @@
 				value="^package.*|^import.*|a href|href|http://|https://|ftp://" />
 		</module>
 		<module name="AvoidStarImport" />
-		<module name="OneTopLevelClass"/>
+		<module name="OneTopLevelClass" />
 		<module name="NoLineWrap" />
 		<module name="EmptyBlock">
 			<property name="option" value="TEXT" />

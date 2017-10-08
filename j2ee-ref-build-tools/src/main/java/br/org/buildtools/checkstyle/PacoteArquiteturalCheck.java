@@ -9,7 +9,6 @@ import br.org.buildtools.arquitetura.enums.PacoteArquitetural;
 
 public class PacoteArquiteturalCheck extends CustomCheck {
 
-    private static final String MSG_PREFIX = "restricaoArquitetural.";
     private static final String MSG_PACOTE_ARQUITETURAL = MSG_PREFIX + "pacoteArquitetural";
 
     @Override
@@ -29,9 +28,7 @@ public class PacoteArquiteturalCheck extends CustomCheck {
 
     @Override
     public void visitToken(DetailAST ast) {
-        if (ast.getType() == PACKAGE_DEF) {
-            verificarConformidadePacote(ast);
-        }
+        verificarConformidadePacote(ast);
     }
 
     private void verificarConformidadePacote(DetailAST astPacote) {

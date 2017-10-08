@@ -1,7 +1,9 @@
 package br.org.buildtools.checkstyle;
 
 import static com.puppycrawl.tools.checkstyle.api.TokenTypes.ABSTRACT;
+import static com.puppycrawl.tools.checkstyle.api.TokenTypes.CLASS_DEF;
 import static com.puppycrawl.tools.checkstyle.api.TokenTypes.IDENT;
+import static com.puppycrawl.tools.checkstyle.api.TokenTypes.INTERFACE_DEF;
 import static com.puppycrawl.tools.checkstyle.api.TokenTypes.MODIFIERS;
 import static com.puppycrawl.tools.checkstyle.api.TokenTypes.PACKAGE_DEF;
 
@@ -18,6 +20,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * @author Paulo Merson
  */
 public abstract class CustomCheck extends AbstractCheck {
+    protected static final String MSG_PREFIX = "restricaoArquitetural.";
 
     /**
      * Returns the fully qualified package in a package definition or import statement.
@@ -28,9 +31,9 @@ public abstract class CustomCheck extends AbstractCheck {
      *         statement or an import statement.
      */
     protected String fullyQualifiedPackage(DetailAST packageDefOrImportAST) {
-        if (packageDefOrImportAST == null || packageDefOrImportAST.getType() != PACKAGE_DEF
-            && packageDefOrImportAST.getType() != TokenTypes.IMPORT
-            && packageDefOrImportAST.getType() != TokenTypes.STATIC_IMPORT) {
+        if (packageDefOrImportAST == null
+            || packageDefOrImportAST.getType() != PACKAGE_DEF && packageDefOrImportAST.getType() != TokenTypes.IMPORT
+                && packageDefOrImportAST.getType() != TokenTypes.STATIC_IMPORT) {
             throw new IllegalArgumentException(
                 "Parameter packageDefOrImportAST must be a PACKAGE_DEF or IMPORT or STATIC_IMPORT AST");
         }
@@ -271,7 +274,7 @@ public abstract class CustomCheck extends AbstractCheck {
         // Percorre a lista de VARIABLE_DEF procurando a definição da variável que chamou o método
         // (que esteja definida antes da chamada)
         for (DetailAST current : variableDefs) {
-            if (getScopeOfDef(current).getType() == TokenTypes.CLASS_DEF) {
+            if (getScopeOfDef(current).getType() == CLASS_DEF) {
                 classDefToken = current;
             }
             if (getVarNameInVariableOrParameterDef(current).equals(identToken.getText())
@@ -333,7 +336,7 @@ public abstract class CustomCheck extends AbstractCheck {
      */
     protected DetailAST getScopeOfDef(DetailAST defToken) {
         DetailAST parent = defToken;
-        while (parent.getType() != TokenTypes.CLASS_DEF && parent.getType() != TokenTypes.CTOR_DEF
+        while (parent.getType() != CLASS_DEF && parent.getType() != TokenTypes.CTOR_DEF
             && parent.getType() != TokenTypes.METHOD_DEF) {
             parent = parent.getParent();
         }
@@ -352,7 +355,7 @@ public abstract class CustomCheck extends AbstractCheck {
      */
     protected boolean isInnerClass(DetailAST classDefToken) {
         DetailAST token = getClassToken(classDefToken);
-        if (token != null && token.getType() == TokenTypes.CLASS_DEF) {
+        if (token != null && token.getType() == CLASS_DEF) {
             return true;
         }
         return false;
@@ -400,7 +403,7 @@ public abstract class CustomCheck extends AbstractCheck {
      */
     protected DetailAST getClassToken(DetailAST defToken) {
         DetailAST parent = defToken.getParent();
-        while (parent != null && parent.getType() != TokenTypes.CLASS_DEF) {
+        while (parent != null && parent.getType() != CLASS_DEF) {
             parent = parent.getParent();
         }
         return parent;
@@ -463,5 +466,25 @@ public abstract class CustomCheck extends AbstractCheck {
         }
 
         return astModifiersAbstract != null ? true : false;
+    }
+
+    /**
+     * Verifica se uma anotação é de classe ou interface.
+     * 
+     * @param astAnotacao
+     *            AST da anotação que se quer saber se é de classe ou interface.
+     * @return true se é uma anotação de classe ou interface. false, caso contrário.
+     */
+    protected boolean ehAnotacaoDeClasseOuInterface(DetailAST astAnotacao) {
+        DetailAST astModifiers = astAnotacao.getParent();
+        if (astModifiers != null && astModifiers.getType() == MODIFIERS) {
+            DetailAST astClasseOuInterface = astModifiers.getParent();
+            if (astClasseOuInterface != null
+                && (astClasseOuInterface.getType() == CLASS_DEF || astClasseOuInterface.getType() == INTERFACE_DEF)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

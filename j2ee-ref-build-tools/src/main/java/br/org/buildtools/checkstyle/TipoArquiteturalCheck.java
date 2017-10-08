@@ -14,10 +14,9 @@ import br.org.buildtools.arquitetura.enums.SufixoArquitetural;
 
 public class TipoArquiteturalCheck extends CustomCheck {
 
-    private static final String MSG_PREFIX = "restricaoArquitetural.";
     private static final String MSG_TIPO_INVALIDO = MSG_PREFIX + "tipoInvalido";
 
-    private RestricoesArquiteturais restricoesArquiteturais = new RestricoesArquiteturais();
+    private RestricoesArquiteturais restricoesArquiteturais = RestricoesArquiteturais.getInstance();
 
     @Override
     public int[] getAcceptableTokens() {
@@ -36,16 +35,18 @@ public class TipoArquiteturalCheck extends CustomCheck {
 
     @Override
     public void visitToken(DetailAST ast) {
-        if (ast.getType() == CLASS_DEF || ast.getType() == INTERFACE_DEF) {
-            verificarConformidadeClasseOuInterface(ast);
-        }
+        verificarConformidadeClasseOuInterface(ast);
     }
 
     private void verificarConformidadeClasseOuInterface(DetailAST astClasseOuInterface) {
-        verificarConfomidadeTipo(astClasseOuInterface);
+        TipoArquitetural tipo = recuperarTipoValido(astClasseOuInterface);
+
+        if (tipo == null) {
+            log(astClasseOuInterface.getLineNo(), MSG_TIPO_INVALIDO);
+        }
     }
 
-    private void verificarConfomidadeTipo(DetailAST astClasseOuInterface) {
+    public TipoArquitetural recuperarTipoValido(DetailAST astClasseOuInterface) {
         String nomeClasse = recuperarNomeDaClasseOuInterface(astClasseOuInterface);
         String nomePacote = recuperarNomeDoPacoteDoTipo(astClasseOuInterface);
 
@@ -58,14 +59,14 @@ public class TipoArquiteturalCheck extends CustomCheck {
         } else if (pacoteArquitetural != null) {
             tipo = new TipoArquitetural(pacoteArquitetural);
         } else {
-            log(astClasseOuInterface.getLineNo(), MSG_TIPO_INVALIDO);
-            return;
+            return null;
         }
 
         if (!restricoesArquiteturais.existeTipoArquitetural(tipo)) {
-            log(astClasseOuInterface.getLineNo(), MSG_TIPO_INVALIDO);
+            return null;
         }
 
+        return tipo;
     }
 
 }

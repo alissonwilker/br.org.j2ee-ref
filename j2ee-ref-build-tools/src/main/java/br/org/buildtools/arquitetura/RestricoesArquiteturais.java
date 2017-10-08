@@ -30,12 +30,22 @@ import br.org.buildtools.arquitetura.enums.InterfaceArquitetural;
 import br.org.buildtools.arquitetura.enums.PacoteArquitetural;
 
 public class RestricoesArquiteturais {
+    private volatile static RestricoesArquiteturais instance;
+    
     private Collection<TipoArquitetural> tiposArquiteturais = new HashSet<TipoArquitetural>();
     private Map<PacoteArquitetural, Collection<PacoteArquitetural>> restricoesPacotesArquiteturais = new HashMap<PacoteArquitetural, Collection<PacoteArquitetural>>();
 
-    public RestricoesArquiteturais() {
+    private RestricoesArquiteturais() {
         instanciarTiposArquiteturais();
         instanciarRestricoesPacotesArquiteturais();
+    }
+    
+    public static RestricoesArquiteturais getInstance() {
+        if (instance == null) {
+            instance = new RestricoesArquiteturais();
+        }
+        
+        return instance;
     }
 
     public boolean existeTipoArquitetural(TipoArquitetural tipo) {

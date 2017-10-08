@@ -11,10 +11,9 @@ import br.org.buildtools.arquitetura.enums.PacoteArquitetural;
 
 public class PacoteRestritoCheck extends CustomCheck {
 
-    private static final String MSG_PREFIX = "restricaoArquitetural.";
     private static final String MSG_PACOTE_RESTRITO = MSG_PREFIX + "pacoteRestrito";
 
-    private RestricoesArquiteturais restricoesArquiteturais = new RestricoesArquiteturais();
+    private RestricoesArquiteturais restricoesArquiteturais = RestricoesArquiteturais.getInstance();
 
     @Override
     public int[] getAcceptableTokens() {
@@ -33,15 +32,13 @@ public class PacoteRestritoCheck extends CustomCheck {
 
     @Override
     public void visitToken(DetailAST ast) {
-        if (ast.getType() == IMPORT || ast.getType() == STATIC_IMPORT) {
-            verificarConformidadeImports(ast);
-        }
+        verificarConformidadeImports(ast);
     }
 
     private void verificarConformidadeImports(DetailAST astImport) {
         String importComNomeClasse = fullyQualifiedPackage(astImport);
         String importApenasPacote = importComNomeClasse.substring(0, importComNomeClasse.lastIndexOf("."));
-        
+
         String nomePacoteDoTipo = recuperarNomeDoPacoteDoTipo(astImport);
         PacoteArquitetural pacoteArquitetural = buscarPacoteArquitetural(nomePacoteDoTipo);
 
