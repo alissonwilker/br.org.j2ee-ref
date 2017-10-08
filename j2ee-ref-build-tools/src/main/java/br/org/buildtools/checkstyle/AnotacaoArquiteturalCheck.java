@@ -43,19 +43,14 @@ public class AnotacaoArquiteturalCheck extends CustomCheck {
         }
     }
 
-    private AnotacaoArquitetural verificarConformidadeAnotacao(DetailAST astAnotacao, TipoArquitetural tipo) {
+    private void verificarConformidadeAnotacao(DetailAST astAnotacao, TipoArquitetural tipo) {
         DetailAST astAnnotationIdent = findFirstAstOfType(astAnotacao, IDENT);
         String nomeAnotacao = astAnnotationIdent.getText();
         AnotacaoArquitetural anotacaoArquitetural = buscarAnotacaoArquitetural(nomeAnotacao);
-        if (anotacaoArquitetural != null) {
-            if (restricoesArquiteturais.ehAnotacaoArquiteturalValida(tipo, anotacaoArquitetural)) {
-                return anotacaoArquitetural;
-            } else {
-                log(astAnnotationIdent.getLineNo(), MSG_ANOTACAO_INVALIDA, anotacaoArquitetural.name());
-            }
+        if (anotacaoArquitetural != null
+            && !restricoesArquiteturais.ehAnotacaoArquiteturalValida(tipo, anotacaoArquitetural)) {
+            log(astAnnotationIdent.getLineNo(), MSG_ANOTACAO_INVALIDA, anotacaoArquitetural.name());
         }
-
-        return null;
     }
 
 }
