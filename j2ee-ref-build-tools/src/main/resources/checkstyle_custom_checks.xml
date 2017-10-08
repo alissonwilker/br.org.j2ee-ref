@@ -34,7 +34,9 @@
 
 	<module name="TreeWalker">
 		<!-- Checks personalizados -->
-		<module name="PacoteBase" />
+		<module name="PacoteBase" >
+			<property name="pacoteBase" value="br.org" />
+		</module>
 		<module name="PacoteArquitetural" />
 		<module name="PacoteRestrito" />
 		<module name="TipoArquitetural" />

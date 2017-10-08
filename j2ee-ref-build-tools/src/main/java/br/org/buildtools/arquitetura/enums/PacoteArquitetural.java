@@ -1,7 +1,7 @@
 package br.org.buildtools.arquitetura.enums;
 
 public enum PacoteArquitetural {
-    Base("br.org"), Api("api"), ApiExcecaoMapper("api.excecao.mapper"), Dto("dto"), DtoMapper("dto.mapper"), Excecao(
+    Api("api"), ApiExcecaoMapper("api.excecao.mapper"), Dto("dto"), DtoMapper("dto.mapper"), Excecao(
         "excecao"), Mensageria("mensageria"), ModelBusiness("model.business"), ModelBusinessFacade(
             "model.business.facade"), ModelPersistenceDao("model.persistence.dao"), ModelPersistenceEntity(
                 "model.persistence.entity"), ModelPersistenceEntityListener(
