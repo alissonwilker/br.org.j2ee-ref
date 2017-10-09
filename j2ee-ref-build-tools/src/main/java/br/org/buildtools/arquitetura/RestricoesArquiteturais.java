@@ -131,6 +131,16 @@ public class RestricoesArquiteturais {
         return tipoArquitetural.getHerancas();
     }
     
+    public boolean deveIgnorarPrefixo(TipoArquitetural tipo) {
+        TipoArquitetural tipoArquitetural = buscarTipoArquitetural(tipo);
+        
+        if (tipoArquitetural == null) {
+            return false; 
+        }
+        
+        return tipoArquitetural.isIgnorarPrefixo();
+    }
+
     private boolean possuiAnotacaoAlternativa(Collection<AnotacaoArquitetural> anotacoes,
             TipoArquitetural tipoArquitetural, AnotacaoArquitetural anotacaoObrigatoria) {
         
