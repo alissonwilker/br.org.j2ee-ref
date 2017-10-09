@@ -47,7 +47,7 @@ public class TipoArquiteturalCheck extends CustomCheck {
     }
 
     public TipoArquitetural recuperarTipoValido(DetailAST astClasseOuInterface) {
-        String nomeClasse = recuperarNomeDaClasseOuInterface(astClasseOuInterface);
+        String nomeClasse = recuperarIdentTokenDaClasseOuInterface(astClasseOuInterface).getText();
         String nomePacote = recuperarNomeDoPacoteDoTipo(astClasseOuInterface);
 
         SufixoArquitetural sufixoArquitetural = buscarSufixoArquitetural(nomeClasse);

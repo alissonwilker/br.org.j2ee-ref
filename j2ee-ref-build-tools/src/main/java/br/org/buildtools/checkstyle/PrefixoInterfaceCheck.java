@@ -31,11 +31,12 @@ public class PrefixoInterfaceCheck extends CustomCheck {
 
     @Override
     public void visitToken(DetailAST astInterface) {
-        String nomeInterface = recuperarNomeDaClasseOuInterface(astInterface);
+        DetailAST identTokenInterface = recuperarIdentTokenDaClasseOuInterface(astInterface);
+        String nomeInterface = identTokenInterface.getText();
 
         if (!(nomeInterface.startsWith(prefixo)
                         && nomeInterface.substring(prefixo.length(), prefixo.length() + 1).matches("[A-Z]"))) {
-            log(astInterface.getLineNo(), MSG_PREFIXO_INTERFACE, nomeInterface, prefixo);
+            log(identTokenInterface.getLineNo(), MSG_PREFIXO_INTERFACE, nomeInterface, prefixo);
         }
     }
 

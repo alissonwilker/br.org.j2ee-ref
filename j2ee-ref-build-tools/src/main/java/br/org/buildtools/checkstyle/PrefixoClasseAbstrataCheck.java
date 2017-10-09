@@ -32,13 +32,15 @@ public class PrefixoClasseAbstrataCheck extends CustomCheck {
 
     @Override
     public void visitToken(DetailAST astClasse) {
-        String nomeClasse = recuperarNomeDaClasseOuInterface(astClasse);
+        DetailAST identTokenClasse = recuperarIdentTokenDaClasseOuInterface(astClasse);
+        String nomeClasse = identTokenClasse.getText();
+        
         boolean ehClasseAbstrata = verificarSeEhClasseAbstrata(astClasse);
             
         if (ehClasseAbstrata && !nomeClasse.startsWith(prefixo)) {
             log(astClasse.getLineNo(), MSG_PREFIXO_CLASSE_ABSTRATA_AUSENTE, nomeClasse, prefixo);
         } else if (nomeClasse.startsWith(prefixo) && !ehClasseAbstrata) {
-            log(astClasse.getLineNo(), MSG_PREFIXO_ABSTRACT_ERRADO, nomeClasse, prefixo);
+            log(identTokenClasse.getLineNo(), MSG_PREFIXO_ABSTRACT_ERRADO, nomeClasse, prefixo);
         }
     }
     
