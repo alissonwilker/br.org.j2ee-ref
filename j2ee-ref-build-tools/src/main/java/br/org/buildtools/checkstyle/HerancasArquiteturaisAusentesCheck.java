@@ -63,6 +63,8 @@ public class HerancasArquiteturaisAusentesCheck extends CustomCheck {
     }
 
     private void verificarHerancasArquiteturaisAusentesNoTipo(DetailAST astClasseOuInterface, TipoArquitetural tipo) {
+        DetailAST identTokenClasseOuInterface = recuperarIdentTokenDaClasseOuInterface(astClasseOuInterface);
+        
         Collection<HerancaArquitetural> herancasArquiteturaisAusentes = restricoesArquiteturais.recuperarHerancas(tipo);
 
         if (!herancasArquiteturaisAusentes.isEmpty()) {
@@ -77,7 +79,7 @@ public class HerancasArquiteturaisAusentesCheck extends CustomCheck {
                 }
             }
 
-            log(astClasseOuInterface.getLineNo(), MSG_HERANCAS_AUSENTES, listaNomesHerancasAusentes);
+            log(identTokenClasseOuInterface.getLineNo(), MSG_HERANCAS_AUSENTES, listaNomesHerancasAusentes);
         }
     }
 
