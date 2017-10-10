@@ -20,8 +20,8 @@ public class TipoArquitetural {
     private Map<AnotacaoArquitetural, TipoRestricao> anotacoes = new HashMap<AnotacaoArquitetural, TipoRestricao>();
     private Map<AnotacaoArquitetural, Collection<AnotacaoArquitetural>> anotacoesAlternativas = new HashMap<AnotacaoArquitetural, Collection<AnotacaoArquitetural>>();
     private Collection<InterfaceArquitetural> interfaces = new HashSet<InterfaceArquitetural>();
-    private Collection<HerancaArquitetural> herancasObrigatorias = new HashSet<HerancaArquitetural>();
-    private Collection<HerancaArquitetural> herancasPermitidas = new HashSet<HerancaArquitetural>();
+    private Map<HerancaArquitetural, TipoRestricao> herancas = new HashMap<HerancaArquitetural, TipoRestricao>();
+    
 
     public TipoArquitetural(PacoteArquitetural pacote) {
         this(SufixoArquitetural.NULL, pacote);
@@ -51,15 +51,11 @@ public class TipoArquitetural {
     }
 
     public void adicionarHerancaObrigatoria(HerancaArquitetural pai) {
-        if (pai != null) {
-            herancasObrigatorias.add(pai);
-        }
+        adicionarHeranca(pai, TipoRestricao.OBRIGATORIO);
     }
 
     public void adicionarHerancaPermitida(HerancaArquitetural pai) {
-        if (pai != null) {
-            herancasPermitidas.add(pai);
-        }
+        adicionarHeranca(pai, TipoRestricao.PERMITIDO);
     }
 
     public void adicionarAnotacoesAlternativas(AnotacaoArquitetural anotacaoObrigatoria,
@@ -102,13 +98,13 @@ public class TipoArquitetural {
     }
 
     public boolean possuiHeranca(HerancaArquitetural herancaArq) {
-        for (HerancaArquitetural herancaArquitetural : herancasObrigatorias) {
+        for (HerancaArquitetural herancaArquitetural : getHerancas(TipoRestricao.OBRIGATORIO)) {
             if (herancaArquitetural.equals(herancaArq)) {
                 return true;
             }
         }
 
-        for (HerancaArquitetural herancaArquitetural : herancasPermitidas) {
+        for (HerancaArquitetural herancaArquitetural : getHerancas(TipoRestricao.PERMITIDO)) {
             if (herancaArquitetural.equals(herancaArq)) {
                 return true;
             }
@@ -155,7 +151,13 @@ public class TipoArquitetural {
     }
 
     public Collection<HerancaArquitetural> getHerancasObrigatorias() {
-        return herancasObrigatorias;
+        return getHerancas(TipoRestricao.OBRIGATORIO);
+    }
+
+    private void adicionarHeranca(HerancaArquitetural herancaArquitetural, TipoRestricao tipoRestricao) {
+        if (herancaArquitetural != null && tipoRestricao != null) {
+            herancas.put(herancaArquitetural, tipoRestricao);
+        }
     }
 
     private void adicionarAnotacao(AnotacaoArquitetural anotacaoArquitetural, TipoRestricao tipoRestricao) {
@@ -164,6 +166,18 @@ public class TipoArquitetural {
         }
     }
 
+    private Collection<HerancaArquitetural> getHerancas(TipoRestricao tipoRestricao) {
+        Collection<HerancaArquitetural> herancasDoTipoRestricao = new HashSet<HerancaArquitetural>();
+
+        for (Map.Entry<HerancaArquitetural, TipoRestricao> herancaTipoRestricao : herancas.entrySet()) {
+            if (herancaTipoRestricao.getValue().equals(tipoRestricao)) {
+                herancasDoTipoRestricao.add(herancaTipoRestricao.getKey());
+            }
+        }
+
+        return herancasDoTipoRestricao;
+    }
+    
     private Collection<AnotacaoArquitetural> getAnotacoes(TipoRestricao tipoRestricao) {
         Collection<AnotacaoArquitetural> anotacoesDoTipoRestricao = new HashSet<AnotacaoArquitetural>();
 
