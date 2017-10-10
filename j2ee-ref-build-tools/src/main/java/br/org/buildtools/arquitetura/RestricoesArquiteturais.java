@@ -168,7 +168,9 @@ public class RestricoesArquiteturais {
             if (tipoArquitetural.getSufixo().equals(tipo.getSufixo()) && tipoArquitetural.getPacote().equals(tipo.getPacote())) {
                 return tipoArquitetural;
             }
+        }
 
+        for (TipoArquitetural tipoArquitetural : tiposArquiteturais) {
             if (tipoArquitetural.isIgnorarSufixo() && tipoArquitetural.getPacote().equals(tipo.getPacote())) {
                 return tipoArquitetural;
             }
