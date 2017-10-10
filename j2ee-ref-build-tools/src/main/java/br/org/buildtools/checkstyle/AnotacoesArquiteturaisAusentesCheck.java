@@ -85,7 +85,8 @@ public class AnotacoesArquiteturaisAusentesCheck extends CustomCheck {
                 }
             }
 
-            log(astClasseOuInterface.getLineNo(), MSG_ANOTACOES_AUSENTES, listaNomesAnotacoesAusentes);
+            DetailAST identTokenClasseOuInterface = recuperarIdentTokenDaClasseOuInterface(astClasseOuInterface);
+            log(identTokenClasseOuInterface.getLineNo(), MSG_ANOTACOES_AUSENTES, listaNomesAnotacoesAusentes);
         }
     }
 

@@ -52,7 +52,7 @@ public class PrefixoClasseAbstrataCheck extends CustomCheck {
         boolean ehClasseAbstrata = verificarSeEhClasseAbstrata(astClasse);
 
         if (ehClasseAbstrata && !nomeClasse.startsWith(prefixo)) {
-            log(astClasse.getLineNo(), MSG_PREFIXO_CLASSE_ABSTRATA_AUSENTE, nomeClasse, prefixo);
+            log(identTokenClasse.getLineNo(), MSG_PREFIXO_CLASSE_ABSTRATA_AUSENTE, nomeClasse, prefixo);
         } else if (nomeClasse.startsWith(prefixo) && !ehClasseAbstrata) {
             log(identTokenClasse.getLineNo(), MSG_PREFIXO_ABSTRACT_ERRADO, nomeClasse, prefixo);
         }

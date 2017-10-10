@@ -42,7 +42,8 @@ public class TipoArquiteturalCheck extends CustomCheck {
         TipoArquitetural tipo = recuperarTipoValido(astClasseOuInterface);
 
         if (tipo == null) {
-            log(astClasseOuInterface.getLineNo(), MSG_TIPO_INVALIDO);
+            DetailAST identTokenClasseOuInterface = recuperarIdentTokenDaClasseOuInterface(astClasseOuInterface);
+            log(identTokenClasseOuInterface.getLineNo(), MSG_TIPO_INVALIDO);
         }
     }
 

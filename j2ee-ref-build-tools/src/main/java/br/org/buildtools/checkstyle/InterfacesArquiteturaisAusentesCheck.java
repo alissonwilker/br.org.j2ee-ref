@@ -73,7 +73,8 @@ public class InterfacesArquiteturaisAusentesCheck extends CustomCheck {
                 }
             }
 
-            log(astClasseOuInterface.getLineNo(), MSG_INTERFACES_AUSENTES, listaNomesInterfacesAusentes);
+            DetailAST identTokenClasseOuInterface = recuperarIdentTokenDaClasseOuInterface(astClasseOuInterface);
+            log(identTokenClasseOuInterface.getLineNo(), MSG_INTERFACES_AUSENTES, listaNomesInterfacesAusentes);
         }
     }
 
