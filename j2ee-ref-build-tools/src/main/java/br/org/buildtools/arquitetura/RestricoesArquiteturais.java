@@ -128,7 +128,7 @@ public class RestricoesArquiteturais {
     public Collection<HerancaArquitetural> recuperarHerancas(TipoArquitetural tipo) {
         TipoArquitetural tipoArquitetural = buscarTipoArquitetural(tipo);
         
-        return tipoArquitetural.getHerancas();
+        return tipoArquitetural.getHerancasObrigatorias();
     }
     
     public boolean deveIgnorarPrefixo(TipoArquitetural tipo) {

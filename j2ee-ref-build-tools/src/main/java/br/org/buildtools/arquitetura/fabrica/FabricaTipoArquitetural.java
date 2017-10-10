@@ -10,7 +10,7 @@ import br.org.buildtools.arquitetura.enums.SufixoArquitetural;
 public class FabricaTipoArquitetural {
     public static TipoArquitetural criarMapper() {
         TipoArquitetural mapper = new TipoArquitetural(SufixoArquitetural.Mapper, PacoteArquitetural.DtoMapper);
-        mapper.adicionarHeranca(HerancaArquitetural.IGenericMapper);
+        mapper.adicionarHerancaObrigatoria(HerancaArquitetural.IGenericMapper);
 
         mapper.adicionarAnotacaoObrigatoria(AnotacaoArquitetural.Mapper);
 
@@ -45,7 +45,7 @@ public class FabricaTipoArquitetural {
     public static TipoArquitetural criarNotificadorJms() {
         TipoArquitetural notificadorJms = new TipoArquitetural(SufixoArquitetural.NotificadorJms,
             PacoteArquitetural.Mensageria);
-        notificadorJms.adicionarHeranca(HerancaArquitetural.AbstractNotificadorJms);
+        notificadorJms.adicionarHerancaObrigatoria(HerancaArquitetural.AbstractNotificadorJms);
 
         notificadorJms.adicionarAnotacaoObrigatoria(AnotacaoArquitetural.Stateless);
 
@@ -55,7 +55,7 @@ public class FabricaTipoArquitetural {
     public static TipoArquitetural criarReceptorJms() {
         TipoArquitetural receptorJms = new TipoArquitetural(SufixoArquitetural.ReceptorJms,
             PacoteArquitetural.Mensageria);
-        receptorJms.adicionarHeranca(HerancaArquitetural.AbstractReceptorJms);
+        receptorJms.adicionarHerancaObrigatoria(HerancaArquitetural.AbstractReceptorJms);
 
         receptorJms.adicionarAnotacaoObrigatoria(AnotacaoArquitetural.MessageDriven);
 
@@ -65,7 +65,7 @@ public class FabricaTipoArquitetural {
     public static TipoArquitetural criarBusinessFacade() {
         TipoArquitetural businessFacade = new TipoArquitetural(SufixoArquitetural.BusinessFacade,
             PacoteArquitetural.ModelBusinessFacade);
-        businessFacade.adicionarHeranca(HerancaArquitetural.AbstractBusinessFacade);
+        businessFacade.adicionarHerancaObrigatoria(HerancaArquitetural.AbstractBusinessFacade);
 
         businessFacade.adicionarAnotacaoObrigatoria(AnotacaoArquitetural.Named);
         businessFacade.adicionarAnotacaoObrigatoria(AnotacaoArquitetural.RequestScoped);
@@ -76,9 +76,7 @@ public class FabricaTipoArquitetural {
 
     public static TipoArquitetural criarDao() {
         TipoArquitetural dao = new TipoArquitetural(SufixoArquitetural.Dao, PacoteArquitetural.ModelPersistenceDao);
-        dao.adicionarHeranca(HerancaArquitetural.AbstractLivrariaDao);
-        dao.adicionarHeranca(HerancaArquitetural.AbstractLibrosDao);
-        dao.adicionarHeranca(HerancaArquitetural.AbstractDao);
+        dao.adicionarHerancaPermitida(HerancaArquitetural.AbstractDao);
 
         dao.adicionarAnotacaoObrigatoria(AnotacaoArquitetural.Named);
         dao.adicionarAnotacaoObrigatoria(AnotacaoArquitetural.RequestScoped);
@@ -88,7 +86,7 @@ public class FabricaTipoArquitetural {
 
     public static TipoArquitetural criarBusiness() {
         TipoArquitetural business = new TipoArquitetural(SufixoArquitetural.Business, PacoteArquitetural.ModelBusiness);
-        business.adicionarHeranca(HerancaArquitetural.AbstractBusiness);
+        business.adicionarHerancaObrigatoria(HerancaArquitetural.AbstractBusiness);
 
         business.adicionarAnotacaoObrigatoria(AnotacaoArquitetural.Named);
         business.adicionarAnotacaoObrigatoria(AnotacaoArquitetural.RequestScoped);
@@ -98,7 +96,7 @@ public class FabricaTipoArquitetural {
 
     public static TipoArquitetural criarApi() {
         TipoArquitetural api = new TipoArquitetural(SufixoArquitetural.Api, PacoteArquitetural.Api);
-        api.adicionarHeranca(HerancaArquitetural.AbstractApi);
+        api.adicionarHerancaObrigatoria(HerancaArquitetural.AbstractApi);
 
         api.adicionarAnotacaoObrigatoria(AnotacaoArquitetural.Path);
         api.adicionarAnotacaoObrigatoria(AnotacaoArquitetural.Api);
@@ -109,7 +107,7 @@ public class FabricaTipoArquitetural {
     public static TipoArquitetural criarViewController() {
         TipoArquitetural viewController = new TipoArquitetural(SufixoArquitetural.Controller,
             PacoteArquitetural.ViewController);
-        viewController.adicionarHeranca(HerancaArquitetural.AbstractController);
+        viewController.adicionarHerancaObrigatoria(HerancaArquitetural.AbstractController);
 
         viewController.adicionarAnotacaoObrigatoria(AnotacaoArquitetural.ManagedBean);
         viewController.adicionarAnotacaoObrigatoria(AnotacaoArquitetural.ViewScoped);

@@ -20,7 +20,8 @@ public class TipoArquitetural {
     private Map<AnotacaoArquitetural, TipoRestricao> anotacoes = new HashMap<AnotacaoArquitetural, TipoRestricao>();
     private Map<AnotacaoArquitetural, Collection<AnotacaoArquitetural>> anotacoesAlternativas = new HashMap<AnotacaoArquitetural, Collection<AnotacaoArquitetural>>();
     private Collection<InterfaceArquitetural> interfaces = new HashSet<InterfaceArquitetural>();
-    private Collection<HerancaArquitetural> herancas = new HashSet<HerancaArquitetural>();
+    private Collection<HerancaArquitetural> herancasObrigatorias = new HashSet<HerancaArquitetural>();
+    private Collection<HerancaArquitetural> herancasPermitidas = new HashSet<HerancaArquitetural>();
 
     public TipoArquitetural(PacoteArquitetural pacote) {
         this(SufixoArquitetural.NULL, pacote);
@@ -49,9 +50,15 @@ public class TipoArquitetural {
         }
     }
 
-    public void adicionarHeranca(HerancaArquitetural pai) {
+    public void adicionarHerancaObrigatoria(HerancaArquitetural pai) {
         if (pai != null) {
-            herancas.add(pai);
+            herancasObrigatorias.add(pai);
+        }
+    }
+
+    public void adicionarHerancaPermitida(HerancaArquitetural pai) {
+        if (pai != null) {
+            herancasPermitidas.add(pai);
         }
     }
 
@@ -95,7 +102,13 @@ public class TipoArquitetural {
     }
 
     public boolean possuiHeranca(HerancaArquitetural herancaArq) {
-        for (HerancaArquitetural herancaArquitetural : herancas) {
+        for (HerancaArquitetural herancaArquitetural : herancasObrigatorias) {
+            if (herancaArquitetural.equals(herancaArq)) {
+                return true;
+            }
+        }
+
+        for (HerancaArquitetural herancaArquitetural : herancasPermitidas) {
             if (herancaArquitetural.equals(herancaArq)) {
                 return true;
             }
@@ -141,8 +154,8 @@ public class TipoArquitetural {
         return interfaces;
     }
 
-    public Collection<HerancaArquitetural> getHerancas() {
-        return herancas;
+    public Collection<HerancaArquitetural> getHerancasObrigatorias() {
+        return herancasObrigatorias;
     }
 
     private void adicionarAnotacao(AnotacaoArquitetural anotacaoArquitetural, TipoRestricao tipoRestricao) {
